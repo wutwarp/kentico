@@ -1,0 +1,441 @@
+<style type="text/css">
+  /* SET UP */
+  :root {
+    --primary: #2b4191;
+    --secondary: #1d3359;
+    --white: #f9f8fe;
+    --white-card: #ffffff;
+    --gray: #727272;
+    --gray-section: #dde1ee;
+    --bg-nav: #f0f4ff;
+    --nav-border: #768bb4;
+    --navItem-hover: #e5ecf9;
+    --shadow: #72727268;
+    --orange-light: #f89906;
+    --orange-bold: #fc7a16;
+    --orange-nav: #ffc365;
+    --black: #1e1e1e;
+    --third: #1ab9cb;
+  }
+
+  .service-editor2f .container ul li {
+    margin: 0px;
+  }
+
+  /* Nav */
+  nav.vc-navbar {
+    display: flex;
+    justify-content: center;
+    background-color: #0f2849;
+    height: 5rem;
+    padding: 0 20px; /* ปรับให้มี padding ซ้าย-ขวา ป้องกันเนื้อหาชนขอบ */
+    border-radius: 10px;
+    align-items: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2) !important; /* แก้ var(--gray) เป็น rgba เนื่องจากใน :root ไม่มีตัวแปร --gray ครับ */
+    width: 100%;
+    box-sizing: border-box; /* ป้องกันกล่องทะลุขอบจอ */
+  }
+
+  ul.menu-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+  }
+
+  ul.menu-wrapper li {
+    display: flex;
+    align-items: center; /* จัดให้ข้อความและเส้นคั่นอยู่กึ่งกลางแนวตั้งตรงกัน */
+    justify-content: center;
+  }
+
+  /* 1. แก้ไขเส้นคั่น (Separator) ให้วาดด้วย CSS แทนตัวอักษร */
+  ul.menu-wrapper li::after {
+    content: ""; /* ลบตัวอักษร | ออก */
+    display: block;
+    width: 1px; /* ความหนาของเส้น */
+    height: 28px; /* ความสูงของเส้น (ปรับเพิ่ม/ลดได้ เพื่อให้ครอบคลุมสระบน-ล่างพอดี) */
+    background-color: #ffffff;
+    opacity: 0.5;
+    margin: 0 25px; /* ระยะห่างซ้าย-ขวา (Distribute) ให้ดูโปร่งเหมือนใน Figma */
+    transform: translateY(4px);
+  }
+
+  ul.menu-wrapper li:last-child::after {
+    display: none; /* ซ่อนเส้นคั่นของเมนูตัวสุดท้าย */
+  }
+
+  /* 2. แก้ไขตัวอักษรให้อยู่กึ่งกลาง */
+  ul.menu-wrapper li a {
+    font-size: 24px;
+    color: #ffffff;
+    text-decoration: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    line-height: 1; /* บังคับระยะบรรทัดให้พอดีกับตัวอักษร ช่วยแก้ปัญหาฟอนต์ลอย */
+    padding-top: 15px; /* ดันลงมานิดหน่อยเพื่อชดเชย Baseline ของฟอนต์ DB Heavent */
+    transition: 0.3s ease;
+  }
+
+  /* เมื่อเป็นหน้าที่กำลังเลือก (Active) */
+  ul.menu-wrapper li a.vc-active {
+    color: #3bb2bd !important;
+    font-weight: bold;
+    text-decoration: none !important;
+  }
+
+  /* เมื่อเอาเมาส์ชี้ (Hover) */
+  ul.menu-wrapper li a:hover {
+    color: #3bb2bd !important;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    text-decoration-thickness: 2px;
+  }
+
+  /* pilot usecase */
+
+  .useCaseTopic {
+    text-align: center;
+    color: var(--secondary);
+    padding: 2rem;
+  }
+
+  .usecaseDescTopic {
+    padding-top: 2rem;
+  }
+
+  .usecaseDesc {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+
+  .techniqueTopic {
+    margin: 0;
+  }
+
+  .techniqueComponent {
+    .componentList {
+      padding: 2rem;
+    }
+  }
+
+  /* Responsive */
+  @media screen and (max-width: 2560px) {
+    label {
+      display: none;
+    }
+
+    ul.menu-wrapper {
+      display: flex;
+      align-self: start;
+      font-size: 24px;
+    }
+
+    a.nav_vc.vc-active {
+      font-weight: 600;
+      color: var(--orange-nav) !important;
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    #menu-icon {
+      color: var(--white);
+      cursor: pointer;
+      display: block !important;
+      user-select: none;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .vc-active {
+      border-bottom: none !important;
+    }
+
+    nav.vc-navbar {
+      justify-content: end;
+      position: relative;
+
+      .menu-name {
+        display: flex;
+        color: var(--white);
+      }
+
+      input {
+        display: none;
+
+        &:checked + label {
+          color: var(--white);
+        }
+
+        &:checked ~ .menu-wrapper {
+          display: flex;
+          flex-direction: column;
+          padding: 1.5rem !important;
+          gap: 1rem;
+        }
+      }
+
+      ul.menu-wrapper {
+        display: flex;
+        text-align: start;
+        flex-direction: column;
+        width: 100%;
+        border-bottom: none;
+        background: linear-gradient(
+          2deg,
+          rgba(46, 170, 250, 1) 20%,
+          rgba(31, 47, 152, 1) 100%
+        );
+        border-width: 1px;
+        border-style: solid;
+        border-color: var(--nav-border);
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        z-index: 3;
+        height: max-content;
+        display: none;
+        text-align: left;
+        border-radius: 0px 0px 20px 20px;
+        box-shadow: 0px 3px 5px var(--shadow);
+
+        li {
+          display: block;
+          float: none;
+          width: auto;
+          margin: 0;
+          padding: 1rem;
+
+          a {
+            padding: 20px 30px;
+          }
+
+          &:hover {
+            background: var(--primary);
+            color: var(--orange-nav) !important;
+            cursor: pointer;
+
+            a {
+              background: none;
+              border-bottom: none !important;
+              color: var(--orange-nav);
+            }
+          }
+        }
+      }
+    }
+
+    a.nav_vc.vc-active {
+      font-weight: 600;
+      color: var(--orange-nav) !important;
+      border-bottom: none;
+    }
+  }
+
+  /* Surface Duo */
+  @media screen and (max-width: 569px) {
+    label {
+      translate: -1rem;
+    }
+  }
+
+  /* 14 Pro Max */
+  @media screen and (max-width: 481px) {
+    input {
+      &:checked ~ .menu-wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 0rem !important;
+        gap: 0rem !important;
+      }
+    }
+
+    label {
+      translate: -2rem;
+    }
+
+    ul.menu-wrapper {
+      li {
+        font-size: 1.85rem;
+      }
+    }
+  }
+</style>
+<nav class="vc-navbar" id="menu">
+  <div id="menu-icon" onclick="handleMenuIconClick()">
+    <div class="bar">&nbsp;</div>
+
+    <div class="bar">&nbsp;</div>
+
+    <div class="bar">&nbsp;</div>
+  </div>
+
+  <ul class="menu-wrapper">
+    <li>
+      <a class="nav_vc" href="/Our-Service/DigitalID/index.aspx">หน้าแรก</a>
+    </li>
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Home.aspx"
+        >VC</a
+      >
+    </li>
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Report.aspx"
+        >เอกสารที่เกี่ยวข้อง</a
+      >
+    </li>
+    <li>
+      <a
+        class="nav_vc vc-active"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/PilotUseCase.aspx"
+        >กรณีศึกษานำร่อง</a
+      >
+    </li>
+    <!-- <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Conformance-Test-Tool.aspx"
+        >การทดสอบมาตรฐาน</a
+      >
+    </li> -->
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/VC-team.aspx"
+        >คณะทำงาน</a
+      >
+    </li>
+    <!-- <li><a class="nav_vc" href="/th/Our-Service/VC-and-Digital-Document-Wallet/Timeline.aspx">ปฏิทินโครงการ</a>
+                    </li> -->
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/knowledge.aspx"
+        >แหล่งความรู้เพิ่มเติม</a
+      >
+    </li>
+  </ul>
+</nav>
+&nbsp;
+<h1 class="useCaseTopic">Digital Transcript Use Case</h1>
+
+<div class="usecaseIntro">
+  &nbsp;
+  <div>
+    การศึกษานี้เป็นการทดลองออกเอกสารรับรองดิจิทัล (Verifiable Credential: VC)
+    และเอกสารสำแดงดิจิทัล (Verifiable Presentation: VP)
+    โดยใช้กรณีของการออกใบแสดงผลการศึกษา (Transcript)
+    จากสถาบันการศึกษาในประเทศไทย
+  </div>
+  &nbsp;
+
+  <div>
+    <img
+      alt="Transcript-VC-User-Journey-(2).jpg"
+      src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/กรณศกษานำรอง/ChatGPT-Image-Jun-8,-2026,-12_30_56-PM-(7)_0.png.aspx?lang=th-TH"
+    />
+  </div>
+</div>
+
+<h3 class="usecaseDescTopic">คำอธิบายกรณีศึกษา</h3>
+
+<div class="usecaseDesc">
+  <strong
+    >1. การศึกษามุ่งเน้นไปที่ขั้นตอนการออกเอกสารรับรองดิจิทัล (VC)
+    และเอกสารสำแดงดิจิทัล (VP) และการทำงานร่วมกัน (Interoperability)
+  </strong>
+  <strong>2. กระบวนการดึงข้อมูล (Resolve)</strong> DID Document ตามมาตรฐานของ
+  W3C จะเป็นการใช้ Universal Resolver ซึ่งในที่นี้ใช้ Universal จำลองของสพธอ.
+  (ETDA)
+  ที่พัฒนาขึ้นเพื่อรองรับความพร้อมของการใช้งานของผู้ให้บริการในคณะทำงานส่งเสริมการพัฒนาเพื่อรองรับการใช้งาน
+  Document Wallet และ Verifiable Credentials เบื้องต้น เพื่อไปดึงข้อมูล DID
+  Document จาก Registry<br />
+  <strong>3. ขั้นตอนการลงทะเบียน (Register)</strong> จะดำเนินการโดยใช้โพรโทคอล
+  OpenID4VP ในที่นี้ทางคณะทำงานส่งเสริมการพัฒนาเพื่อรองรับการใช้งาน Document
+  Wallet และ Verifiable Credentials ได้สร้าง DID Documentแล้วบันทึกลง Registry
+  เอง
+</div>
+
+<h3 class="techniqueTopic">องค์ประกอบพื้นฐานทางเทคนิค</h3>
+
+<div class="techniqueComponent">
+  <ul class="componentList">
+    <li>ระบบพัฒนาโดยใช้ภาษาคอมพิวเตอร์ระดับสูง (High-Level Language)</li>
+    <li>ใช้อัลกอริทึม EdDSA (Edwards-Curve Digital Signature Algorithm)</li>
+    <li>ใช้การเข้ารหัสแบบ Ed25519</li>
+    <li>รูปแบบเอกสารใช้ JSON-LD ทั้งในส่วนของ VC และ VP</li>
+    <li>VC และ VP ใช้รูปแบบ JSON Web Token (JWT)</li>
+    <li>ใช้ Protocol OID4VC draft 13 และ OID4VP draft 20</li>
+    <li>
+      ใช้กระบวนการยืนยันตัวตน (Authorize code flow) แบบ Pre-authorized Code Flow
+    </li>
+  </ul>
+</div>
+
+<h3>
+  การทำงานร่วมกัน (Interoperability) ระหว่าง Issuer และ Wallet Holder และ
+  Verifier
+</h3>
+<img
+  alt="info_Wallet-Holder_Verifier-(2).jpg"
+  src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/กรณศกษานำรอง/ChatGPT-Image-Jun-8,-2026,-12_30_56-PM-(6)_0.png.aspx?lang=th-TH"
+/>
+<div class="interoperability-desc">
+  การออกแบบแนวทางการ Interoperability ระหว่าง Issuer และ Wallet Holder และ
+  Verifier ในโครงการ มีขั้นตอน ดังนี้<br />
+  <strong>1. กำหนด Registry</strong> สำหรับการทดสอบขึ้นมา 1 Registry เพื่อให้
+  Issuer ทำการ Register<br />
+  <strong>2. กำหนด Issuer</strong> เพื่อใช้ในการทดสอบ โดย Issuer จะทำการสร้าง
+  DID ไว้ เพื่อใช้สำหรับส่งข้อมูล และทำการ Register กับ Registry
+  ที่ได้ทำการจัดเตรียมไว้<br />
+  <strong>3. กำหนด Holder</strong> เพื่อใช้ในการ Request ข้อมูลกับทาง Issuer
+  และรับข้อมูล VC ที่จะได้จาก Issuer รวมถึงส่งข้อมูลในรูปแบบ VP ให้กับทาง
+  Verifier<br />
+  <strong>4. กำหนด Verifier</strong> เพื่อใช้ในการรับข้อมูล VP จาก Holder
+  พร้อมทั้งต้องตรวจสอบความถูกต้องของข้อมูล ตลอดจนการรับ-ส่ง ข้อมูลกับทาง DIF
+  Universal Resolver<br />
+  <strong>5. สร้าง HTTP GET</strong>&nbsp;เพื่อใช้ในการเข้าถึง Registry
+  พร้อมกับส่งข้อมูลให้กับทาง DIF Universal Resolver
+</div>
+<script type="text/javascript">
+  function updateMenu() {
+    const menu = document.getElementById("menu");
+    const menuIcon = document.getElementById("menu-icon");
+
+    if (document.getElementById("responsive-menu-checkbox").checked) {
+      menu.style.borderBottomRightRadius = "0";
+      menu.style.borderBottomLeftRadius = "0";
+      menuIcon.classList.add("menu-icon-close");
+    } else {
+      menu.style.borderRadius = "10px";
+      menuIcon.classList.remove("menu-icon-close");
+    }
+  }
+
+  function handleMenuIconClick() {
+    const menuCheckbox = document.getElementById("responsive-menu-checkbox");
+
+    if (menuCheckbox.checked) {
+      menuCheckbox.checked = false;
+      menuCheckbox.removeAttribute("checked");
+    } else {
+      menuCheckbox.checked = true;
+      menuCheckbox.setAttribute("checked", "checked");
+    }
+
+    updateMenu();
+  }
+</script>
