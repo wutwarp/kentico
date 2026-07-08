@@ -1,0 +1,1067 @@
+<style type="text/css">
+  /* SET UP */
+  :root {
+    --primary: #2b4191;
+    --secondary: #1d3359;
+    --white: #f9f8fe;
+    --white-card: #ffffff;
+    --gray: #727272;
+    --gray-section: #dde1ee;
+    --bg-nav: #f0f4ff;
+    --nav-border: #768bb4;
+    --navItem-hover: #e5ecf9;
+    --shadow: #72727268;
+    --orange-light: #f89906;
+    --orange-bold: #fc7a16;
+    --orange-nav: #ffc365;
+    --black: #1e1e1e;
+    --third: #1ab9cb;
+  }
+
+  /* Nav */
+
+  nav.vc-navbar {
+    display: flex;
+    justify-content: center;
+    background-color: #0f2849;
+    height: 5rem;
+    padding: 0 20px; /* ปรับให้มี padding ซ้าย-ขวา ป้องกันเนื้อหาชนขอบ */
+    border-radius: 10px;
+    align-items: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2) !important; /* แก้ var(--gray) เป็น rgba เนื่องจากใน :root ไม่มีตัวแปร --gray ครับ */
+    width: 100%;
+    box-sizing: border-box; /* ป้องกันกล่องทะลุขอบจอ */
+    overflow: hidden; /* กันมุมโค้งโดนเนื้อหาทะลุ */
+  }
+
+  .menu-name {
+    display: none;
+    width: 100%;
+  }
+
+  input {
+    margin: 0;
+    padding: 0;
+    height: 45px;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  ul.menu-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+  }
+
+  ul.menu-wrapper li {
+    display: flex;
+    align-items: center; /* จัดให้ข้อความและเส้นคั่นอยู่กึ่งกลางแนวตั้งตรงกัน */
+    justify-content: center;
+  }
+
+  /* 1. แก้ไขเส้นคั่น (Separator) ให้วาดด้วย CSS แทนตัวอักษร */
+  ul.menu-wrapper li::after {
+    content: ""; /* ลบตัวอักษร | ออก */
+    display: block;
+    width: 1px; /* ความหนาของเส้น */
+    height: 28px; /* ความสูงของเส้น (ปรับเพิ่ม/ลดได้ เพื่อให้ครอบคลุมสระบน-ล่างพอดี) */
+    background-color: #ffffff;
+    opacity: 0.5;
+    margin: 0 25px; /* ระยะห่างซ้าย-ขวา (Distribute) ให้ดูโปร่งเหมือนใน Figma */
+    transform: translateY(4px);
+  }
+
+  ul.menu-wrapper li:last-child::after {
+    display: none; /* ซ่อนเส้นคั่นของเมนูตัวสุดท้าย */
+  }
+
+  /* 2. แก้ไขตัวอักษรให้อยู่กึ่งกลาง */
+  ul.menu-wrapper li a {
+    font-size: 24px;
+    color: #ffffff !important; /* กัน theme หลักของเว็บทับสี */
+    text-decoration: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    line-height: 1; /* บังคับระยะบรรทัดให้พอดีกับตัวอักษร ช่วยแก้ปัญหาฟอนต์ลอย */
+    padding-top: 15px; /* ดันลงมานิดหน่อยเพื่อชดเชย Baseline ของฟอนต์ DB Heavent */
+    transition: 0.3s ease;
+    opacity: 1 !important; /* กันกรณีมี opacity แอบมาจาก theme */
+  }
+
+  /* กันไม่ให้ลิงก์ที่ "เคยกด" (visited) เปลี่ยนสี */
+  ul.menu-wrapper li a:visited {
+    color: #ffffff !important;
+  }
+
+  /* เมื่อเป็นหน้าที่กำลังเลือก (Active) */
+  ul.menu-wrapper li a.vc-active {
+    color: #3bb2bd !important;
+    font-weight: bold;
+    text-decoration: none !important;
+  }
+
+  /* เมื่อเอาเมาส์ชี้ (Hover) */
+  ul.menu-wrapper li a:hover {
+    color: #3bb2bd !important;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    text-decoration-thickness: 2px;
+  }
+
+  a.nav_vc.vc-active {
+    font-weight: 600;
+    color: var(--orange-nav) !important;
+    border-bottom: 0px;
+  }
+
+  label#menu-icon {
+    display: none;
+  }
+
+  label#menu-icon .bar {
+    margin: 3px;
+    width: 25px;
+    height: 3px;
+    background: var(--white);
+    border-radius: 1.5px;
+    transition:
+      margin 0.2s,
+      transform 0.2s;
+
+    /* same as above but with prefixes added */
+    -webkit-transition:
+      margin 0.2s,
+      -webkit-transform 0.2s;
+    transition:
+      margin 0.2s,
+      -webkit-transform 0.2s;
+    -o-transition:
+      margin 0.2s,
+      transform 0.2s;
+    transition:
+      margin 0.2s,
+      transform 0.2s;
+    transition:
+      margin 0.2s,
+      transform 0.2s,
+      -webkit-transform 0.2s;
+  }
+
+  label#menu-icon:not(.menu-icon-close):hover .bar {
+    margin: 5px 3px;
+  }
+
+  label#menu-icon.menu-icon-close .bar:first-child {
+    -webkit-transform: translateY(6px) rotate(45deg);
+    -ms-transform: translateY(6px) rotate(45deg);
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  label#menu-icon.menu-icon-close .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  label#menu-icon.menu-icon-close .bar:last-child {
+    -webkit-transform: translateY(-6px) rotate(-45deg);
+    -ms-transform: translateY(-6px) rotate(-45deg);
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* ===== แก้ตรงนี้: การ์ดหน่วยงาน (partner-container / partner-card) ===== */
+  .partner-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(8, 2fr);
+    align-items: start;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .partner-card {
+    text-align: center;
+    justify-items: center;
+    align-content: center;
+    padding: 20px 10px 25px 10px; /* ← เพิ่ม padding ให้กรอบใหญ่ขึ้น */
+    min-height: 180px; /* ← เพิ่มบรรทัดนี้ ถ้าอยากคุมความสูงขั้นต่ำ */
+    background: var(--white-card);
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+  }
+
+  /* ===== แก้ตรงนี้: การ์ดหน่วยงาน (partner-container / partner-card) ===== */
+  .partner-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(8, 2fr);
+    align-items: start;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .partner-card {
+    text-align: center;
+    justify-items: center;
+    align-content: center;
+    padding: 10px 0px 15px 0px;
+    background: var(--white-card);
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+  }
+
+  .partner-card .partner-img {
+    width: 230px !important;
+    height: 110px !important;
+    object-fit: contain !important;
+  }
+  /* ===== จบส่วนที่แก้ ===== */
+
+  /* Responsive */
+  @media screen and (max-width: 2560px) {
+    label {
+      display: none;
+    }
+
+    ul.menu-wrapper {
+      display: flex;
+      align-self: start;
+      font-size: 24px;
+    }
+
+    a.nav_vc.vc-active {
+      font-weight: 600;
+      color: var(--orange-nav) !important;
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    label#menu-icon {
+      color: var(--white);
+      cursor: pointer;
+      display: block;
+      user-select: none;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .vc-active {
+      border-bottom: none !important;
+    }
+
+    nav.vc-navbar {
+      justify-content: end;
+      position: relative;
+
+      .menu-name {
+        display: flex;
+        color: var(--white);
+      }
+
+      input {
+        display: none;
+
+        &:checked + label {
+          color: var(--white);
+        }
+
+        &:checked ~ .menu-wrapper {
+          display: flex;
+          flex-direction: column;
+          padding: 1.5rem !important;
+          gap: 1rem;
+        }
+      }
+
+      ul.menu-wrapper {
+        display: flex;
+        text-align: start;
+        flex-direction: column;
+        width: 100%;
+        border-bottom: none;
+        background: linear-gradient(
+          2deg,
+          rgba(46, 170, 250, 1) 20%,
+          rgba(31, 47, 152, 1) 100%
+        );
+        border-width: 1px;
+        border-style: solid;
+        border-color: var(--nav-border);
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        z-index: 3;
+        height: max-content;
+        display: none;
+        text-align: left;
+        border-radius: 0px 0px 20px 20px;
+        box-shadow: 0px 3px 5px var(--shadow);
+
+        li {
+          display: block;
+          float: none;
+          width: auto;
+          margin: 0;
+          padding: 1rem;
+
+          a {
+            padding: 20px 30px;
+          }
+
+          &:hover {
+            background: var(--primary);
+            color: var(--orange-nav) !important;
+            cursor: pointer;
+
+            a {
+              background: none;
+              border-bottom: none !important;
+              color: var(--orange-nav);
+            }
+          }
+        }
+      }
+    }
+
+    a.nav_vc.vc-active {
+      font-weight: 600;
+      color: var(--orange-nav) !important;
+      border-bottom: none;
+    }
+  }
+
+  /* Surface Duo */
+  @media screen and (max-width: 569px) {
+    label {
+      translate: -1rem;
+    }
+  }
+
+  /* 14 Pro Max */
+  @media screen and (max-width: 481px) {
+    input {
+      &:checked ~ .menu-wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 0rem !important;
+        gap: 0rem !important;
+      }
+    }
+
+    label {
+      translate: -2rem;
+    }
+
+    ul.menu-wrapper {
+      li {
+        font-size: 1.85rem;
+      }
+    }
+  }
+
+  /* Authority-card */
+  .head-topic {
+    padding: 30px 0px;
+    text-align: center;
+    padding: 40px 0px 15px;
+  }
+
+  .authority-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 0rem 1rem;
+
+    .authority-card {
+      border: 2px solid var(--nav-border);
+      border-radius: 15px;
+      color: var(--primary);
+      justify-items: center;
+      background: var(--white-card);
+      padding: 1rem;
+
+      .authority-head {
+        width: 100%;
+        display: flex;
+        padding: 1rem;
+        gap: 2rem;
+
+        .authority-list {
+          width: 50px;
+          padding: 1rem;
+          font-size: 50px;
+          color: var(--primary);
+          background: var(--gray-section);
+          display: flex;
+          border-radius: 100px;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+      .authority-content {
+        .authority-topic {
+          text-align: center;
+        }
+
+        .authority-textContainer {
+          padding: 0.5rem 2rem;
+          align-content: center;
+          background: var(--white-card);
+          border-radius: 15px;
+
+          .authority-text {
+            font-size: 25px;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 2560px) {
+    .authority-container {
+      .authority-card {
+        .authority-head {
+          flex-direction: column;
+          align-items: center;
+
+          .img-content {
+            display: flex;
+            justify-self: center;
+          }
+        }
+
+        .authority-content {
+          .authority-topic {
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    .authority-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: 1rem;
+      width: 90%;
+      justify-self: center;
+
+      .authority-card {
+        display: flex;
+        flex-direction: column;
+
+        .authority-head {
+          flex-direction: column-reverse;
+          gap: 1rem;
+
+          .authority-list {
+            display: inline;
+            width: auto;
+            height: fit-content;
+            padding: 1rem;
+            font-size: 50px;
+            color: var(--primary);
+            border-radius: 100px;
+            width: 50px;
+            text-align: center;
+          }
+        }
+
+        .authority-content {
+          .authority-topic {
+            padding: 1rem 1.5rem;
+            text-align: left;
+          }
+
+          .authority-textContainer {
+            padding: 0rem;
+            align-content: center;
+            background: var(--white-card);
+
+            .authority-text {
+              padding: 15px;
+            }
+          }
+        }
+      }
+    }
+
+    .partner-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(16, 2fr);
+      gap: 2rem;
+    }
+
+    .partner-card {
+      display: flex;
+
+      .partner-img {
+        padding: 0rem 1.5rem;
+      }
+
+      .partner-name {
+        text-align: left;
+        padding: 0rem 1.5rem;
+        align-content: center;
+      }
+    }
+  }
+
+  @media screen and (max-width: 569px) {
+    .authority-container {
+      gap: 1.5rem;
+      padding: 0rem;
+      width: 90%;
+
+      .authority-text {
+        padding: 10px !important;
+      }
+    }
+
+    .partner-card {
+      align-items: center;
+
+      .partner-img {
+        padding: 0rem 1.5rem;
+        width: 40% !important;
+        height: auto;
+      }
+
+      .partner-name {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  /* Ipad mini */
+  @media screen and (max-width: 769px) {
+    .authority-content {
+      display: inline !important;
+    }
+  }
+
+  @media screen and (max-width: 345px) {
+    .authority-container {
+      .authority-head {
+        gap: 0rem !important;
+
+        .authority-list {
+          font-weight: 600;
+          font-size: 30px !important;
+          padding: 0.5rem;
+          width: 30%;
+          border-radius: 30px;
+          align-self: center;
+          transform: scale(0.8);
+        }
+
+        .authority-content {
+          .authority-topic {
+            font-size: 25px;
+            padding: 0rem 1rem;
+          }
+
+          .authority-textContainer {
+            .authority-text {
+              font-size: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+</style>
+<div style="width: 100%; text-align: center">
+  <nav class="vc-navbar" id="menu">
+    <div id="menu-icon" onclick="handleMenuIconClick()">
+      <div class="bar">&nbsp;</div>
+
+      <div class="bar">&nbsp;</div>
+
+      <div class="bar">&nbsp;</div>
+    </div>
+
+    <ul class="menu-wrapper">
+      <li>
+        <a class="nav_vc" href="/Our-Service/DigitalID/index.aspx">หน้าแรก</a>
+      </li>
+      <li>
+        <a
+          class="nav_vc"
+          href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Home.aspx"
+          >VC</a
+        >
+      </li>
+      <li>
+        <a
+          class="nav_vc"
+          href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Report.aspx"
+          >เอกสารที่เกี่ยวข้อง</a
+        >
+      </li>
+      <li>
+        <a
+          class="nav_vc"
+          href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/PilotUseCase.aspx"
+          >กรณีศึกษานำร่อง</a
+        >
+      </li>
+      <!-- <li>
+        <a
+          class="nav_vc"
+          href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Conformance-Test-Tool.aspx"
+          >การทดสอบมาตรฐาน</a
+        >
+      </li> -->
+      <li>
+        <a
+          class="nav_vc vc-active"
+          href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/VC-team.aspx"
+          >คณะทำงาน</a
+        >
+      </li>
+      <!-- <li><a class="nav_vc" href="/th/Our-Service/VC-and-Digital-Document-Wallet/Timeline.aspx">ปฏิทินโครงการ</a>
+                    </li> -->
+      <li>
+        <a
+          class="nav_vc"
+          href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/knowledge.aspx"
+          >แหล่งความรู้เพิ่มเติม</a
+        >
+      </li>
+    </ul>
+  </nav>
+  &nbsp;
+
+  <h3 class="head-topic">อำนาจและหน้าที่</h3>
+
+  <div class="authority-container">
+    <div class="authority-card">
+      <div class="authority-head">
+        <img
+          alt="8136206.png"
+          class="img-content"
+          src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/ChatGPT-Image-Jun-8,-2026,-12_30_56-PM-(4)_0.png.aspx?lang=th-TH"
+        />
+        <div class="authority-list">1</div>
+      </div>
+
+      <div class="authority-content">
+        <h5 class="authority-topic">ทดสอบการใช้งาน Document Wallet และ VC</h5>
+
+        <div class="authority-textContainer">
+          <div class="authority-text">
+            คณะทำงานมีหน้าที่ทดสอบการใช้งาน Document Wallet และ Verifiable
+            Credentials เพื่อให้สามารถทำงานร่วมกันได้ (Interoperability)
+            และสามารถแลกเปลี่ยนข้อมูลได้อย่างปลอดภัยและน่าเชื่อถือ (Trustworthy)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="authority-card">
+      <div class="authority-head">
+        <img
+          alt="4445.png"
+          class="img-content"
+          src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/ChatGPT-Image-Jun-8,-2026,-12_30_56-PM-(1)_0.png.aspx?lang=th-TH"
+        />
+        <div class="authority-list">2</div>
+      </div>
+
+      <div class="authority-content">
+        <h5 class="authority-topic">จัดทำข้อเสนอแนะหรือรายงานทางด้านเทคนิค</h5>
+
+        <div class="authority-textContainer">
+          <div class="authority-text">
+            คณะทำงานมีหน้าที่จัดทำข้อเสนอแนะหรือรายงานทางด้านเทคนิค (Technical
+            Recommendation) เกี่ยวข้องกับการพัฒนาระบบเพื่อรองรับการใช้งาน
+            Document Wallet และ Verifiable Credentials
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="authority-card">
+      <div class="authority-head">
+        <img
+          alt="4022164-(2).png"
+          class="img-content"
+          src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/ChatGPT-Image-Jun-8,-2026,-12_30_56-PM-(3)_0.png.aspx?lang=th-TH"
+        />
+        <div class="authority-list">3</div>
+      </div>
+
+      <div class="authority-content">
+        <h5 class="authority-topic">
+          ให้คำปรึกษาหรือข้อเสนอแนะการทดสอบและการใช้งานเทคโนโลยี
+        </h5>
+
+        <div class="authority-textContainer">
+          <div class="authority-text">
+            คณะทำงานมีหน้าที่ให้คำปรึกษาหรือข้อเสนอแนะในการทดสอบการใช้งาน
+            Document Wallet และ Verifiable Credentials
+            รวมถึงการใช้งานเทคโนโลยีในเรื่องที่เกี่ยวข้องกับหลักการ
+            Self-Sovereign Identity แก่หน่วยงานต่าง ๆ
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="authority-card">
+      <div class="authority-head">
+        <img
+          alt="8732-(1).png"
+          class="img-content"
+          src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/ChatGPT-Image-Jun-8,-2026,-12_30_56-PM-(2)_0.png.aspx?lang=th-TH"
+        />
+        <div class="authority-list">4</div>
+      </div>
+
+      <div class="authority-content">
+        <h5 class="authority-topic">
+          ดำเนินการใด ๆ อันเป็นประโยชน์ต่อการใช้งานและจัดข้อเสนอแนะ
+        </h5>
+
+        <div class="authority-textContainer">
+          <div class="authority-text">
+            คณะทำงานมีหน้าที่ดำเนินการอื่นใดที่เกี่ยวข้อง
+            อันเป็นประโยชน์ต่อการทดสอบการใช้งาน Document Wallet และ Verifiable
+            Credentials และการจัดทำข้อเสนอแนะหรือรายงานทางด้านเทคนิค (Technical
+            Recommendation) รวมถึงการดำเนินการอื่นใด
+            ในเรื่องที่เกี่ยวข้องกับหลักการ Self-Sovereign Identity
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="head-topic">หน่วยงาน</h3>
+
+  <div class="partner-container">
+    <div class="partner-card">
+      <img
+        alt="กรรมการปกครอง(1).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/ภาพถายหนาจอ-2569-07-03-เวลา-15-19-20.png.aspx?lang=th-TH"
+      />
+      <h6 class="partner-name">กรมการปกครอง</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="กรมการขนส่งทางบก(2).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/กรมการขนสงทางบก.jpeg.aspx?lang=th-TH"
+      />
+      <h6 class="partner-name">กรมการขนส่งทางบก</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="กระทรวงสาธารณสุข(3).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/กระทรวงสาธารณสขใหม.png.aspx?lang=th-TH"
+      />
+      <h6 class="partner-name">กระทรวงสาธารณสุข</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="สำนักงานพัฒนารัฐบาลดิจิทัล(4).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/ภาพถายหนาจอ-2569-07-03-เวลา-17-24-44.png.aspx?lang=th-TH"
+      />
+      <h6 class="partner-name">สำนักงานพัฒนารัฐบาลดิจิทัล (องค์การมหาชน)</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="คณะกรรมการนโยบายเขตพิเศษภาคตะวันออก(5).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/สำนกงานคณะกรรมการนโยบายเขตพฒนาพเศษตะวนออก.png.aspx?lang=th-TH"
+      />
+      <h6 class="partner-name">คณะกรรมการนโยบายเขตพิเศษภาคตะวันออก</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="สถาบันพัฒนาบุคลากรดิจิทัล(6).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/สถาบนพฒนาบคลากรดานดจทลภาครฐ.jpg.aspx?lang=th-TH"
+      />
+      <h6 class="partner-name">สถาบันพัฒนาบุคลากรดิจิทัล</h6>
+    </div>
+
+    <!-- <div class="partner-card">
+    <img
+      alt="สถาบนคณวฒวชาชพองคการมหาชน-1-(2).png"
+      class="partner-img"
+      src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/สถาบนคณวฒวชาชพองคการมหาชน-1-(2).png.aspx"
+    />
+    <h6 class="partner-name">สถาบันคุณวุฒิวิชาชีพ (องค์การมหาชน)</h6>
+  </div> -->
+
+    <!-- <div class="partner-card">
+    <img
+      alt="revenue-dept.png"
+      class="partner-img"
+      src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/รายชอคณะทำงานสงเสรมการพฒนาระบบ/revenue-dept.png.aspx"
+    />
+    <h6 class="partner-name">กรมสรรพากร</h6>
+  </div> -->
+    <div class="partner-card">
+      <img
+        alt="บริษัท ไปรษณีย์ไทย จำกัด(7).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/บรษท-ไปรษณยไทย-จำกด.png.aspx?lang=th-TH"
+      />
+      <h6 class="partner-name">บริษัท ไปรษณีย์ไทย จำกัด</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="นายกสภาวิศวกร(8).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/นายกสภาวศวกร.jpg.aspx?lang=th-TH"
+      />
+      <h6 class="partner-name">นายกสภาวิศวกร</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="จุฬาลงกรณ์มหาวิทยาลัย(9).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/Chulalongkorn_University_Alt_Logo-svg.png.aspx?lang=th-TH"
+      />
+      <h6 class="partner-name">จุฬาลงกรณ์มหาวิทยาลัย</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="MU.png(10)"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/MU.png.aspx"
+      />
+      <h6 class="partner-name">มหาวิทยาลัยมหิดล</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="มหาวิทยาลัยเชียงใหม่(11).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/ภาพถายหนาจอ-2569-07-03-เวลา-16-07-03.png.aspx?lang=th-TH"
+      />
+      <h6 class="partner-name">มหาวิทยาลัยเชียงใหม่</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="มหาวิทยาลัยขอนแก่น(12).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/มหาวทยาลยขอนแกน-(7).png.aspx"
+      />
+      <h6 class="partner-name">มหาวิทยาลัยขอนแก่น</h6>
+    </div>
+    <div class="partner-card">
+      <img
+        alt="มหาวิทยาลัยอัสสัมชัญ(13).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/มหาวทยาลยอสสมชญ.png.aspx?lang=th-TH"
+      />
+      <h6 class="partner-name">มหาวิทยาลัยอัสสัมชัญ</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="bangkok-bank-(14).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/bangkok-bank-(5).png.aspx"
+      />
+      <h6 class="partner-name">ธนาคารกรุงเทพ จำกัด (มหาชน)</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="ธนาคารกรุงไทย-(15).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/ธนาคารกรงไทย-(7).png.aspx"
+      />
+      <h6 class="partner-name">ธนาคารกรุงไทย จำกัด (มหาชน)</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="ธนาคารกสิกรไทย จำกัด(16).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/ธนาคารกสกรไทย-จำกด-(มหาชน).png.aspx?lang=th-TH"
+      />
+      <h6 class="partner-name">ธนาคารกสิกรไทย จำกัด (มหาชน)</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="บริษัท จันวาณิชย์ จำกัด(17).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/บรษท-จนวาณชย-จำกด.png.aspx?lang=th-TH"
+      />
+      <h6 class="partner-name">บริษัท จันวาณิชย์ จำกัด</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="บริษัท อินเทอร์เน็ตประเทศไทย จำกัด(18).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/บรษท-อนเทอรเนตประเทศไทย-จำกด-(มหาชน).png.aspx?lang=th-TH"
+      />
+      <h6 class="partner-name">บริษัท อินเทอร์เน็ตประเทศไทย จำกัด (มหาชน)</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="บริษัท เทิร์นคีย์ คอมมูนิเคชั่น เซอร์วิส จำกัด(19).jpg"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/บรษท-เทรนคย-คอมมนเคชน-เซอรวส-จำกด-(มหาชน).jpg.aspx?lang=th-TH"
+      />
+      <h6 class="partner-name">
+        บริษัท เทิร์นคีย์ คอมมูนิเคชั่น เซอร์วิส จำกัด (มหาชน)
+      </h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="บริษัท ออร์บิกซ์ เทคโนโลยี แอนด์ อินโนเวชั่น จำกัด(20).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/หนวยงานทเขารวมกบคณะทำงาน/ภาพถายหนาจอ-2569-07-03-เวลา-17-31-39.png.aspx?lang=th-TH"
+      />
+      <h6 class="partner-name">
+        บริษัท ออร์บิกซ์ เทคโนโลยี แอนด์ อินโนเวชั่น จำกัด
+      </h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="cdg-(21).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/cdg-(4).png.aspx"
+      />
+      <h6 class="partner-name">บริษัท คอนโทรลดาต้า (ประเทศไทย) จำกัด</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="20240110_Logo_NDID-PNG-1-1.(22)png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/รายชอคณะทำงานสงเสรมการพฒนาระบบ/20240110_Logo_NDID-PNG-1-1.png.aspx"
+        title="20240110_Logo_NDID-PNG-1-1.png"
+      />
+      <h6 class="partner-name">บริษัท เนชั่นแนลดิจิทัลไอดี จำกัด</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="blockfint-(23).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/blockfint-(4).png.aspx"
+      />
+      <h6 class="partner-name">บริษัท บล็อคฟินท์ จำกัด</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="finema-(24).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/รายชอคณะทำงานสงเสรมการพฒนาระบบ/finema-(2).png.aspx"
+        title="finema-(2).png"
+      />
+      <h6 class="partner-name">บริษัท ฟินีม่า จำกัด</h6>
+    </div>
+
+    <div class="partner-card">
+      <img
+        alt="iamconsulting-(25).png"
+        class="partner-img"
+        src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/iamconsulting-(4).png.aspx"
+      />
+      <h6 class="partner-name">บริษัท ไอแอม คอนซัลติ้ง จำกัด</h6>
+    </div>
+
+    <!-- <div class="partner-card">
+    <img
+      alt="เอไอ-แอนด-โรโบตกส-เวนเจอรส-(11).png"
+      class="partner-img"
+      src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/เอไอ-แอนด-โรโบตกส-เวนเจอรส-(11).png.aspx"
+    />
+    <h6 class="partner-name">บริษัท เอไอ แอนด์ โรโบติกส์ เวนเจอร์ส จำกัด</h6>
+  </div> -->
+
+    <!-- <div class="partner-card">
+    <img
+      alt="AWN-(3).png"
+      class="partner-img"
+      src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/รายชอคณะทำงานสงเสรมการพฒนาระบบ/AWN-(3).png.aspx"
+      title="AWN-(3).png"
+    />
+    <h6 class="partner-name">บริษัท แอดวานซ์ ไวร์เลส เน็ทเวอร์ค จำกัด</h6>
+  </div> -->
+
+    <!-- <div class="partner-card">
+    <img
+      alt="healthtag-(2).png"
+      class="partner-img"
+      src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/รายชอคณะทำงานสงเสรมการพฒนาระบบ/healthtag-(2).png.aspx"
+      title="healthtag-(2).png"
+    />
+    <h6 class="partner-name">บริษัท เฮลธ์แท็ก จำกัด</h6>
+  </div> -->
+
+    <!-- <div class="partner-card">
+    <img
+      alt="สมาคมเมองนฤมต-(6).png"
+      class="partner-img"
+      src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/รายชอคณะทำงานสงเสรมการพฒนาระบบ/สมาคมเมองนฤมต-(6).png.aspx"
+      title="สมาคมเมองนฤมต-(6).png"
+    />
+    <h6 class="partner-name">สมาคมเมืองนฤมิต</h6>
+  </div> -->
+
+    <!-- <div class="partner-card">
+    <img
+      alt="กสทช-(3).png"
+      class="partner-img"
+      src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/กสทช-(3).png.aspx"
+    />
+    <h6 class="partner-name">
+      สำนักงานคณะกรรมการกิจการกระจายเสียง<br />
+      กิจการโทรทัศน์ และกิจการโทรคมนาคมแห่งชาติ (กสทช.)
+    </h6>
+  </div> -->
+  </div>
+  <div>&nbsp;</div>
+  <script type="text/javascript">
+    function updatemenu() {
+      const menu = document.getElementById("menu");
+      const menuIcon = document.getElementById("menu-icon");
+
+      if (document.getElementById("responsive-menu-checkbox").checked) {
+        menu.style.borderBottomRightRadius = "0";
+        menu.style.borderBottomLeftRadius = "0";
+        menuIcon.classList.add("menu-icon-close");
+      } else {
+        menu.style.borderRadius = "10px";
+        menuIcon.classList.remove("menu-icon-close");
+      }
+    }
+  </script>
+</div>
