@@ -1,0 +1,1558 @@
+<!--* Information -->
+<style type="text/css">/* SET UP */
+  :root {
+    --primary: #2b4191;
+    --secondary: #1d3359;
+    --white: #f9f8fe;
+    --white-card: #ffffff;
+    --gray: #727272;
+    --gray-section: #dde1ee;
+    --bg-nav: #f0f4ff;
+    --nav-border: #768bb4;
+    --navItem-hover: #e5ecf9;
+    --shadow: #72727268;
+    --orange-light: #f89906;
+    --orange-bold: #fc7a16;
+    --orange-nav: #ffc365;
+    --black: #1e1e1e;
+    --third: #1ab9cb;
+  }
+
+  .service-editor2f img {
+    width: 100% !important;
+  }
+
+  .service-editor2f .container ul li,
+  .service-editor2f .container > ul li,
+  .service-editor2f .container ul,
+  .content-editor .container > ul {
+    margin: 0px;
+  }
+
+  video {
+    object-fit: contain;
+  }
+
+  body {
+    font-family: "dbheavent_cond";
+  }
+
+  h1,
+  .vc-secondary-text {
+    color: var(--secondary) !important;
+  }
+
+  h5 {
+    font-size: 35px;
+  }
+
+  /* Nav */
+  nav.vc-navbar {
+    display: flex;
+    justify-content: center;
+    background-color: #0f2849;
+    height: 5rem;
+    padding: 0 20px; /* ปรับให้มี padding ซ้าย-ขวา ป้องกันเนื้อหาชนขอบ */
+    border-radius: 10px;
+    align-items: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2) !important; /* แก้ var(--gray) เป็น rgba เนื่องจากใน :root ไม่มีตัวแปร --gray ครับ */
+    width: 100%;
+    box-sizing: border-box; /* ป้องกันกล่องทะลุขอบจอ */
+  }
+
+  ul.menu-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+  }
+
+  ul.menu-wrapper li {
+    display: flex;
+    align-items: center; /* จัดให้ข้อความและเส้นคั่นอยู่กึ่งกลางแนวตั้งตรงกัน */
+    justify-content: center;
+  }
+
+  /* 1. แก้ไขเส้นคั่น (Separator) ให้วาดด้วย CSS แทนตัวอักษร */
+  ul.menu-wrapper li::after {
+    content: ""; /* ลบตัวอักษร | ออก */
+    display: block;
+    width: 1px; /* ความหนาของเส้น */
+    height: 28px; /* ความสูงของเส้น (ปรับเพิ่ม/ลดได้ เพื่อให้ครอบคลุมสระบน-ล่างพอดี) */
+    background-color: #ffffff;
+    opacity: 0.5;
+    margin: 0 25px; /* ระยะห่างซ้าย-ขวา (Distribute) ให้ดูโปร่งเหมือนใน Figma */
+    transform: translateY(4px);
+  }
+
+  ul.menu-wrapper li:last-child::after {
+    display: none; /* ซ่อนเส้นคั่นของเมนูตัวสุดท้าย */
+  }
+
+  /* 2. แก้ไขตัวอักษรให้อยู่กึ่งกลาง */
+  ul.menu-wrapper li a {
+    font-size: 24px;
+    color: #ffffff;
+    text-decoration: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    line-height: 1; /* บังคับระยะบรรทัดให้พอดีกับตัวอักษร ช่วยแก้ปัญหาฟอนต์ลอย */
+    padding-top: 15px; /* ดันลงมานิดหน่อยเพื่อชดเชย Baseline ของฟอนต์ DB Heavent */
+    transition: 0.3s ease;
+  }
+
+  /* เมื่อเป็นหน้าที่กำลังเลือก (Active) */
+  ul.menu-wrapper li a.vc-active {
+    color: #3bb2bd !important;
+    font-weight: bold;
+    text-decoration: none !important;
+  }
+
+  /* เมื่อเอาเมาส์ชี้ (Hover) */
+  ul.menu-wrapper li a:hover {
+    color: #3bb2bd !important;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    text-decoration-thickness: 2px;
+  }
+
+  /* Responsive */
+  @media screen and (max-width: 2560px) {
+    label {
+      display: none;
+    }
+
+    ul.menu-wrapper {
+      display: flex;
+      align-self: start;
+      font-size: 24px;
+    }
+
+    a.nav_vc.vc-active {
+      font-weight: 600;
+      color: var(--orange-nav) !important;
+    }
+
+    .home-textTopic {
+      .objectiveTopic {
+        width: 100%;
+        line-height: normal;
+      }
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    #menu-icon {
+      color: var(--white);
+      cursor: pointer;
+      display: block !important;
+      user-select: none;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .vc-active {
+      border-bottom: none !important;
+    }
+
+    nav.vc-navbar {
+      justify-content: end;
+      position: relative;
+
+      .menu-name {
+        display: flex;
+        color: var(--white);
+      }
+
+      input {
+        display: none;
+
+        &:checked + label {
+          color: var(--white);
+        }
+
+        &:checked ~ .menu-wrapper {
+          display: flex;
+          flex-direction: column;
+          padding: 1.5rem !important;
+          gap: 1rem;
+        }
+      }
+
+      ul.menu-wrapper {
+        display: flex;
+        text-align: start;
+        flex-direction: column;
+        width: 100%;
+        border-bottom: none;
+        background: linear-gradient(
+          2deg,
+          rgba(46, 170, 250, 1) 20%,
+          rgba(31, 47, 152, 1) 100%
+        );
+        border-width: 1px;
+        border-style: solid;
+        border-color: var(--nav-border);
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        z-index: 3;
+        height: max-content;
+        display: none;
+        text-align: left;
+        border-radius: 0px 0px 20px 20px;
+        box-shadow: 0px 3px 5px var(--shadow);
+
+        li {
+          display: block;
+          float: none;
+          width: auto;
+          margin: 0;
+          padding: 1rem;
+
+          a {
+            padding: 20px 30px;
+          }
+
+          &:hover {
+            background: var(--primary);
+            color: var(--orange-nav) !important;
+            cursor: pointer;
+
+            a {
+              background: none;
+              border-bottom: none !important;
+              color: var(--orange-nav);
+            }
+          }
+        }
+      }
+    }
+
+    a.nav_vc.vc-active {
+      font-weight: 600;
+      color: var(--orange-nav) !important;
+      border-bottom: none;
+    }
+  }
+
+  /* Surface Duo */
+  @media screen and (max-width: 569px) {
+    label {
+      translate: -1rem;
+    }
+  }
+
+  /* 14 Pro Max */
+  @media screen and (max-width: 481px) {
+    input {
+      &:checked ~ .menu-wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 0rem !important;
+        gap: 0rem !important;
+      }
+    }
+
+    label {
+      translate: -2rem;
+    }
+
+    ul.menu-wrapper {
+      li {
+        font-size: 1.85rem;
+      }
+    }
+  }
+
+  .home-textTopic {
+    line-height: normal;
+  }
+
+  /* Section 1 - Introduction (home) */
+  .intro-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 3rem;
+
+    .home-video {
+      display: flex;
+      justify-content: center;
+
+      object {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+      }
+    }
+
+    .VC-VP-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 15px;
+
+      .VC-VP-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4rem;
+
+        .VC-VP-btn-container {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          width: 40%;
+          gap: 4rem;
+
+          .VC-VP-btn {
+            display: flex;
+            background-color: var(--secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            border: transparent;
+            color: var(--white);
+            gap: 2rem;
+            cursor: pointer;
+            align-items: center;
+
+            &:hover {
+              background-color: var(--primary);
+            }
+
+            &:active {
+              background-color: var(--primary);
+              border-right: 15px solid #3b5aca;
+            }
+          }
+        }
+
+        .VC-VP-content-card {
+          width: 100%;
+          display: flex;
+          background: var(--white-card);
+          border-radius: 15px;
+          padding: 5rem;
+          box-shadow: 0px 0px 8px #d3e0f6;
+          border-right: 5px solid var(--secondary);
+        }
+
+        .VC-VP-detail {
+          gap: 2rem;
+          border-right: 1px solid var(--white);
+        }
+      }
+    }
+  }
+
+  /* .intro-img {
+            width: 25%;
+            height: auto;
+            object-fit: cover;
+        } */
+  /* } */
+
+  /* Section 2 - User Journey  */
+  .userJourney-container {
+    padding-bottom: 35px;
+
+    .userJourneyImg-container {
+      justify-items: center;
+    }
+
+    .userJourney-img {
+      justify-items: center;
+    }
+
+    .userJourney-text {
+      /* width: 90%;
+            line-clamp: 6;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 6;
+            overflow: hidden; */
+      padding: 2rem 2rem;
+
+      .userJourney-desc {
+        padding-bottom: 2rem;
+      }
+
+      .collapse {
+        .processTopic {
+          margin: 0rem;
+        }
+      }
+    }
+
+    .readMore {
+      color: var(--secondary) !important;
+    }
+
+    .readMore:hover {
+      color: var(--primary) !important;
+    }
+  }
+
+  /* Section 3 - Framework */
+  .framework-container {
+    .framework-textTopic {
+      font-size: 55px;
+      padding: 1rem 0 0;
+      margin: 0;
+      text-align: center;
+    }
+
+    .framework-content {
+      padding: 0rem 5rem;
+
+      .QR-download {
+        display: flex;
+        justify-content: center;
+        padding: 5rem 0;
+
+        .QR-text {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          background-color: #ffffff;
+          padding: 2rem;
+          width: fit-content;
+          gap: 1rem;
+          border-radius: 15px;
+
+          .home-download-btn {
+            background-color: var(--primary);
+            padding: 1rem;
+
+            &:hover {
+              background-color: var(--secondary);
+            }
+
+            a {
+              color: var(--white);
+
+              &:hover {
+                color: var(--white) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Section 4 - Objective & scope  */
+  .objective-container {
+    display: flex;
+    padding: 50px 50px 20px 50px;
+    align-items: center;
+    gap: 2rem;
+
+    .objectiveContent {
+      width: 100%;
+    }
+  }
+
+  /* section 5 - usecase */
+  .useCase-container {
+    padding: 50px 30px;
+
+    .useCase-content {
+      display: flex;
+      background: var(--white-card);
+
+      .useCase-left {
+        align-content: center;
+
+        pilotTopic {
+          padding: 0px;
+        }
+      }
+
+      .useCase-topic {
+        width: 100%;
+        color: var(--secondary);
+      }
+
+      .useCase-right {
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1.75rem;
+
+        .useCase-card {
+          display: grid;
+          grid-template-areas:
+            "img topic"
+            "img desc";
+          background: var(--primary);
+          border-radius: 10px;
+          padding: 2rem;
+          gap: 1.25rem;
+
+          .useCase-card-img {
+            grid-area: img;
+            display: grid;
+            place-items: center;
+          }
+
+          .useCase-card-topic {
+            color: var(--white);
+            grid-area: topic;
+            margin: 0px !important;
+          }
+
+          .useCase-card-desc {
+            color: var(--white);
+            grid-area: desc;
+          }
+        }
+
+        .useCase-btn-container {
+          display: flex;
+          justify-content: center;
+
+          .useCase-btn {
+            width: fit-content;
+            gap: 2rem;
+            border: 2px solid var(--primary);
+            display: flex;
+            color: var(--secondary);
+            cursor: pointer;
+            padding: 1rem;
+            border-radius: 10px;
+            transition: all 150ms;
+
+            &:hover {
+              background: var(--primary);
+              color: var(--white);
+              transform: scale(1.1);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Section 6 - roadmap */
+  .roadmap-container {
+    /* background: var(--gray-session); */
+    padding-bottom: 60px;
+    text-align: center;
+
+    .roadmapTopic {
+      padding: 3rem;
+    }
+  }
+
+  /* Session x - Knowledge resources */
+  /* .knowledge-container {
+        padding-top: 80px;
+
+        .knowledge-header {
+            display: flex;
+            width: 100%;
+
+            .knowledgeLink-container {
+                padding: 2rem 6rem 2rem 0rem;
+
+                .knowledgeLink {
+                    display: flex;
+                    color: var(--orange-light);
+                }
+
+                .knowledgeLink:hover {
+                    color: var(--orange-bold) !important;
+                }
+            }
+        }
+    }
+
+    .knowledgeImg-container {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 80px;
+
+        a.imgLink-article {
+            padding: 2rem;
+
+            &:hover {
+                background: var(--gray-session);
+                border-radius: 15px;
+            }
+
+            .knowledgeArticle {
+
+                h6,
+                h6:hover,
+                h6:active {
+                    color: var(--gray);
+                }
+            }
+
+            .text-truncate {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+
+        .knowledgeLink-btn {
+            border: 2px solid var(--orange-light);
+            border-radius: 10px;
+            width: 80%;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .knowledgeLink-btn>span>a {
+            color: var(--orange-light);
+        }
+
+        .knowledgeLink-btn:active,
+        .knowledgeLink-btn:hover {
+            background-color: var(--orange-light);
+        }
+
+        .knowledgeLink-btn:active>span>a,
+        .knowledgeLink-btn:hover>span>a {
+            color: var(--white) !important;
+        }
+    } */
+
+  /* Session x - Technique report */
+  /* .techniqueReport_container {
+        background: var(--gray-session);
+        text-align: center;
+        padding: 50px 0px;
+
+        h2 {
+            padding-bottom: 40px;
+        }
+
+        .report_link {
+            padding: 5px;
+        }
+    } */
+
+  /* a.link-technique:hover {
+        color: var(--primary) !important;
+    } */
+
+  /* Section 7 - Our group & Partner (คณะทำงาน) */
+  /* .logo-container {
+        padding-top: 80px;
+    } */
+
+  .slide-show {
+    overflow: hidden;
+    background-color: var(--white);
+
+    .slider {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      animation: slide 30s linear infinite;
+
+      img {
+        width: 100% !important;
+      }
+    }
+  }
+
+  @keyframes slide {
+    0% {
+      transform: translateX(0%);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Authority-card */
+
+  /* .head-topic {
+        padding: 30px 0px;
+        text-align: center;
+        padding: 40px 0px 15px;
+    } */
+
+  .authority-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .authorityTopic {
+      padding: 3rem;
+    }
+  }
+
+  .authority-card-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 0rem 1rem;
+
+    .authority-card {
+      border: 2px solid var(--nav-border);
+      border-radius: 15px;
+      color: var(--primary);
+      justify-items: center;
+      background: var(--white-card);
+      padding: 1rem;
+
+      .authority-head {
+        width: 100%;
+        display: flex;
+        padding: 1rem;
+        gap: 2rem;
+
+        .authority-list {
+          width: 50px;
+          padding: 1rem;
+          font-size: 50px;
+          color: var(--primary);
+          background: var(--gray-section);
+          display: flex;
+          border-radius: 100px;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+      .authority-content {
+        .authority-topic {
+          text-align: center;
+        }
+
+        .authority-textContainer {
+          padding: 0.5rem 2rem;
+          align-content: center;
+          background: var(--white-card);
+          border-radius: 15px;
+          /* 
+                    .authority-text {
+                        font-size: 25px;
+                    } */
+        }
+      }
+    }
+  }
+
+  .contact-container {
+    display: flex;
+    padding: 2rem;
+    justify-content: center;
+
+    .contact-box {
+      padding: 2rem;
+      border: 1px solid var(--primary);
+      border-radius: 10px;
+      text-align: center;
+      background: var(--white-card);
+
+      .link {
+        color: var(--primary) !important;
+
+        &:hover {
+          color: var(--secondary) !important;
+        }
+      }
+    }
+  }
+
+  /* Responsive */
+
+  @media screen and (max-width: 2560px) {
+    .vc-navbar ul {
+      display: flex;
+      text-align: center;
+    }
+
+    .menu-icon {
+      display: none;
+    }
+
+    .home-textTopic {
+      color: var(--secondary);
+      text-align: center;
+    }
+
+    /* Section 3 - Framework */
+    .QR-img {
+      width: 30%;
+
+      .QRBorder {
+        border: 1px solid var(--secondary);
+      }
+    }
+
+    /* .intro-container {
+            .intro-img {
+                display: flex;
+                justify-content: end;
+            }
+        } */
+
+    /* .knowledge-header {
+            justify-content: space-between;
+
+            .knowledge-topic {
+                padding: 0rem 0rem 2rem 5rem;
+            }
+        }
+
+        .knowledgeLink-container {
+            display: flex;
+        }
+
+        .knowledgeLink-btn {
+            display: none;
+        } */
+
+    /* .text-truncate {
+            max-width: 40rem;
+        } */
+
+    /* .report_link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5rem;
+
+            .report_text {
+                font-size: 45px;
+            }
+        } */
+
+    /* section 5 - usecase */
+
+    .useCase-content {
+      gap: 5rem;
+      padding: 5rem;
+
+      .useCase-left {
+        height: 245px;
+      }
+
+      .useCase-right {
+        max-width: 65%;
+
+        .useCase-card-img {
+          img {
+            width: 100px !important;
+          }
+        }
+
+        .useCase-btn-container {
+          padding: 3rem 0 0;
+        }
+      }
+    }
+
+    /* Section 7 - Our group & Partner (คณะทำงาน) */
+    .slide-show {
+      .slider {
+        gap: 2rem;
+      }
+    }
+
+    /* Authority Responsive*/
+    .authority-card-container {
+      .authority-card {
+        .authority-head {
+          flex-direction: column;
+          align-items: center;
+
+          .img-content {
+            display: flex;
+            justify-self: center;
+          }
+        }
+
+        .authority-content {
+          .authority-topic {
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+  /* Surface pro 7 */
+  @media screen and (max-width: 991px) {
+    /* Section 1 - Introduction (home) */
+    .intro-container {
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 0px auto;
+      width: 100%;
+      gap: 5rem;
+      padding-bottom: 3rem;
+
+      /* .intro-img {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            } */
+    }
+
+    .intro-container > * {
+      width: 100%;
+    }
+
+    /* Section 2 - User Journey  */
+
+    .userJourneyImg-container {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Section 4 - objective */
+    .objective-container {
+      flex-wrap: wrap;
+      gap: 30px;
+      padding: 50px 30px;
+
+      br {
+        display: none;
+      }
+    }
+
+    .objective-container > * {
+      width: 90%;
+    }
+
+    /* section 5 - usecase */
+    .useCase-container {
+      .useCase-content {
+        flex-direction: column;
+
+        .useCase-left {
+          height: 35px;
+        }
+
+        .useCase-right {
+          max-width: 100%;
+
+          .useCase-card {
+            flex-direction: column;
+
+            .useCase-card-topic {
+              display: flex;
+              flex-direction: column;
+            }
+          }
+        }
+      }
+    }
+
+    /* .knowledge-header {
+            justify-content: center;
+
+            .knowledge-topic {
+                padding: 0rem 0rem 2rem 0rem;
+            }
+        }
+
+        .knowledgeLink-container {
+            display: none;
+        }
+
+        .knowledgeLink-btn {
+            display: inline;
+        }
+
+        .text-truncate {
+            max-width: 70rem;
+        }
+
+        .knowledgeImg-container {
+            flex-wrap: wrap;
+            justify-content: center;
+            justify-self: center;
+            width: 80%;
+            gap: 3rem;
+        } */
+
+    /* .techniqueReport_container {
+            padding: 20px 0px;
+
+            h2 {
+                padding: 20px;
+            }
+
+            .report_link {
+                display: block;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .report_text {
+                padding-bottom: 2rem;
+            }
+        } */
+
+    /* Authority Responsive*/
+    .authority-card-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: 1rem;
+      width: 90%;
+
+      .authority-card {
+        display: flex;
+        flex-direction: column;
+
+        .authority-head {
+          flex-direction: column-reverse;
+          gap: 1rem;
+
+          .img-content {
+            width: 70% !important;
+          }
+
+          .authority-list {
+            display: inline;
+            width: auto;
+            height: fit-content;
+            padding: 1rem;
+            font-size: 50px;
+            color: var(--primary);
+            border-radius: 100px;
+            width: 50px;
+            text-align: center;
+          }
+        }
+
+        .authority-content {
+          .authority-topic {
+            padding: 1rem 1.5rem;
+            text-align: left;
+          }
+
+          .authority-textContainer {
+            padding: 0rem;
+            align-content: center;
+            background: var(--white-card);
+
+            .authority-text {
+              padding: 15px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Ipad mini */
+  @media screen and (max-width: 769px) {
+    h1 {
+      font-size: 50px;
+      line-height: normal;
+    }
+
+    .home-textTopic {
+      font-size: 50px;
+      padding: 0 0 2rem 0;
+    }
+
+    /* .text-truncate {
+            max-width: 38rem;
+        } */
+
+    /* .techniqueReport_container {
+
+            h2 {
+                font-size: 40px;
+                padding: 10px 0px 0px 0px;
+            }
+
+            h5 {
+                width: 50%;
+            }
+
+            .report_link {
+                transform: scale(0.7);
+                gap: 0px;
+            }
+
+            .report_text {
+                width: 100%;
+                padding-bottom: 0rem;
+                padding: 0px 0.5px;
+            }
+        } */
+
+    /* Section 2 - User Journey  */
+    .userJourneyImg-container {
+      .userJourney-img {
+        width: 90%;
+      }
+    }
+
+    /* Section 3 - Framework */
+    .framework-container {
+      .framework-textTopic {
+        font-size: 45px;
+        padding: 0rem 0.5rem;
+      }
+    }
+
+    /* section 5 - usecase */
+    .useCase-container {
+      .useCase-content {
+        .useCase-left > .home-textTopic {
+          text-align: center;
+        }
+
+        .useCase-right {
+          max-width: 100%;
+
+          .useCase-card {
+            display: flex;
+            gap: 2rem;
+            flex-direction: column;
+            align-items: center;
+            grid-template-areas: unset;
+          }
+        }
+      }
+    }
+
+    /* Section 7 - Our group & Partner (คณะทำงาน) */
+    .logo-container {
+      h1 {
+        font-size: 45px;
+      }
+    }
+
+    /* Authority Responsive*/
+    .authority-content {
+      display: inline !important;
+    }
+  }
+
+  /* Iphone SE */
+  @media screen and (max-width: 569px) {
+    .intro-container {
+      display: inline-block;
+      align-items: center;
+      justify-items: center;
+      margin: 0px auto;
+      width: 100%;
+      padding: 50px 10px;
+
+      .VC-VP-intro {
+        padding: 3rem 0 0;
+      }
+
+      /* .intro-img {
+                width: 80% !important;
+                height: 80% !important;
+                padding-top: 2rem;
+            } */
+    }
+
+    /* .report_text {
+            padding: 0px 0px 30px 0px;
+        } */
+
+    /* .text-truncate {
+            max-width: 32rem;
+        } */
+
+    /* section 4 - framework */
+    .framework-container {
+      .framework-textTopic {
+        font-size: 35px;
+        padding: 0rem 0.5rem;
+      }
+
+      .QR-img {
+        width: 120px;
+      }
+    }
+
+    /* section 5 - usecase */
+    .useCase-content {
+      padding: 2rem;
+      gap: 4rem;
+
+      /* .useCase-topic {
+                font-size: 40px;
+            } */
+
+      .useCase-card-topic {
+        font-size: 30px;
+      }
+    }
+
+    /* Section 7 - Our group & Partner (คณะทำงาน) */
+    .slide-show {
+      .slider {
+        gap: 0rem;
+
+        img {
+          transform: scale(0.8);
+          width: 90% !important;
+        }
+      }
+    }
+
+    /* Authority Responsive*/
+    .authority-card-container {
+      gap: 1.5rem;
+      padding: 0rem;
+
+      .authority-text {
+        padding: 10px !important;
+      }
+    }
+  }
+
+  /* galaxy fold 5 */
+  @media screen and (max-width: 376px) {
+    .framework-container {
+      .framework-textTopic {
+        font-size: 38px;
+        padding: 0rem 0.5rem;
+      }
+
+      .framework-content {
+        padding: 0rem 2rem;
+      }
+    }
+
+    .logo-container {
+      h1 {
+        font-size: 38px;
+      }
+    }
+
+    /* section 5 - usecase */
+
+    .useCase-container {
+      .useCase-card-img {
+        img {
+          width: 80px !important;
+        }
+      }
+    }
+
+    .useCase-btn-container {
+      padding: 2rem 0;
+    }
+
+    /* Authority Responsive*/
+    .authority-card-container {
+      .authority-head {
+        gap: 0rem !important;
+
+        .authority-list {
+          font-weight: 600;
+          font-size: 30px !important;
+          padding: 0.5rem;
+          width: 30%;
+          border-radius: 30px;
+          align-self: center;
+          transform: scale(0.8);
+        }
+
+        .authority-content {
+          .authority-topic {
+            font-size: 25px;
+            padding: 0rem 1rem;
+          }
+        }
+      }
+    }
+  }
+</style>
+<nav class="vc-navbar" id="menu">
+<div id="menu-icon" onclick="handleMenuIconClick()">
+<div class="bar">&nbsp;</div>
+
+<div class="bar">&nbsp;</div>
+
+<div class="bar">&nbsp;</div>
+</div>
+
+<ul class="menu-wrapper">
+	<li><a class="nav_vc" href="/Our-Service/DigitalID/index.aspx">หน้าแรก</a></li>
+	<li><a class="nav_vc vc-active" href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Home.aspx">VC</a></li>
+	<li><a class="nav_vc" href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Report.aspx">เอกสารที่เกี่ยวข้อง</a></li>
+	<li><a class="nav_vc" href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/PilotUseCase.aspx">กรณีศึกษานำร่อง</a></li>
+	<li><a class="nav_vc" href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Conformance-Test-Tool.aspx">การทดสอบมาตรฐาน</a></li>
+	<li><a class="nav_vc" href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/VC-team.aspx">คณะทำงาน</a></li>
+	<!-- <li><a class="nav_vc" href="/th/Our-Service/VC-and-Digital-Document-Wallet/Timeline.aspx">ปฏิทินโครงการ</a>
+                    </li> -->
+	<li><a class="nav_vc" href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/knowledge.aspx">แหล่งความรู้เพิ่มเติม</a></li>
+</ul>
+</nav>
+&nbsp; <!-- Section 1: Introduction -->
+
+<div class="intro-container">
+<h2 class="home-textTopic">VC and Digital Document Wallet</h2>
+
+<div class="home-video"><object codetype="CMSInlineControl" height="669" style="display: none" type="media" width="1080"><param name="ext" value=".mp4" /><param name="url" value="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/fix_Luf-Made-with-Clipchamp.mp4.aspx?lang=th-TH" /></object></div>
+<!-- VC & VP -->
+
+<div class="VC-VP-container"><!-- <h1 class="home-textTopic">Verifiable Credential (VC)<br />
+            and Verifiable Presentation (VP)</h1>
+        <img alt="VC-VP.png"
+            src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/VC-VP.png.aspx"
+            style=" padding: 0px 0px 40px;" /> -->
+<div class="VC-VP-content">
+<div class="VC-VP-intro">ในยุคที่โลกกำลังก้าวสู่การเปลี่ยนผ่านสู่ดิจิทัลอย่างเต็มรูปแบบ การพิสูจน์และยืนยันตัวตนทางดิจิทัล (Digital ID) ก็กำลังพัฒนาไปสู่รูปแบบใหม่ที่ปลอดภัย ยืดหยุ่น และให้ความเป็นส่วนตัวมากขึ้น หนึ่งในเทคโนโลยีสำคัญที่เข้ามามีบทบาทคือ Verifiable Credentials (VC) และ Verifiable Presentation (VP) ซึ่งช่วยให้ผู้ใช้งานสามารถควบคุมข้อมูลของตนเองได้อย่างแท้จริง และเลือกเปิดเผยเฉพาะข้อมูลที่จำเป็นในแต่ละสถานการณ์ได้อย่างปลอดภัยและน่าเชื่อถือ</div>
+
+<div>
+<h3>VC และ VP มีบทบาทอย่างไรใน Digital ID?</h3>
+
+<div><strong>VC ย่อมาจาก Verifiable Credential</strong> หรือภาษาไทยเรียกว่าเอกสารรับรองดิจิทัล ทำหน้าที่เป็นข้อมูลรับรองดิจิทัล เช่น บัตรประชาชนดิจิทัล ใบอนุญาตทำงาน หรือบัตรนักศึกษา ซึ่งออกโดยหน่วยงานที่เชื่อถือได้<br />
+<strong>VP ย่อมาจาก Verifiable Presentation</strong> หรือภาษาไทยเรียกว่าเอกสารสำแดงดิจิทัล ช่วยให้ผู้ถือข้อมูลสามารถแสดงข้อมูลบางส่วนหรือข้อมูลทั้งหมดให้แก่หน่วยงานต่าง ๆ โดยไม่ต้องเปิดเผยข้อมูลทั้งหมด เช่น สามารถส่งเอกสารเพื่อยืนยันอายุจากกระเป๋าเอกสารของตนเองโดยไม่ต้องแสดงเลขประจำตัวประชาชน</div>
+</div>
+
+<div>
+<h3>องค์ประกอบหลักของ VC และ VP</h3>
+
+<div>
+<ul>
+	<li><strong>ผู้ออกเอกสาร (Issuer)</strong> หมายถึง หน่วยงานที่ออกข้อมูลรับรองหรือเอกสารรับรองดิจิทัล เช่น รัฐบาล มหาวิทยาลัย หรือธนาคาร</li>
+	<li><strong>ผู้ถือเอกสาร (Holder)</strong> หมายถึง บุคคลที่ได้รับข้อมูลรับรองและสามารถควบคุมการแชร์ข้อมูล</li>
+	<li><strong>ผู้ให้บริการกระเป๋าเอกสารดิจิทัล (Digital Document Wallet Provider)</strong> หมายถึง บุคคลหรือหน่วยงานที่พัฒนา หรือให้บริการระบบกระเป๋าเอกสารดิจิทัล ซึ่งใช้สำหรับจัดเก็บและจัดการเอกสารในรูปแบบดิจิทัล เพื่ออำนวยความสะดวกแก่ผู้ออกเอกสาร ผู้ถือเอกสาร หรือผู้ตรวจสอบเอกสาร</li>
+	<li><strong>ผู้ตรวจสอบเอกสาร (Verifier)</strong> หมายถึง หน่วยงานที่ต้องการตรวจสอบข้อมูลจากเอกสารสำแดงดิจิทัล เช่น บริษัท หรือตำรวจจราจร</li>
+</ul>
+</div>
+</div>
+
+<div>
+<h3>ประโยชน์ของ VC และ VP ใน Digital ID</h3>
+<strong>1. ความปลอดภัยสูง</strong> : Digital ID ที่ใช้ VC และ VP มีการเข้ารหัสข้อมูลและลายเซ็นดิจิทัล ทำให้มั่นใจว่าข้อมูลไม่ถูกปลอมแปลงและสามารถตรวจสอบที่มาที่ไปได้<br />
+<strong>2. ความเป็นส่วนตัวของข้อมูล</strong> : ผู้ใช้สามารถเลือกแชร์เฉพาะข้อมูลที่จำเป็นแทนการเปิดเผยข้อมูลทั้งหมด เช่น ยืนยันว่าอายุเกิน 18 ปี โดยไม่ต้องแสดงวันเกิดเต็ม<br />
+<strong>3. ความสะดวกและรวดเร็ว</strong> : VC และ VP ช่วยลดความยุ่งยากในการกรอกเอกสาร หรือส่งสำเนาเอกสารผ่านอีเมล เช่น การสมัครงานหรือเปิดบัญชีธนาคารออนไลน์<br />
+<strong>4.ความน่าเชื่อถือและมาตรฐานสากล</strong> : Digital ID ที่ใช้ VC และ VP รองรับมาตรฐานระดับโลก เช่น W3C ทำให้สามารถใช้งานได้ข้ามแพลตฟอร์มและประเทศ<br />
+<strong>5. สามารถตรวจสอบวันหมดอายุของ e-Signature หรือ e-Timestamp ได้ </strong> : VC และ VP รองรับการแนบลายเซ็นดิจิทัล (e-Signature) และเวลาอิเล็กทรอนิกส์ (e-Timestamp) ซึ่งช่วยให้ผู้รับสามารถตรวจสอบได้ว่าเอกสารยังมีผลใช้บังคับหรือหมดอายุแล้ว เพิ่มความมั่นใจในการใช้งานเอกสารดิจิทัลอย่างถูกต้อง</div>
+</div>
+</div>
+</div>
+<!-- Section 2: User Journey -->
+
+<div class="userJourney-container">
+<h2 class="home-textTopic">User Journey</h2>
+<!-- userJourney img -->
+
+<div class="userJourneyImg-container">
+<div class="userJourney-img"><img alt="fix_S__4735031-1-(3).png" src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/VC-and-Digital-Document-Wallet/ChatGPT-Image-Jun-8,-2026,-12_30_50-PM_0-(1).png.aspx?lang=th-TH" />
+<div class="userJourney-text">
+<div class="userJourney-desc"><!-- คำอธิบาย issuer --><strong>ผู้ออกเอกสารรับรอง (Issuer)</strong>&nbsp;คือ หน่วยงานหรือองค์กรที่มีหน้าที่ออก Credential (เอกสารหรือข้อมูลรับรอง) ให้แก่&nbsp;Holder โดยเอกสารนี้มักมีการเซ็นดิจิทัล (Digital Signature) เพื่อยืนยันว่าข้อมูลถูกต้องและน่าเชื่อถือ<br />
+<strong>บทบาทของ Issuer</strong>: สร้างและออกเอกสารรับรอง (Credential) เช่น Transcript, บัตรประจำตัว, ใบรับรอง หรือเอกสารอื่น ๆ ที่สามารถใช้เป็นหลักฐานยืนยันได้ เซ็นเอกสารด้วยลายเซ็นดิจิทัลเพื่อให้สามารถตรวจสอบความถูกต้องได้โดย Verifier</div>
+
+<div class="collapse" id="issuer-collapse">
+<h6 class="processTopic"><strong>กระบวนการออกข้อมูล (Issuer) ประกอบด้วย 5 ขั้นตอน ดังนี้</strong></h6>
+<strong>1. Login to University Website</strong> : เข้าสู่ระบบเว็บไซต์ของมหาวิทยาลัยด้วยการสแกน QR Code เพื่อขอข้อมูล Transcript การสแกนนี้อาจใช้ Wallet ที่รองรับ DID<br />
+<strong>2. Send Transcript (VC)</strong> : มหาวิทยาลัยจะออก Verifiable Credential (VC) ให้ โดยส่งข้อมูล (Transcript) เข้าสู่ Wallet ของเธอ<br />
+<strong>3. Verify and Accept the VC</strong> : ตรวจสอบข้อมูลใน VC และกดยอมรับ (Accept) เพื่อเก็บข้อมูลนี้ไว้ใน Wallet ของเธอ<br />
+<strong>4. Issuer Call Resolver to Verify DID Document</strong> : มหาวิทยาลัย (Issuer) จะใช้ DID Resolver เพื่อตรวจสอบว่า Wallet ของ มี DID Document ที่ถูกต้อง การตรวจสอบนี้ช่วยให้แน่ใจว่าข้อมูลจะถูกส่งไปยัง อย่างปลอดภัย<br />
+<strong>5. University Issue Transcript (VC)</strong> : เมื่อทุกอย่างผ่านการตรวจสอบ มหาวิทยาลัยจะออก Transcript (VC) ให้ ซึ่งสามารถนำไปใช้กับ Verifier (เช่น บริษัท) ต่อไป</div>
+<a aria-controls="issuer-collapse" aria-expanded="false" class="readMore" data-toggle="collapse" href="#issuer-collapse" onclick="toggleText(this)">คลิกเพื่ออ่านขั้นตอนการใช้งาน... </a></div>
+</div>
+
+<div class="userJourney-img"><img alt="fix_S__4735033-(1).jpg" src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/VC-and-Digital-Document-Wallet/ChatGPT-Image-July-1,-2026-12_32_02.png.aspx?lang=th-TH" />
+<div class="userJourney-text">
+<div class="userJourney-desc"><!-- คำอธิบาย verifier --><strong>ผู้ตรวจสอบเอกสาร (Verifier) </strong>คือ บุคคลหรือองค์กรที่ต้องการตรวจสอบความถูกต้องของ Credential ที่ Holder นำมาแสดง เพื่อยืนยันตัวตนหรือคุณสมบัติของ Holder<br />
+<strong>บทบาทของ Verifier</strong>: รับข้อมูล Credential (ในรูปแบบ Verifiable Presentation หรือ VP) จาก Holder ตรวจสอบความถูกต้องของ Credential ผ่าน DID Resolver หรือระบบที่รองรับ ยืนยันว่าเอกสารนี้ออกโดย Issuer ที่เชื่อถือได้ และข้อมูลใน Credential ไม่ถูกแก้ไข</div>
+
+<div class="collapse" id="verifier-collapse">
+<h6 class="processTopic"><strong>กระบวนการตรวจสอบข้อมูล (Verifier) ประกอบด้วย 5 ขั้นตอน ดังนี้</strong></h6>
+<strong>1. Apply for Work</strong> : ผู้ถือ Credential สมัครงานกับบริษัทที่ต้องการตรวจสอบ Transcript หรือข้อมูลของเธอ บริษัทจะมี QR Code ให้ User สแกนเพื่อเริ่มต้นกระบวนการส่งข้อมูล<br />
+<strong>2. Scan QR Code to Send the Transcript</strong> : User ใช้ Wallet บนมือถือของเธอสแกน QR Code ที่บริษัทให้ หลังจากสแกนแล้ว ระบบจะแสดงข้อมูล Verifiable Credential (VC) ของ User<br />
+<strong>3. User Select the Transcript Credential</strong> : User เลือกข้อมูล Transcript Credential จาก Wallet และเลือกสิ่งที่ต้องการแชร์ (เช่น เกรด, ชื่อมหาวิทยาลัย ฯลฯ) ระบบจะสร้าง Verifiable Presentation (VP) ที่มีข้อมูลและหลักฐานการยืนยัน<br />
+<strong>4. Verifier Call Resolver to Verify DID Document</strong> : บริษัท (Verifier) จะส่ง VP ไปตรวจสอบความถูกต้องผ่าน DID Resolver ทำหน้าที่ตรวจสอบลายเซ็นดิจิทัล (Digital Signature) และข้อมูล VC เพื่อยืนยันว่าข้อมูลนี้ออกโดย Issuer ที่เชื่อถือได้ (มหาวิทยาลัย) ข้อมูลไม่มีการแก้ไขหรือดัดแปลง<br />
+<strong>5. Document Verified Successfully</strong> : หลังจากตรวจสอบเรียบร้อย Verifier จะแจ้งว่าเอกสารถูกต้อง User จึงผ่านกระบวนการตรวจสอบ</div>
+<a aria-controls="verifier-collapse" aria-expanded="false" class="readMore" data-toggle="collapse" href="#verifier-collapse" onclick="toggleText(this)">คลิกเพื่ออ่านขั้นตอนการใช้งาน... </a></div>
+</div>
+</div>
+</div>
+<!--Section 4: VC Framework -->
+
+<div class="framework-container">
+<h3 class="framework-textTopic">THAI VC ARCHITECTURE AND REFERENCE FRAMEWORK</h3>
+
+<div class="framework-content"><br />
+ปัจจุบัน กระเป๋าเอกสารดิจิทัล (Digital Document Wallet) มีบทบาทสำคัญในการทำธุรกรรมอิเล็กทรอนิกส์ โดยมีคุณสมบัติต่าง ๆ ดังต่อไปนี้<br />
+<strong>1. จัดเก็บและจัดการข้อมูลสำคัญอย่างมั่นคงปลอดภัย</strong> เช่น กุญแจเข้ารหัส (Cryptographic Keys), เอกสารรับรองดิจิทัล (Verifiable Credentials: VC), ข้อมูลอัตลักษณ์ (Identity Attributes) และข้อมูลส่วนบุคคล<br />
+<strong>2. ใช้ในการรับส่งเอกสารรับรองดิจิทัล (Verifiable Credentials: VC) และ เอกสารสำแดงดิจิทัล (Verifiable Presentation: VP) ที่สามารถตรวจสอบความถูกต้องได้</strong> เพื่อเข้าถึงบริการทั้งจากภาครัฐและภาคเอกชน<br />
+<strong>3. ลงทะเบียนขอใช้บริการบนเว็บไซต์ และรูปแบบออฟไลน์</strong> เช่น การเข้ารับการรักษาในโรงพยาบาล<br />
+<strong>4. ใช้ในการสร้างลายเซ็นดิจิทัล (Digital Signature)</strong> บนเอกสารหรือข้อมูลอิเล็กทรอนิกส์
+
+<div><br />
+เพื่อให้การให้บริการกระเป๋าเอกสารดิจิทัลและเอกสารรับรองดิจิทัลมีความน่าเชื่อถือและเป็นที่ยอมรับ สำนักงานพัฒนาธุรกรรมทางอิเล็กทรอนิกส์ หรือ ETDA จึงได้จัดทำรายงานทางเทคนิค เรื่อง กรอบแนวทางการทำงานร่วมกันของเอกสารรับรองดิจิทัลสำหรับประเทศไทย หรือ THAI VC ARCHITECTURE AND REFERENCE FRAMEWORK รายงานฉบับนี้อธิบายหลักการทำงาน วงจรชีวิต องค์ประกอบ และข้อแนะนำสำหรับเอกสารรับรองดิจิทัล เพื่อให้ผู้ให้บริการและนักพัฒนาสามารถนำไปใช้พัฒนาระบบที่มั่นคงปลอดภัย ปกป้องข้อมูลส่วนบุคคล และทำงานร่วมกันได้อย่างราบรื่น (Interoperability)</div>
+
+<div><br />
+นอกจากนี้ รายงานยังได้รับการสนับสนุนข้อมูลจากการทำงานร่วมกันของคณะทำงานส่งเสริมการพัฒนาระบบเพื่อรองรับการใช้งาน Document Wallet และ Verifiable Credentials และผู้ที่เกี่ยวข้องทั้งหมด 17 หน่วยงาน ทั้งภาครัฐและเอกชนที่ได้ร่วมกันศึกษาและหาแนวทางมาตรฐานที่จะใช้รับส่งข้อมูล ตลอดจนร่วมกันทดสอบการใช้งาน Document Wallet และ Verifiable Credentials เพื่อให้สามารถทำงานร่วมกันได้ และสามารถแลกเปลี่ยนข้อมูลได้อย่างปลอดภัยและน่าเชื่อถือ</div>
+
+<div class="QR-download">
+<div class="QR-text">สแกน QR Code เพื่อดาวน์โหลด รายงานทางเทคนิค&nbsp;<br />
+เรื่องกรอบแนวทางการทำงานร่วมกันของเอกสารรับรองดิจิทัลสำหรับประเทศไทย<!-- [img] QR introduction -->
+<div class="QR-img"><img alt="QR.png" class="QRBorder" src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/QR.png.aspx" /></div>
+
+<div class="home-download-btn"><a href="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/รายงานทางเทคนค-Thai-VC-ARF-v1-1(1).pdf.aspx?lang=th-TH" target="_blank">คลิกเพื่อดาวน์โหลด</a></div>
+</div>
+</div>
+</div>
+</div>
+
+<div>&nbsp;</div>
+<!-- Section 5: Objective & Scope -->
+
+<div class="objective-container">
+<h2 class="home-textTopic objectiveTopic">Objective and Scope<br />
+of Our Project</h2>
+
+<div class="objectiveContent">เพื่อส่งเสริมการพัฒนาระบบการพิสูจน์และการยืนยันตัวตนรูปแบบใหม่<br />
+โดยมีหน้าที่ทดสอบการใช้งาน Document Wallet และเอกสารรับรอง Verifiable Credentials ให้สามารถทำงานร่วมกัน และแลกเปลี่ยนข้อมูลได้อย่างปลอดภัยและน่าเชื่อถือ ให้คำปรึกษา จัดทำข้อเสนอแนะหรือรายงานทางด้านเทคนิค รวมถึงการดำเนินการใดๆที่เกี่ยวข้องกับการทดสอบการใช้งาน หรือ หลักการ Self-Sovereign Identity</div>
+</div>
+<!-- Section 6 : Use case -->
+
+<div class="useCase-container">
+<div class="useCase-content">
+<div class="useCase-left">
+<h2 class="home-textTopic pilotTopic">Pilot Use Case</h2>
+</div>
+
+<div class="useCase-right">
+<div class="useCase-card">
+<h3 class="useCase-card-topic">Digital Transcript Use Case</h3>
+
+<div class="useCase-card-img"><img alt="file_2635266-(1).png" src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/file_2635266-(1).png.aspx" /></div>
+
+<div class="useCase-card-desc">การศึกษานี้เป็นการทดลองออกเอกสารรับรองดิจิทัล (Verifiable Credential: VC) และเอกสารสำแดงดิจิทัล (Verifiable Presentation: VP) โดยใช้กรณีของการออกใบแสดงผลการศึกษา (Transcript) จากสถาบันการศึกษาในประเทศไทย</div>
+</div>
+
+<div class="useCase-btn-container">
+<div class="useCase-btn">
+<div onclick="
+              window.open(
+                '/th/Our-Service/VC-and-Digital-Document-Wallet/PilotUseCase.aspx',
+              )
+            ">ดูข้อมูลเพิ่มเติม</div>
+<svg class="bi bi-chevron-right" fill="currentColor" height="24" viewbox="0 0 16 16" width="24" xmlns="http://www.w3.org/2000/svg"> <path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708" fill-rule="evenodd"></path> </svg></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 7: Timeline -->
+
+<div class="roadmap-container">
+<h2 class="home-textTopic roadmapTopic">OUR ROADMAP</h2>
+<!-- <a href="/th/Our-Service/VC-and-Digital-Document-Wallet/Timeline.aspx"> --><!--[img] timeline --><img alt="fix_roadmap.png" src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/VC-and-Digital-Document-Wallet/ChatGPT-Image-Jun-8,-2026,-12_30_56-PM-(5)_0-(1).png.aspx?lang=th-TH" /> <!-- </a> --></div>
+<!-- Session x: Knowledge Resources --><!-- <div class="knowledge-container">
+    <div class="knowledge-header">
+        <h1 class="knowledge-topic">แหล่งความรู้เพิ่มเติม</h1> 
+        --><!-- link all knowledge resource --><!-- <div class="knowledgeLink-container"><a class="knowledgeLink" href="">
+
+            <h5 style="width: max-content;"><a class="knowledgeLink" href="">ดูเพิ่มเติม&nbsp;</a></h5>
+            <a class="knowledgeLink" href=""> <svg class="bi bi-chevron-right" fill="currentColor" height="30"
+                    viewbox="0 0 16 16" width="30" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"
+                        fill-rule="evenodd"></path>
+                </svg> </a>
+    </div>
+</div> --><!-- [img] knowledge resources --><!-- 
+<div class="knowledgeImg-container">
+    <a class="imgLink-article" href="">
+        <div class="knowledgeArticle">
+            <img alt="mockup-img.png"
+                src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/mockup-img-(6).png.aspx"
+                style="width: 860px; height: 450px;" />
+            <h6 class="d-inline-block text-truncate">description Lorem ipsum dolor sit amet, consectetur adipiscing
+                elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis
+                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commod</h6>
+        </div>
+    </a> --><!-- <a class="imgLink-article" href="">
+        <div class="knowledgeArticle">
+            <img alt="mockup-img.png"
+                src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/mockup-img-(7).png.aspx"
+                style="width: 860px; height: 450px;" />
+            <h6 class="d-inline-block text-truncate">description Lorem ipsum dolor sit amet, consectetur adipiscing
+                elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis
+                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commod</h6>
+        </div>
+    </a>
+
+    <div class="knowledgeLink-btn"><span><a href="">ดูเพิ่มเติม... </a></span></div>
+</div>
+
+</div> --> <!-- Session x: Technique report --> <!-- <div class="techniqueReport_container">
+    <h2 class="vc-secondary-text">เอกสารที่เกี่ยวข้อง</h2>
+
+<div class="report_link">
+    <p><a href="/th/Our-Service/VC-and-Digital-Document-Wallet/Technique.aspx"><img alt="technique-report-(2).png"
+                class="zoom"
+                src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Information/technique-report-(2).png.aspx"
+                style="width: 178px; height: 178px;" /></a></p>
+
+    <h5 class="report_text"><a class="link-technique vc-secondary-text"
+            href="/th/Our-Service/VC-and-Digital-Document-Wallet/Technique.aspx">Technique Report</a></h5>
+</div>
+
+</div> --> <!-- Section 8: Our group & Partner -->
+
+<div class="contact-container">
+<p class="contact-box">สอบถามข้อมูลเพิ่มเติม ติดต่อมาที่&nbsp; <a class="link" href="mailto:doc-wallet@etda.or.th">doc-wallet@etda.or.th</a> &nbsp;หรือ 02-123-1234</p>
+</div>
+<script type="text/javascript">
+  function updateMenu() {
+    const menu = document.getElementById("menu");
+    const menuIcon = document.getElementById("menu-icon");
+
+    if (document.getElementById("responsive-menu-checkbox").checked) {
+      menu.style.borderBottomRightRadius = "0";
+      menu.style.borderBottomLeftRadius = "0";
+      menuIcon.classList.add("menu-icon-close");
+    } else {
+      menu.style.borderRadius = "10px";
+      menuIcon.classList.remove("menu-icon-close");
+    }
+  }
+
+  function handleMenuIconClick() {
+    const menuCheckbox = document.getElementById("responsive-menu-checkbox");
+
+    if (menuCheckbox.checked) {
+      menuCheckbox.checked = false;
+      menuCheckbox.removeAttribute("checked");
+    } else {
+      menuCheckbox.checked = true;
+      menuCheckbox.setAttribute("checked", "checked");
+    }
+
+    updateMenu();
+  }
+
+  function toggleText(element) {
+    const isExpanded = element.getAttribute("aria-expanded") === "true";
+
+    if (isExpanded) {
+      element.innerText = "คลิกเพื่ออ่านขั้นตอนการใช้งาน...";
+    } else {
+      element.innerText = "คลิกเพื่อปิดขั้นตอนการใช้งาน...";
+    }
+  }
+</script>
