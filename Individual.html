@@ -1,0 +1,1192 @@
+<style type="text/css">
+  /* =========================================
+       1. GLOBAL VARIABLES (สีและขนาดตาม CI)
+       ========================================= */
+  :root {
+    --color-primary: #3bb2bd;
+    --color-secondary: #04294c;
+    --color-white: #ffffff;
+    --color-bg-light: #f4fbfc;
+    --text-abstract-highlight: 75px;
+    --text-abstract: 70px;
+    --text-heading-center: 44px;
+    --text-body: 35px;
+    --text-minor-body: 16px;
+  }
+
+  /* =========================================
+       2. KENTICO CMS RESET (กัน Layout พัง)
+       ========================================= */
+  .service-editor2f img {
+    width: 100% !important;
+  }
+  .service-editor2f .container > ul,
+  .content-editor .container > ul {
+    margin: 0px;
+  }
+  video {
+    object-fit: contain;
+  }
+
+  /* =========================================
+       3. BASE TYPOGRAPHY
+       ========================================= */
+  body {
+    font-family: "dbheavent_cond", sans-serif;
+    color: var(--color-secondary);
+  }
+  .text-abstract {
+    font-size: var(--text-abstract);
+    color: var(--color-secondary);
+    font-weight: bold;
+    line-height: 1.05;
+  }
+  .text-abstract-highlight {
+    font-size: var(--text-abstract-highlight);
+    color: var(--color-primary);
+    font-weight: bold;
+    line-height: 1.05;
+  }
+  .text-heading-center {
+    font-size: var(--text-heading-center);
+    font-weight: bold;
+    color: var(--color-primary);
+    text-align: center;
+    margin: 40px 0;
+  }
+  .text-body {
+    font-size: var(--text-body);
+    line-height: 1.6;
+  }
+
+  /* เพิ่มระยะห่างบรรทัดเฉพาะย่อหน้าใน Section 1 (hero-text-col) */
+  .hero-text-col .text-body {
+    line-height: 2;
+  }
+
+  .section-title {
+    color: var(--color-primary);
+    text-align: left;
+    font-weight: 600; /* SemiBold */
+    font-size: 40px;
+    line-height: 1.3;
+    margin-bottom: 20px;
+  }
+
+  /* =========================================
+       4. NAVBAR (เมนูนำทาง)
+       ========================================= */
+  nav.vc-navbar {
+    display: flex;
+    justify-content: center;
+    background-color: #0f2849;
+    height: 5rem;
+    padding: 0 20px; /* ปรับให้มี padding ซ้าย-ขวา ป้องกันเนื้อหาชนขอบ */
+    border-radius: 10px;
+    align-items: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2) !important; /* แก้ var(--gray) เป็น rgba เนื่องจากใน :root ไม่มีตัวแปร --gray ครับ */
+    width: 100%;
+    box-sizing: border-box; /* ป้องกันกล่องทะลุขอบจอ */
+  }
+
+  ul.menu-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+  }
+
+  ul.menu-wrapper li {
+    display: flex;
+    align-items: center; /* จัดให้ข้อความและเส้นคั่นอยู่กึ่งกลางแนวตั้งตรงกัน */
+    justify-content: center;
+  }
+
+  /* 1. แก้ไขเส้นคั่น (Separator) ให้วาดด้วย CSS แทนตัวอักษร */
+  ul.menu-wrapper li::after {
+    content: ""; /* ลบตัวอักษร | ออก */
+    display: block;
+    width: 1px; /* ความหนาของเส้น */
+    height: 28px; /* ความสูงของเส้น (ปรับเพิ่ม/ลดได้ เพื่อให้ครอบคลุมสระบน-ล่างพอดี) */
+    background-color: #ffffff;
+    opacity: 0.5;
+    margin: 0 25px; /* ระยะห่างซ้าย-ขวา (Distribute) ให้ดูโปร่งเหมือนใน Figma */
+    transform: translateY(4px);
+  }
+
+  ul.menu-wrapper li:last-child::after {
+    display: none; /* ซ่อนเส้นคั่นของเมนูตัวสุดท้าย */
+  }
+
+  /* 2. แก้ไขตัวอักษรให้อยู่กึ่งกลาง */
+  ul.menu-wrapper li a {
+    font-size: 24px;
+    color: #ffffff;
+    text-decoration: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    line-height: 1; /* บังคับระยะบรรทัดให้พอดีกับตัวอักษร ช่วยแก้ปัญหาฟอนต์ลอย */
+    padding-top: 10px; /* ดันลงมานิดหน่อยเพื่อชดเชย Baseline ของฟอนต์ DB Heavent */
+    transition: 0.3s ease;
+  }
+
+  /* เมื่อเป็นหน้าที่กำลังเลือก (Active) */
+  ul.menu-wrapper li a.vc-active {
+    color: #3bb2bd !important;
+    font-weight: bold;
+    text-decoration: none !important;
+  }
+
+  /* เมื่อเอาเมาส์ชี้ (Hover) */
+  ul.menu-wrapper li a:hover {
+    color: #3bb2bd !important;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    text-decoration-thickness: 2px;
+  }
+  /* =========================================
+       5. SECTION 1: LAYOUT
+       ========================================= */
+  .hero-content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+  .hero-text-col {
+    flex: 1;
+    padding-right: 20px;
+  }
+  .hero-img-col {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  .hero-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+  }
+  /* ซ่อนปุ่ม Toggle บนหน้าจอ Desktop (จอใหญ่) */
+  #mobile-toggle {
+    display: none;
+  }
+
+  /* =========================================
+       Responsive สำหรับมือถือ (อ้างอิงจากหน้า VC Wallet)
+       ========================================= */
+  @media screen and (max-width: 991px) {
+    /* 1. ปรับกล่อง Navbar หลัก */
+    nav.vc-navbar {
+      justify-content: center;
+      height: 60px; /* ลดความสูงลงบนมือถือให้ดูพอดี */
+      padding: 0 20px;
+      position: relative; /* สำคัญ: เพื่อให้ Dropdown เกาะติดกล่องนี้ */
+      z-index: 999; /* ให้อยู่หน้าสุด ไม่โดนเนื้อหาอื่นบัง */
+    }
+
+    /* 2. แสดงปุ่ม Toggle (ข้อความซ้าย - ไอคอนขวา) */
+    #mobile-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      color: #ffffff;
+      font-size: 24px;
+      cursor: pointer;
+      line-height: 1;
+      padding-top: 4px; /* ดันฟอนต์ DB Heavent ให้ตรงกลาง */
+    }
+
+    /* 3. ซ่อนเมนูแนวนอน และเตรียมกล่อง Dropdown แนวตั้ง */
+    ul.menu-wrapper {
+      display: none; /* ซ่อนไว้ก่อนตอนยังไม่กด */
+      flex-direction: column;
+      position: absolute;
+      top: 100%; /* ให้กล่องห้อยลงมาจากขอบล่างของ Navbar */
+      left: 0;
+      width: 100%;
+      /* ไล่สีพื้นหลังแบบหน้า VC (ปรับสีได้ตามต้องการ) */
+      background: linear-gradient(180deg, #0f2849 0%, #4a6e8c 100%);
+      border-radius: 0 0 10px 10px;
+      padding: 20px 0 !important;
+      box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 4. จัดรูปแบบรายการเมนูใน Dropdown (ให้ชิดซ้าย) */
+    ul.menu-wrapper li {
+      width: 100%;
+      justify-content: flex-start; /* ให้ข้อความชิดซ้ายเหมือนหน้า VC */
+      padding: 10px 30px;
+    }
+
+    /* ซ่อนเส้นคั่น | บนมือถือ */
+    ul.menu-wrapper li::after {
+      display: none;
+    }
+
+    /* 5. Action เมื่อกดปุ่ม (Checkbox ถูกติ๊ก) */
+    /* แสดง Dropdown */
+    input#responsive-menu-checkbox:checked ~ ul.menu-wrapper {
+      display: flex;
+    }
+
+    /* เปลี่ยนพื้นหลัง Navbar ตอนเปิดเมนู (ถ้าต้องการให้เนียนไปกับ Dropdown) */
+    input#responsive-menu-checkbox:checked ~ #mobile-toggle {
+      opacity: 0.8;
+    }
+
+    /* เปลี่ยนไอคอน ☰ เป็น ✕ (กากบาท) เมื่อเปิดเมนู */
+    input#responsive-menu-checkbox:checked ~ #mobile-toggle .menu-icon {
+      font-size: 0; /* ซ่อนไอคอนเดิม */
+    }
+    input#responsive-menu-checkbox:checked ~ #mobile-toggle .menu-icon::before {
+      content: "✕"; /* แสดงไอคอนกากบาท */
+      font-size: 24px;
+    }
+  }
+
+  /* =========================================
+       7. SECTION 2: WHY DIGITAL ID (แบบรูปเดียว)
+       ========================================= */
+  .why-section {
+    padding: 50px 0;
+    text-align: center;
+  }
+
+  /* ปรับแก้สีหัวข้อเฉพาะใน Section 2 ให้เป็นสีเข้ม (ตาม CI หรือสีดำ) */
+  .why-section .text-heading-center {
+    color: var(
+      --color-secondary
+    ); /* ใช้สีน้ำเงินเข้มตาม CI ของเว็บ หรือเปลี่ยนเป็น #000000 หากต้องการดำสนิท */
+  }
+
+  .why-image-wrapper {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .why-image-wrapper img {
+    width: 100%;
+    max-width: 100%; /* ขนาดตาม Mockup */
+    height: auto;
+    border-radius: 10px;
+  }
+
+  /* =========================================
+       8. SECTION 3: รู้หรือไม่? (Card 2 ใบ)
+       ========================================= */
+  .usage-section {
+    padding: 40px 0;
+  }
+
+  .usage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* แบ่ง 2 ฝั่งเท่ากัน */
+    gap: 30px;
+    margin-top: 30px;
+  }
+
+  .usage-card {
+    background-color: #f4fbfc; /* สีฟ้าอ่อนตาม Mockup */
+    border: 1px solid #ebebeb; /* ขอบเทาอ่อนๆ รอบด้าน */
+    border-top: 6px solid var(--color-primary); /* ขอบบนหนา สีฟ้า-เขียว */
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); /* เงาบางๆ ให้การ์ดดูลอยขึ้น */
+  }
+
+  /* 1. บังคับยัดฟอนต์ DB Heavent ลงลึกลงไปใน Card เพื่อป้องกันสระ/พยัญชนะกระโดดคนละฟอนต์ */
+  .usage-card,
+  .usage-card * {
+    font-family: "dbheavent_cond", sans-serif !important;
+  }
+
+  /* บังคับเนื้อหานำทางใน usage-card ยกเว้นตัวหนา และหัวข้อ */
+  .usage-card h1,
+  .usage-card h2,
+  .usage-card h4,
+  .usage-card p,
+  .usage-card span {
+    font-size: 28px !important;
+    line-height: 1.4 !important;
+    color: #04294c !important; /* ค่าของ var(--color-secondary) */
+  }
+
+  /* บังคับเฉพาะตัวหัวข้อที่เป็น h3 ให้ตัวหนา */
+  .usage-card h3,
+  .usage-card h3 * {
+    font-weight: bold !important;
+    margin-bottom: 20px !important;
+    display: block !important;
+    font-size: 28px !important;
+    color: #04294c !important;
+  }
+
+  /* 2. บล็อกควบคุมจุด Bullet (ยกเลิก Bullet เครื่องธรรมดา และสร้างใหม่) */
+  .usage-card ul {
+    list-style-type: none !important; /* ซ่อนจุด Bullet ดำของเบราว์เซอร์ */
+    padding-left: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* บังคับลิสต์รายการและทุกสิ่งอย่างด้านใน li ไม่ว่าจะยัด span ลึกแค่ไหน ให้ขยายเป็น 20px ทั้งสิ้น */
+  .usage-card li,
+  .usage-card li *,
+  .usage-card ul li span,
+  .usage-card ul li strong {
+    font-size: 28px !important;
+    line-height: 1.6 !important;
+  }
+
+  .usage-card li {
+    position: relative;
+    padding-left: 24px; /* เว้นพื้นที่ด้านซ้ายให้จุด Bullet ใหม่ */
+    margin-bottom: 15px;
+    font-weight: 400;
+    color: var(--color-secondary) !important;
+  }
+
+  /* สร้างจุด Bullet กลมสีฟ้าแบรนด์แสนละมุน */
+  .usage-card li::before {
+    content: "•" !important; /* ใช้สัญลักษณ์จุดกลม */
+    position: absolute;
+    left: 0;
+    top: -2px; /* ดันจุดเล็กน้อยให้อยู่ระนาบเดียวกับสระตัวอักษรแรก */
+    color: var(--color-primary) !important; /* ดึงสีฟ้า #3BB2BD มาใช้ */
+    font-weight: bold !important;
+    font-size: 28px !important; /* ความใหญ่จุดกลมงามพอดีตา */
+    line-height: 1 !important;
+  }
+
+  /* 3. บังคับตัวหนาเฉพาะคำหลัก (SemiBold 20px) โดยสระไม่กระเด็นกระดอน */
+  .usage-card li strong {
+    font-weight: 600 !important; /* ตั้งสิทธิ์ SemiBold */
+    color: #04294c !important;
+  }
+
+  /* Responsive ปรับให้เรียงบน-ล่างบนมือถือ */
+  @media screen and (max-width: 991px) {
+    .usage-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* =========================================
+       9. SECTION 4: WORKFLOW (2 รูปภาพ)
+       ========================================= */
+  .step-section {
+    padding: 40px 0;
+  }
+  .workflow-container {
+    margin-bottom: 50px;
+  }
+
+  /* 1. บังคับสีและขนาดข้อความทุก .text-body ใน Section 4 (รวมใต้ขั้นตอนที่ 1 และ 2) */
+  .step-section .text-body {
+    color: #1d3359 !important;
+    font-size: 28px !important;
+  }
+
+  /* 2. แก้ไขขนาดและสีของ "ขั้นตอนที่ 1 และ 2" */
+  .step-title {
+    font-size: 28px !important;
+    color: #1d3359 !important;
+    font-weight: 600 !important; /* SemiBold */
+    margin-bottom: 24px !important;
+  }
+
+  /* 3. ลบกล่องสีเทาพื้นหลังออก ให้เนียนไปกับพื้นหลังเว็บ */
+  .definition-list {
+    background: transparent !important;
+    padding: 0 !important;
+    margin-bottom: 30px;
+  }
+
+  /* 4. คุมหัวข้อ "คำศัพท์น่ารู้..." */
+  .vocab-title {
+    color: #1d3359 !important;
+    font-size: 24px !important;
+    font-weight: normal !important;
+    margin-bottom: 20px !important;
+  }
+
+  /* 5. คุมเนื้อหาคำแปล ให้เป็นสีดำ #000000 */
+  .vocab-list li,
+  .vocab-list li span {
+    color: #000000 !important;
+    font-size: 28px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* 6. คุมชื่อคำศัพท์ (IdP, RP) ให้เป็นสีดำและตัวหนา */
+  .vocab-list li strong {
+    color: #000000 !important;
+    font-size: 28px !important;
+  }
+
+  /* --- ส่วนของรูปภาพและ Grid ด้านล่าง (คงไว้เหมือนเดิม) --- */
+  .workflow-image {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    display: block;
+    margin: 0 auto 20px auto;
+    border-radius: 10px;
+  }
+
+  .step-labels-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0 auto;
+    max-width: 900px;
+    padding: 0;
+    text-align: center;
+  }
+
+  .step-label-item {
+    font-size: 20px !important;
+    font-weight: normal !important;
+    color: var(--color-secondary);
+    line-height: 1.4;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0 10px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .step-labels-grid {
+      grid-template-columns: 1fr;
+      padding: 0;
+      gap: 10px;
+    }
+    .step-label-item {
+      padding: 10px;
+    }
+  }
+
+  /* =========================================
+       10. SECTION 5: IAL & AAL (ระดับความน่าเชื่อถือ)
+       ========================================= */
+  .assurance-section {
+    padding: 40px 0;
+  }
+
+  .assurance-card {
+    border: 1px solid #ebebeb;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    background-color: var(--color-white);
+  }
+
+  .assurance-card-header {
+    background-color: #f4fbfc; /* สีฟ้าอ่อนตาม Mockup */
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--color-secondary);
+    border-bottom: 1px solid #ebebeb;
+  }
+
+  .assurance-card-body {
+    padding: 30px;
+  }
+
+  .assurance-intro {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .assurance-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 25px;
+    gap: 20px;
+  }
+
+  .assurance-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .assurance-badge {
+    flex-shrink: 0;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 6px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 28px;
+    min-width: 120px;
+    text-align: center;
+  }
+
+  .assurance-badge.dark {
+    background-color: var(--color-secondary);
+  }
+
+  .assurance-text {
+    flex-grow: 1;
+    font-size: 28px;
+    color: var(--color-secondary);
+    line-height: 1.5;
+  }
+
+  .assurance-sublist {
+    margin-top: 10px;
+    padding-left: 20px;
+    list-style-type: disc;
+  }
+
+  .assurance-sublist li {
+    margin-bottom: 5px;
+  }
+
+  .text-highlight-primary {
+    color: var(--color-primary);
+    font-weight: bold;
+  }
+
+  @media screen and (max-width: 768px) {
+    .assurance-row {
+      flex-direction: column;
+      gap: 10px;
+    }
+    .assurance-badge {
+      align-self: flex-start;
+    }
+  }
+
+  /* =========================================
+       11. SECTION 6: CALL TO ACTION (3 การ์ดแอป)
+       ========================================= */
+  .cta-section {
+    padding: 50px 0;
+    text-align: center;
+  }
+
+  .cta-title-box {
+    border: none;
+    border-radius: 8px;
+    display: inline-block;
+    padding: 15px 40px;
+    margin-bottom: 25px;
+  }
+
+  .cta-title {
+    color: var(--color-primary);
+    font-size: 70px;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .cta-description {
+    font-size: 28px;
+    color: var(--color-secondary);
+    margin-bottom: 40px;
+    line-height: 1.5;
+    font-weight: normal;
+  }
+
+  .app-cards-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .app-card {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-radius: 12px;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* เพิ่มเงาบางๆ ให้สมจริง */
+  }
+
+  .app-card h3 {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+    color: var(--color-white);
+  }
+
+  .app-card .app-provider {
+    font-size: 28px;
+    margin-bottom: 30px; /* เพิ่มระยะห่างให้เหมือนใน Mockup */
+    font-weight: normal;
+  }
+
+  .app-card .app-feature {
+    font-size: 28px;
+    line-height: 1.4;
+    font-weight: normal;
+  }
+
+  @media screen and (max-width: 768px) {
+    .app-cards-wrapper {
+      grid-template-columns: 1fr;
+      padding: 0 20px;
+    }
+  }
+
+  /* =========================================
+       12. SECTION 7: DOWNLOAD REPORT (เอกสารที่เกี่ยวข้อง)
+       ========================================= */
+  .report-section {
+    padding: 40px 0;
+  }
+
+  .report-card {
+    background: var(--color-white);
+    border: 1px solid #ebebeb;
+    border-radius: 20px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .report-text {
+    flex: 1;
+  }
+  .report-text h3 {
+    color: var(--color-secondary);
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+  .report-text p {
+    color: var(--color-secondary);
+    line-height: 1.6;
+  }
+
+  .report-icon {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 55px; /* ขนาดไอคอน */
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .report-icon:hover {
+    transform: scale(1.1);
+  }
+
+  /* เส้นคั่นกลาง */
+  .report-divider {
+    width: 1px;
+    align-self: stretch; /* ยืดเต็มความสูงของ card */
+    background-color: #ebebeb;
+  }
+
+  @media screen and (max-width: 768px) {
+    .report-card {
+      flex-direction: column;
+      text-align: center;
+    }
+    .report-divider {
+      display: none;
+    }
+  }
+</style>
+<nav class="vc-navbar" id="menu">
+  <input id="responsive-menu-checkbox" style="display: none" type="checkbox" />
+  <!-- ปุ่มสำหรับมือถือ -->
+  <label for="responsive-menu-checkbox" id="mobile-toggle">
+    <span class="menu-text">เมนู</span> <span class="menu-icon">☰</span>
+  </label>
+  <ul class="menu-wrapper">
+    <!-- 1. หน้าแรก (อัปเดต URL แล้ว) -->
+    <li>
+      <a class="nav_vc" href="/th/Our-Service/DigitalID/index.aspx">หน้าแรก</a>
+    </li>
+    <!-- 2. สำหรับบุคคลธรรมดา (หน้านี้ใส่ vc-active ไว้) -->
+    <li>
+      <a
+        class="nav_vc vc-active"
+        href="/th/Our-Service/DigitalID/personal/public.aspx"
+        >สำหรับบุคคลธรรมดา</a
+      >
+    </li>
+    <!-- 3. สำหรับกลุ่มเปราะบาง -->
+    <li>
+      <a
+        class="nav_vc"
+        href="/th/Our-Service/DigitalID/personal/vulnerable.aspx"
+        >สำหรับกลุ่มเปราะบาง</a
+      >
+    </li>
+    <!-- 4. สำหรับกลุ่มคนต่างด้าว -->
+    <li>
+      <a class="nav_vc" href="/th/Our-Service/DigitalID/Public/Foreigner.aspx"
+        >สำหรับกลุ่มคนต่างด้าว</a
+      >
+    </li>
+    <!-- 5. ภัยคุกคาม -->
+    <li>
+      <a class="nav_vc" href="/th/Our-Service/DigitalID/Public/threats.aspx"
+        >ภัยคุกคาม</a
+      >
+    </li>
+    <!-- 6. บทความ -->
+    <li>
+      <a class="nav_vc" href="/th/Our-Service/DigitalID/Public/articles.aspx"
+        >บทความ</a
+      >
+    </li>
+  </ul>
+</nav>
+<!-- Title -->
+
+<div class="text-heading-center">การพิสูจน์และยืนยันตัวตนสำหรับบุคคลธรรมดา</div>
+<!-- Section 1 Content -->
+
+<div class="hero-content-wrapper">
+  <div class="hero-text-col">
+    <h1 class="text-abstract">
+      Digital ID:<br />
+      <span class="text-abstract-highlight">กุญแจสำคัญสู่</span><br />
+      บริการดิจิทัล
+    </h1>
+
+    <p class="text-body">
+      เพื่อยกระดับการทำธุรกิจให้ก้าวข้ามข้อจำกัดของเอกสารกระดาษและความเสี่ยงในการถูกปลอมแปลง
+      ดังนั้น Digital ID จึงเข้ามามีบทบาทในฐานะ<br />
+      <strong>&quot;บัตรประชาชนบนโลกดิจิทัล&quot;</strong> ที่ช่วยยืนยันว่า
+      <strong>&quot;คุณคือคุณจริงๆ&quot;</strong>
+      ให้มีความปลอดภัยและเข้าถึงบริการภาครัฐและเอกชนได้ทุกที่ทุกเวลา
+    </p>
+  </div>
+
+  <div class="hero-img-col">
+    <img
+      alt="S1Citizen_intro"
+      class="hero-image"
+      src="/getattachment/Our-Service/Digital-ID/index/Digital-ID-ทเกยวของกบบคคลธรรมดา/public/S1Citizen_intro.png.aspx"
+    />&nbsp;
+  </div>
+</div>
+<div>&nbsp;</div>
+<!-- ================= Section 2 ================= -->
+
+<section class="why-section">
+  <!-- หัวข้อ -->
+  <div class="text-heading-center">ทำไมเราถึงควรใช้ Digital ID?</div>
+  <!-- รูปภาพรวม -->
+
+  <div class="why-image-wrapper">
+    <img
+      alt="ทำไมเราถึงควรใช้ Digital ID"
+      class="why-image"
+      src="/getattachment/Our-Service/Digital-ID/index/Digital-ID-ทเกยวของกบบคคลธรรมดา/public/S1Citizen_why1.png.aspx?lang=th-TH"
+    />
+  </div>
+</section>
+<!-- ================= จบ Section 2 ================= --><!-- ================= Section 3 ================= -->
+
+<section class="usage-section">
+  <!-- หัวข้อส่วนบน -->
+  <h2 class="section-title">
+    รู้หรือไม่? คุณอาจกำลังใช้งาน Digital ID อยู่แล้วในชีวิตประจำวัน
+  </h2>
+
+  <p class="text-body" style="margin-bottom: 30px">
+    Digital ID ไม่ใช่เรื่องไกลตัว หรือเรื่องใหม่ที่ต้องเริ่มเรียนรู้ใหม่ทั้งหมด
+    เพราะในปัจจุบันมีบริการทั้งจากภาครัฐและเอกชนที่เราใช้งานกันอยู่เป็นประจำ
+    ซึ่งเบื้องหลังถูกขับเคลื่อนด้วยระบบ Digital ID :
+  </p>
+  <!-- ส่วนเนื้อหาการ์ด 2 ใบ -->
+
+  <div class="usage-grid">
+    <!-- การ์ด 1: ภาครัฐ -->
+    <div class="usage-card">
+      <h3>ภาครัฐ (เข้าถึงบริการรัฐง่ายๆ แค่ปลายนิ้ว)</h3>
+
+      <ul>
+        <li>
+          <strong>แอปพลิเคชัน ThaID (กรมการปกครอง):</strong>
+          ใช้แสดงตัวตนแทนบัตรประชาชนใบจริงได้ตามกฎหมาย
+        </li>
+        <li>
+          <strong>แอปพลิเคชัน ทางรัฐ (สพร.):</strong> ศูนย์รวมบริการภาครัฐ
+          ตรวจสอบสิทธิและสวัสดิการต่างๆ
+        </li>
+        <li>
+          <strong>แอปพลิเคชัน หมอพร้อม (สธ.):</strong>
+          ดูประวัติสุขภาพและการรับบริการทางการแพทย์
+        </li>
+      </ul>
+    </div>
+    <!-- การ์ด 2: ภาคเอกชน -->
+
+    <div class="usage-card">
+      <h3>ภาคเอกชน (ขับเคลื่อนเศรษฐกิจและไลฟ์สไตล์)</h3>
+
+      <ul>
+        <li>
+          <strong>ภาคการเงินและการธนาคาร:</strong> บริการ NDID
+          ที่ช่วยให้คุณเปิดบัญชีใหม่หรือขอสินเชื่อออนไลน์ได้โดยไม่ต้องไปธนาคาร
+        </li>
+        <li>
+          <strong>ภาคโทรคมนาคม:</strong> บริการ Mobile ID (AIS, True, Dtac)
+          ที่ใช้หมายเลขโทรศัพท์มือถือร่วมกับข้อมูลแสดงตัวตนเพื่อทำธุรกรรม
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+<!-- ================= จบ Section 3 ================= --><!-- ================= Section 4 ================= -->
+
+<section class="step-section">
+  <h2 class="section-title">2 ขั้นตอนง่ายๆ สู่การใช้งาน Digital ID</h2>
+
+  <p class="text-body">
+    เพื่อให้คุณมั่นใจว่าไม่มีใครสามารถมาสวมรอยเป็นคุณได้ ระบบ Digital ID
+    จึงมีกลไกการทำงาน 2 ขั้นตอนหลัก ดังนี้:
+  </p>
+  <!-- คำศัพท์ -->
+
+  <div class="definition-list">
+    <div class="step-title">คำศัพท์น่ารู้ก่อนเริ่มใช้งาน:</div>
+
+    <ul class="vocab-list">
+      <li>
+        Identity Provider หรือ IdP (ผู้ให้บริการพิสูจน์และยืนยันตัวตน):
+        ตัวแทนที่ช่วยยืนยันว่า คุณคือตัวจริงบนโลกดิจิทัล เช่น แอป ThaID,
+        แพลตฟอร์ม NDID
+      </li>
+      <li>
+        Relying Party หรือ RP
+        (ผู้ให้บริการที่อาศัยการยืนยันตัวตน):เว็บไซต์หรือบริการออนไลน์
+        (e-service) ที่คุณต้องการเข้าไปทำธุรกรรมด้วย เช่น เว็บยื่นภาษี,
+        เว็บโรงพยาบาล
+      </li>
+    </ul>
+  </div>
+  <!-- ขั้นตอนที่ 1 -->
+
+  <div class="workflow-container">
+    <div class="step-title">
+      ขั้นตอนที่ 1: การลงทะเบียนครั้งแรก (Identity Proofing - การพิสูจน์ตัวตน)
+    </div>
+
+    <p class="text-body">
+      การทำให้ระบบรู้จักและมั่นใจว่า &quot;คุณคือตัวจริง&quot;
+      ปกติจะทำเพียงครั้งเดียว เช่น การนำบัตรประชาชนไปเสียบที่ตู้ Kiosk
+      หรือสแกนใบหน้าผ่านแอป (IdP) เมื่อผ่านขั้นตอนนี้ คุณจะได้รับ
+      &quot;สิ่งที่ใช้ยืนยันตัวตน&quot; เช่น รหัสผ่าน หรือ แอปพลิเคชัน
+    </p>
+    <img
+      alt="ขั้นตอนที่ 1"
+      class="workflow-image"
+      src="/getattachment/Our-Service/Digital-ID/index/Digital-ID-ทเกยวของกบบคคลธรรมดา/public/S1Citizen_proof1.png.aspx?lang=th-TH"
+    />
+    <!-- ข้อความอธิบายใต้ขั้นตอนที่ 1 ตาม Mockup 
+    <div class="step-labels-grid">
+      <div class="step-label-item">
+        บุคคลมาแสดงตน<br />
+        กับ IdP
+      </div>
+
+      <div class="step-label-item">
+        IdP พิสูจน์ตัวตน<br />
+        ของบุคคล
+      </div>
+
+      <div class="step-label-item">
+        IdP ออกหรือลงทะเบียน<br />
+        สิ่งที่ใช้ยืนยันตัวตน<br />
+        (Authenticator)
+      </div>
+
+      <div class="step-label-item">
+        บุคคลเปลี่ยนสถานะ<br />
+        เป็นผู้ใช้บริการ
+      </div>
+    </div> -->
+  </div>
+  <!-- ขั้นตอนที่ 2 -->
+
+  <div class="workflow-container">
+    <div class="step-title">
+      ขั้นตอนที่ 2: การเข้าใช้งานบริการต่างๆ (Authentication - การยืนยันตัวตน)
+    </div>
+
+    <p class="text-body">
+      เมื่อคุณมี Digital ID แล้ว ในการทำธุรกรรมครั้งต่อๆ
+      ไปกับผู้ให้บริการออนไลน์ (RP) คุณเพียงแค่ &quot;ยืนยันตัวตน&quot; ผ่านแอป
+      (IdP) เช่น การใส่รหัส PIN 6 หลัก หรือสแกนใบหน้า
+      เพื่อล็อกอินเข้าใช้งานได้อย่างรวดเร็วและปลอดภัย
+    </p>
+    <img
+      alt="ขั้นตอนที่ 2"
+      class="workflow-image"
+      src="/getattachment/Our-Service/Digital-ID/index/Digital-ID-ทเกยวของกบบคคลธรรมดา/public/S1Citizen_authen2.png.aspx?lang=th-TH"
+    />
+    <!-- ข้อความอธิบายใต้ขั้นตอนที่ 2 ตาม Mockup 
+    <div class="step-labels-grid">
+      <div class="step-label-item">
+        ผู้ใช้บริการขอ<br />
+        ทำธุรกรรมกับ RP
+      </div>
+
+      <div class="step-label-item">
+        RP ให้ผู้ใช้บริการ<br />
+        ไปยืนยันตัวตนกับ IdP
+      </div>
+
+      <div class="step-label-item">
+        IdP ตรวจสอบสิ่งที่ใช้<br />
+        ยืนยันตัวตน<br />
+        และส่งผลให้กับ RP
+      </div>
+
+      <div class="step-label-item">
+        ผู้ใช้บริการ<br />
+        เข้าใช้งานที่ RP
+      </div>
+    </div> -->
+  </div>
+</section>
+<!-- ================= จบ Section 4 ================= --><!-- ================= Section 5 ================= -->
+
+<section class="assurance-section">
+  <!-- หัวข้อส่วนบน -->
+  <h2 class="section-title">
+    มั่นใจทุกธุรกรรม ด้วยมาตรฐานความปลอดภัยระดับประเทศ
+  </h2>
+
+  <p class="text-body" style="margin-bottom: 40px">
+    สำนักงานพัฒนาธุรกรรมทางอิเล็กทรอนิกส์ (ETDA) ได้กำหนด
+    &quot;มาตรฐานการพิสูจน์และยืนยันตัวตน&quot;
+    เพื่อให้หน่วยงานผู้ให้บริการนำไปปฏิบัติอย่างเคร่งครัด
+    โดยระบบจะปรับระดับความเข้มงวดให้เหมาะสมกับ
+    &quot;ความเสี่ยงของธุรกรรม&quot;<br />
+    (ตัวอย่างเช่น: การล็อกอินเพื่ออ่านข่าวทั่วไป อาจใช้แค่รหัสผ่าน
+    แต่หากเป็นการโอนเงินจำนวนมาก ระบบจะบังคับให้คุณสแกนใบหน้า หรือใช้รหัส OTP
+    เพิ่มเติม เพื่อปกป้องทรัพย์สินของคุณ)
+  </p>
+  <!-- Card 1: IAL -->
+
+  <div class="assurance-card">
+    <div class="assurance-card-header">
+      ระดับความน่าเชื่อถือของการพิสูจน์ตัวตน (IAL &ndash; Identity Assurance
+      Level)
+    </div>
+
+    <div class="assurance-card-body">
+      <p class="text-body assurance-intro">
+        ระดับความเข้มงวดในการตรวจสอบตอน &quot;สมัครหรือลงทะเบียนครั้งแรก&quot;
+        แบ่งเป็น 3 ระดับหลัก
+      </p>
+
+      <div class="assurance-row">
+        <div class="assurance-badge">ระดับ IAL 1</div>
+
+        <div class="assurance-text">
+          ใช้ข้อมูลที่ผู้ใช้งานแจ้งด้วยตนเอง (Self-asserted)
+          เหมาะสำหรับบริการที่มีความเสี่ยงต่ำ
+        </div>
+      </div>
+
+      <div class="assurance-row">
+        <div class="assurance-badge">ระดับ IAL 2</div>
+
+        <div class="assurance-text">
+          ต้องมีการตรวจสอบหลักฐานแสดงตน ยกตัวอย่าง
+          การใช้งานออนไลน์ผ่านสมาร์ทโฟน<br />
+          (กรณีไม่มีเครื่องอ่านบัตร) จะแบ่งความเข้มงวดดังนี้:
+          <ul class="assurance-sublist">
+            <li>
+              <span class="text-highlight-primary">IAL 2.1:</span>
+              ดึงข้อมูลจากระบบของผู้ให้บริการอื่น (IdP)
+              ที่คุณเคยยืนยันตัวตนระดับ IAL 2.3 มาแล้ว
+            </li>
+            <li>
+              <span class="text-highlight-primary">IAL 2.2:</span>
+              ดึงข้อมูลจากระบบของผู้ให้บริการอื่น (IdP) ในระดับ IAL 2.3
+              โดยระบบจะขอให้คุณกรอก &quot;รหัสหลังบัตรประชาชน (Laser Code)&quot;
+              เพิ่มเติม เพื่อตรวจสอบสถานะบัตรล่าสุดกับหน่วยงานรัฐ
+            </li>
+            <li>
+              <span class="text-highlight-primary">IAL 2.3:</span>
+              ต้องมีการตรวจสอบข้อมูลจากหน้าบัตรประจำตัวประชาชน
+              พร้อมกรอกรหัสหลังบัตร (Laser Code) และ &quot;สแกนใบหน้า (Face
+              Verification)&quot; เพื่อเปรียบเทียบกับฐานข้อมูลของรัฐโดยตรง
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="assurance-row">
+        <div class="assurance-badge dark">ระดับ IAL 3</div>
+
+        <div class="assurance-text">
+          <strong>เข้มงวดสูงสุด!</strong> ต้องมีการพบเห็นต่อหน้า
+          (หรือผ่านระบบเทียบเท่า) และต้องมีการเปรียบเทียบข้อมูลชีวมิติ (เช่น
+          สแกนใบหน้า (Face Verification))
+          เทียบกับฐานข้อมูลที่น่าเชื่อถือของหน่วยงานรัฐ
+          ป้องกันการปลอมตัวขั้นเด็ดขาด
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Card 2: AAL -->
+
+  <div class="assurance-card">
+    <div class="assurance-card-header">
+      ระดับความน่าเชื่อถือของการยืนยันตัวตน (AAL &ndash; Authentication
+      Assurance Level)
+    </div>
+
+    <div class="assurance-card-body">
+      <p class="text-body assurance-intro">
+        ระดับความเข้มงวดในการตรวจสอบตอน &quot;เข้าใช้งานระบบในครั้งต่อๆ ไป&quot;
+        แบ่งตามจำนวนปัจจัย (Factor) ที่ใช้ยืนยันตัวตน ดังนี้
+      </p>
+
+      <div class="assurance-row">
+        <div class="assurance-badge">ระดับ AAL 1</div>
+
+        <div class="assurance-text">
+          การยืนยันตัวตนด้วยปัจจัยเดียว (Single-factor) เช่น การใช้รหัสผ่าน
+          (Password)
+        </div>
+      </div>
+
+      <div class="assurance-row">
+        <div class="assurance-badge">ระดับ AAL 2</div>
+
+        <div class="assurance-text">
+          การยืนยันตัวตนแบบหลายปัจจัย (Multi-factor) เช่น การใช้รหัสผ่าน
+          ร่วมกับการรับรหัส OTP ทาง SMS ป้องกันกรณีรหัสผ่านถูกขโมย
+        </div>
+      </div>
+
+      <div class="assurance-row">
+        <div class="assurance-badge dark">ระดับ AAL 3</div>
+
+        <div class="assurance-text">
+          <strong>เข้มงวดสูงสุด!</strong> การยืนยันตัวตนแบบหลายปัจจัย
+          โดยต้องใช้อุปกรณ์ฮาร์ดแวร์เฉพาะ (Hardware-based Cryptographic Key)
+          ป้องกันการโจมตีทางไซเบอร์และการสวมรอยขั้นสูง
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= จบ Section 5 ================= --><!-- ================= Section 6 ================= -->
+
+<section class="cta-section">
+  <!-- กล่องหัวข้อเส้นประ -->
+  <div class="cta-title-box">
+    <h2 class="cta-title">
+      พร้อมก้าวสู่โลกดิจิทัลที่ง่ายและปลอดภัยแล้วหรือยัง?
+    </h2>
+  </div>
+  <!-- รายละเอียด -->
+
+  <div class="cta-description">
+    สัมผัสประสบการณ์การทำธุรกรรมที่สะดวกรวดเร็ว ไม่ต้องพกเอกสารให้ยุ่งยาก
+    และปลอดภัยตามมาตรฐานสากล<br />
+    เริ่มต้นสร้าง Digital ID ของคุณได้แล้ววันนี้
+    เพียงดาวน์โหลดและลงทะเบียนผ่านแอปพลิเคชันที่รองรับ:
+  </div>
+  <!-- การ์ดทั้ง 3 ใบ -->
+
+  <div class="app-cards-wrapper">
+    <!-- Card 1 -->
+    <div class="app-card">
+      <h3>ThaID (ไทยดี)</h3>
+
+      <div class="app-provider">โดย กรมการปกครอง (DOPA)</div>
+
+      <div class="app-feature">
+        บัตรประชาชนและทะเบียนบ้าน<br />
+        ดิจิทัลบนมือถือคุณ
+      </div>
+    </div>
+    <!-- Card 2 -->
+
+    <div class="app-card">
+      <h3>ทางรัฐ</h3>
+
+      <div class="app-provider">
+        โดย สำนักงานพัฒนารัฐบาลดิจิทัล<br />
+        (DGA)
+      </div>
+
+      <div class="app-feature">
+        ศูนย์รวมบริการภาครัฐเบ็ดเสร็จ<br />
+        เข้าถึงสิทธิและสวัสดิการง่ายๆ
+      </div>
+    </div>
+    <!-- Card 3 -->
+
+    <div class="app-card">
+      <h3>หมอพร้อม</h3>
+
+      <div class="app-provider">
+        โดย สำนักงานปลัดกระทรวง<br />
+        สาธารณสุข (MOPH)
+      </div>
+
+      <div class="app-feature">ศูนย์รวมบริการทางการแพทย์</div>
+    </div>
+  </div>
+</section>
+<!-- ================= จบ Section 6 ================= --><!-- ================= Section 7 ================= -->
+
+<section class="report-section">
+  <!-- หัวข้อ -->
+  <h2 class="section-title">เอกสารที่เกี่ยวข้อง</h2>
+
+  <p class="text-body" style="margin-bottom: 30px">
+    เอกสารที่เกี่ยวข้องกับการพิสูจน์และยืนยันตัวตนสำหรับบุคคลธรรมดา
+  </p>
+  <!-- กล่องรายงาน -->
+
+  <div class="report-card">
+    <div class="report-text">
+      <h3>
+        มาตรฐานธุรกรรมทางอิเล็กทรอนิกส์ว่าด้วยการพิสูจน์และยืนยันตัวตนทางดิจิทัล
+      </h3>
+
+      <p class="text-minor-body">
+        เอกสารฉบับนี้รวมชุดมาตรฐาน มธอ. 11-2566 เล่ม 1-3
+        ซึ่งครอบคลุมกรอบการทำงาน, ข้อกำหนดของการพิสูจน์ตัวตน และ
+        ข้อกำหนดของการยืนยันตัวตนเพื่อเป็นการยกระดับและพัฒนาการทำธุรกรรมทางอิเล็กทรอนิกส์ของประเทศในการพิสูจน์และ
+        ยืนยันตัวตนทางดิจิทัล
+        เพื่อให้สามารถใช้อ้างอิงและเลือกใช้งานดิจิทัลไอดีร่วมกันได้บน
+        มาตรฐานและระดับความน่าเชื่อถือ ที่มีความสอดคล้องกัน
+        รวมถึงเพื่อเสริมสร้างความน่าเชื่อถือและยอมรับ
+        ในระบบการพิสูจน์และยืนยันตัวตนทางดิจิทัล
+      </p>
+    </div>
+
+    <div class="report-divider">&nbsp;</div>
+    <a
+      class="report-icon"
+      href="https://www.etda.or.th/getattachment/ETC/strategy-law-standard/standard/%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%A2%E0%B8%A3%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%AD%E0%B9%80%E0%B8%A5%E0%B8%81%E0%B8%97%E0%B8%A3%E0%B8%AD%E0%B9%89%E0%B8%99%E0%B8%B4%E0%B8%AA-%E0%B9%80%E0%B8%A3%E0%B8%AD%E0%B8%87-%E0%B8%A1%E0%B8%B2%E0%B8%95%E0%B8%A3%E0%B8%90%E0%B8%B2%E0%B8%99%E0%B8%98%E0%B8%A3/ETCAnnounce-_15Sep66_Standard-DID_TS.zip.aspx?lang=th-TH"
+      target="_blank"
+      ><img
+        alt="External link"
+        src="/getattachment/Our-Service/Digital-ID/index/Digital-ID-ทเกยวของกบบคคลธรรมดา/public/PDF.png.aspx?lang=th-TH"
+      />
+    </a>
+  </div>
+</section>
+<!-- ================= จบ Section 7 ================= -->
