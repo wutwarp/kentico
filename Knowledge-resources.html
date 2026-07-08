@@ -1,0 +1,504 @@
+<style type="text/css">
+  /* SET UP */
+  :root {
+    --primary: #2b4191;
+    --secondary: #1d3359;
+    --white: #f9f8fe;
+    --white-card: #ffffff;
+    --gray: #727272;
+    --gray-section: #dde1ee;
+    --bg-nav: #f0f4ff;
+    --nav-border: #768bb4;
+    --navItem-hover: #e5ecf9;
+    --shadow: #72727268;
+    --orange-light: #f89906;
+    --orange-bold: #fc7a16;
+    --orange-nav: #ffc365;
+    --black: #1e1e1e;
+    --third: #1ab9cb;
+  }
+
+  .service-editor2f .container ul li {
+    margin: 0px;
+  }
+  /* Nav */
+
+  nav.vc-navbar {
+    display: flex;
+    justify-content: center;
+    background-color: #0f2849;
+    height: 5rem;
+    padding: 0 20px; /* ปรับให้มี padding ซ้าย-ขวา ป้องกันเนื้อหาชนขอบ */
+    border-radius: 10px;
+    align-items: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2) !important; /* แก้ var(--gray) เป็น rgba เนื่องจากใน :root ไม่มีตัวแปร --gray ครับ */
+    width: 100%;
+    box-sizing: border-box; /* ป้องกันกล่องทะลุขอบจอ */
+    overflow: hidden; /* กันมุมโค้งโดนเนื้อหาทะลุ */
+  }
+
+  .menu-name {
+    display: none;
+    width: 100%;
+  }
+
+  input {
+    margin: 0;
+    padding: 0;
+    height: 45px;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  ul.menu-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+  }
+
+  ul.menu-wrapper li {
+    display: flex;
+    align-items: center; /* จัดให้ข้อความและเส้นคั่นอยู่กึ่งกลางแนวตั้งตรงกัน */
+    justify-content: center;
+  }
+
+  /* 1. แก้ไขเส้นคั่น (Separator) ให้วาดด้วย CSS แทนตัวอักษร */
+  ul.menu-wrapper li::after {
+    content: ""; /* ลบตัวอักษร | ออก */
+    display: block;
+    width: 1px; /* ความหนาของเส้น */
+    height: 28px; /* ความสูงของเส้น (ปรับเพิ่ม/ลดได้ เพื่อให้ครอบคลุมสระบน-ล่างพอดี) */
+    background-color: #ffffff;
+    opacity: 0.5;
+    margin: 0 25px; /* ระยะห่างซ้าย-ขวา (Distribute) ให้ดูโปร่งเหมือนใน Figma */
+    transform: translateY(4px);
+  }
+
+  ul.menu-wrapper li:last-child::after {
+    display: none; /* ซ่อนเส้นคั่นของเมนูตัวสุดท้าย */
+  }
+
+  /* 2. แก้ไขตัวอักษรให้อยู่กึ่งกลาง */
+  ul.menu-wrapper li a {
+    font-size: 24px;
+    color: #ffffff !important; /* กัน theme หลักของเว็บทับสี */
+    text-decoration: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    line-height: 1; /* บังคับระยะบรรทัดให้พอดีกับตัวอักษร ช่วยแก้ปัญหาฟอนต์ลอย */
+    padding-top: 15px; /* ดันลงมานิดหน่อยเพื่อชดเชย Baseline ของฟอนต์ DB Heavent */
+    transition: 0.3s ease;
+    opacity: 1 !important; /* กันกรณีมี opacity แอบมาจาก theme */
+  }
+
+  /* กันไม่ให้ลิงก์ที่ "เคยกด" (visited) เปลี่ยนสี */
+  ul.menu-wrapper li a:visited {
+    color: #ffffff !important;
+  }
+
+  /* เมื่อเป็นหน้าที่กำลังเลือก (Active) */
+  ul.menu-wrapper li a.vc-active {
+    color: #3bb2bd !important;
+    font-weight: bold;
+    text-decoration: none !important;
+  }
+
+  /* เมื่อเอาเมาส์ชี้ (Hover) */
+  ul.menu-wrapper li a:hover {
+    color: #3bb2bd !important;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    text-decoration-thickness: 2px;
+  }
+
+  a.nav_vc.vc-active {
+    font-weight: 600;
+    color: var(--orange-nav) !important;
+    border-bottom: 0px;
+  }
+
+  label#menu-icon {
+    display: none;
+  }
+
+  label#menu-icon .bar {
+    margin: 3px;
+    width: 25px;
+    height: 3px;
+    background: var(--white);
+    border-radius: 1.5px;
+    transition:
+      margin 0.2s,
+      transform 0.2s;
+
+    /* same as above but with prefixes added */
+    -webkit-transition:
+      margin 0.2s,
+      -webkit-transform 0.2s;
+    transition:
+      margin 0.2s,
+      -webkit-transform 0.2s;
+    -o-transition:
+      margin 0.2s,
+      transform 0.2s;
+    transition:
+      margin 0.2s,
+      transform 0.2s;
+    transition:
+      margin 0.2s,
+      transform 0.2s,
+      -webkit-transform 0.2s;
+  }
+
+  label#menu-icon:not(.menu-icon-close):hover .bar {
+    margin: 5px 3px;
+  }
+
+  label#menu-icon.menu-icon-close .bar:first-child {
+    -webkit-transform: translateY(6px) rotate(45deg);
+    -ms-transform: translateY(6px) rotate(45deg);
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  label#menu-icon.menu-icon-close .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  label#menu-icon.menu-icon-close .bar:last-child {
+    -webkit-transform: translateY(-6px) rotate(-45deg);
+    -ms-transform: translateY(-6px) rotate(-45deg);
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* ===== แก้ตรงนี้: การ์ดหน่วยงาน (partner-container / partner-card) ===== */
+  .partner-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(8, 2fr);
+    align-items: start;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .partner-card {
+    text-align: center;
+    justify-items: center;
+    align-content: center;
+    padding: 20px 10px 25px 10px; /* ← เพิ่ม padding ให้กรอบใหญ่ขึ้น */
+    min-height: 180px; /* ← เพิ่มบรรทัดนี้ ถ้าอยากคุมความสูงขั้นต่ำ */
+    background: var(--white-card);
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+  }
+
+  /* ===== แก้ตรงนี้: การ์ดหน่วยงาน (partner-container / partner-card) ===== */
+  .partner-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(8, 2fr);
+    align-items: start;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .partner-card {
+    text-align: center;
+    justify-items: center;
+    align-content: center;
+    padding: 10px 0px 15px 0px;
+    background: var(--white-card);
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+  }
+
+  .partner-card .partner-img {
+    width: 230px !important;
+    height: 110px !important;
+    object-fit: contain !important;
+  }
+  /* Responsive */
+  /* Responsive */
+  @media screen and (max-width: 2560px) {
+    label {
+      display: none;
+    }
+
+    ul.menu-wrapper {
+      display: flex;
+      align-self: start;
+      font-size: 24px;
+    }
+
+    a.nav_vc.vc-active {
+      font-weight: 600;
+      color: var(--orange-nav) !important;
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    label#menu-icon {
+      color: var(--white);
+      cursor: pointer;
+      display: block;
+      user-select: none;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .vc-active {
+      border-bottom: none !important;
+    }
+
+    nav.vc-navbar {
+      justify-content: end;
+      position: relative;
+
+      .menu-name {
+        display: flex;
+        color: var(--white);
+      }
+
+      input {
+        display: none;
+
+        &:checked + label {
+          color: var(--white);
+        }
+
+        &:checked ~ .menu-wrapper {
+          display: flex;
+          flex-direction: column;
+          padding: 1.5rem !important;
+          gap: 1rem;
+        }
+      }
+
+      ul.menu-wrapper {
+        display: flex;
+        text-align: start;
+        flex-direction: column;
+        width: 100%;
+        border-bottom: none;
+        background: linear-gradient(
+          2deg,
+          rgba(46, 170, 250, 1) 20%,
+          rgba(31, 47, 152, 1) 100%
+        );
+        border-width: 1px;
+        border-style: solid;
+        border-color: var(--nav-border);
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        z-index: 3;
+        height: max-content;
+        display: none;
+        text-align: left;
+        border-radius: 0px 0px 20px 20px;
+        box-shadow: 0px 3px 5px var(--shadow);
+
+        li {
+          display: block;
+          float: none;
+          width: auto;
+          margin: 0;
+          padding: 1rem;
+
+          a {
+            padding: 20px 30px;
+          }
+
+          &:hover {
+            background: var(--primary);
+            color: var(--orange-nav) !important;
+            cursor: pointer;
+
+            a {
+              background: none;
+              border-bottom: none !important;
+              color: var(--orange-nav);
+            }
+          }
+        }
+      }
+    }
+
+    a.nav_vc.vc-active {
+      font-weight: 600;
+      color: var(--orange-nav) !important;
+      border-bottom: none;
+    }
+  }
+
+  /* Surface Duo */
+  @media screen and (max-width: 569px) {
+    label {
+      translate: -1rem;
+    }
+  }
+
+  /* 14 Pro Max */
+  @media screen and (max-width: 481px) {
+    input {
+      &:checked ~ .menu-wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 0rem !important;
+        gap: 0rem !important;
+      }
+    }
+
+    label {
+      translate: -2rem;
+    }
+
+    ul.menu-wrapper {
+      li {
+        font-size: 1.85rem;
+      }
+    }
+  }
+</style>
+<style type="text/css"></style>
+<nav class="vc-navbar" id="menu">
+  <div id="menu-icon" onclick="handleMenuIconClick()">
+    <div class="bar">&nbsp;</div>
+
+    <div class="bar">&nbsp;</div>
+
+    <div class="bar">&nbsp;</div>
+  </div>
+
+  <ul class="menu-wrapper">
+    <li>
+      <a class="nav_vc" href="/Our-Service/DigitalID/index.aspx">หน้าแรก</a>
+    </li>
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Home.aspx"
+        >VC</a
+      >
+    </li>
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Report.aspx"
+        >เอกสารที่เกี่ยวข้อง</a
+      >
+    </li>
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/PilotUseCase.aspx"
+        >กรณีศึกษานำร่อง</a
+      >
+    </li>
+    <!-- <li>
+        <a
+          class="nav_vc"
+          href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Conformance-Test-Tool.aspx"
+          >การทดสอบมาตรฐาน</a
+        >
+      </li> -->
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/VC-team.aspx"
+        >คณะทำงาน</a
+      >
+    </li>
+    <!-- <li><a class="nav_vc" href="/th/Our-Service/VC-and-Digital-Document-Wallet/Timeline.aspx">ปฏิทินโครงการ</a>
+                    </li> -->
+    <li>
+      <a
+        class="nav_vc vc-active"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/knowledge.aspx"
+        >แหล่งความรู้เพิ่มเติม</a
+      >
+    </li>
+  </ul>
+</nav>
+&nbsp;
+
+<div
+  class="row"
+  style="text-align: left; background-color: #ebebeb; padding: 20px"
+>
+  <div class="col-lg-12" style="text-align: center">
+    <h2>ข้อมูลและแหล่งความรู้เพิ่มเติม</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6" style="text-align: center">
+      <div>
+        <div class="img-thumbnail2f">
+          <a
+            href="https://www.etda.or.th/th/pr-news/VC-and-Digital-Document-Wallet/vd_model2.aspx"
+            target="_blank"
+            ><img
+              alt="Verifiable Credentials Data Model 2.0: ก้าวสำคัญของมาตรฐานดิจิทัลไอดีสู่ยุคใหม่"
+              src="https://www.etda.or.th/getattachment/e33b9493-2ebc-4aab-9e7c-b234c669f583/Banner_credentials.jpg.aspx"
+              style="padding: 10px" /></a
+          ><br />
+          Verifiable Credentials Data Model 2.0:
+          ก้าวสำคัญของมาตรฐานดิจิทัลไอดีสู่ยุคใหม่
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6" style="text-align: center">
+      <div>
+        <div class="img-thumbnail2f">
+          <a
+            href="https://www.etda.or.th/th/pr-news/VC-and-Digital-Document-Wallet/learning-resources.aspx"
+            target="_blank"
+            ><img
+              alt=""
+              src="https://www.etda.or.th/getattachment/8cd4319d-df82-4590-abaa-2a4a12c7a06d/learning-resources.aspx"
+              style="padding: 10px" /></a
+          ><br />
+          ทำความรู้จักเอกสารรับรองดิจิทัลและกระเป๋าเอกสารดิจิทัล (Document
+          Wallet)
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  function updateMenu() {
+    const menu = document.getElementById("menu");
+    const menuIcon = document.getElementById("menu-icon");
+
+    if (document.getElementById("responsive-menu-checkbox").checked) {
+      menu.style.borderBottomRightRadius = "0";
+      menu.style.borderBottomLeftRadius = "0";
+      menuIcon.classList.add("menu-icon-close");
+    } else {
+      menu.style.borderRadius = "10px";
+      menuIcon.classList.remove("menu-icon-close");
+    }
+  }
+
+  function handleMenuIconClick() {
+    const menuCheckbox = document.getElementById("responsive-menu-checkbox");
+
+    if (menuCheckbox.checked) {
+      menuCheckbox.checked = false;
+      menuCheckbox.removeAttribute("checked");
+    } else {
+      menuCheckbox.checked = true;
+      menuCheckbox.setAttribute("checked", "checked");
+    }
+
+    updateMenu();
+  }
+</script>
