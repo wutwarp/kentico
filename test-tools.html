@@ -1,0 +1,740 @@
+<style type="text/css">
+  /* SET UP */
+  :root {
+    --primary: #2b4191;
+    --secondary: #1d3359;
+    --white: #f9f8fe;
+    --gray: #727272;
+    --gray-section: #dde1ee;
+    --bg-nav: #f0f4ff;
+    --nav-border: #768bb4;
+    --navItem-hover: #e5ecf9;
+    --shadow: #72727268;
+    --orange-light: #f89906;
+    --orange-bold: #fc7a16;
+    --orange-nav: #ffc365;
+    --black: #1e1e1e;
+    --third: #1ab9cb;
+  }
+
+  .control-page2f {
+    padding: 0;
+  }
+
+  .service-editor2f .container ul li {
+    margin: 0px;
+  }
+
+  /* Nav */
+  nav.vc-navbar {
+    display: flex;
+    justify-content: center;
+    background-color: #0f2849;
+    height: 5rem;
+    padding: 0 20px; /* ปรับให้มี padding ซ้าย-ขวา ป้องกันเนื้อหาชนขอบ */
+    border-radius: 10px;
+    align-items: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2) !important; /* แก้ var(--gray) เป็น rgba เนื่องจากใน :root ไม่มีตัวแปร --gray ครับ */
+    width: 100%;
+    box-sizing: border-box; /* ป้องกันกล่องทะลุขอบจอ */
+  }
+
+  ul.menu-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+  }
+
+  ul.menu-wrapper li {
+    display: flex;
+    align-items: center; /* จัดให้ข้อความและเส้นคั่นอยู่กึ่งกลางแนวตั้งตรงกัน */
+    justify-content: center;
+  }
+
+  /* 1. แก้ไขเส้นคั่น (Separator) ให้วาดด้วย CSS แทนตัวอักษร */
+  ul.menu-wrapper li::after {
+    content: ""; /* ลบตัวอักษร | ออก */
+    display: block;
+    width: 1px; /* ความหนาของเส้น */
+    height: 28px; /* ความสูงของเส้น (ปรับเพิ่ม/ลดได้ เพื่อให้ครอบคลุมสระบน-ล่างพอดี) */
+    background-color: #ffffff;
+    opacity: 0.5;
+    margin: 0 25px; /* ระยะห่างซ้าย-ขวา (Distribute) ให้ดูโปร่งเหมือนใน Figma */
+    transform: translateY(4px);
+  }
+
+  ul.menu-wrapper li:last-child::after {
+    display: none; /* ซ่อนเส้นคั่นของเมนูตัวสุดท้าย */
+  }
+
+  /* 2. แก้ไขตัวอักษรให้อยู่กึ่งกลาง */
+  ul.menu-wrapper li a {
+    font-size: 24px;
+    color: #ffffff;
+    text-decoration: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    line-height: 1; /* บังคับระยะบรรทัดให้พอดีกับตัวอักษร ช่วยแก้ปัญหาฟอนต์ลอย */
+    padding-top: 15px; /* ดันลงมานิดหน่อยเพื่อชดเชย Baseline ของฟอนต์ DB Heavent */
+    transition: 0.3s ease;
+  }
+
+  /* เมื่อเป็นหน้าที่กำลังเลือก (Active) */
+  ul.menu-wrapper li a.vc-active {
+    color: #3bb2bd !important;
+    font-weight: bold;
+    text-decoration: none !important;
+  }
+
+  /* เมื่อเอาเมาส์ชี้ (Hover) */
+  ul.menu-wrapper li a:hover {
+    color: #3bb2bd !important;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    text-decoration-thickness: 2px;
+  }
+
+  /* Responsive */
+  @media screen and (max-width: 2560px) {
+    label {
+      display: none;
+    }
+
+    ul.menu-wrapper {
+      display: flex;
+      align-self: start;
+      font-size: 24px;
+    }
+
+    a.nav_vc.vc-active {
+      font-weight: 600;
+      color: var(--orange-nav) !important;
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    #menu-icon {
+      color: var(--white);
+      cursor: pointer;
+      display: block !important;
+      user-select: none;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .vc-active {
+      border-bottom: none !important;
+    }
+
+    nav.vc-navbar {
+      justify-content: end;
+      position: relative;
+
+      .menu-name {
+        display: flex;
+        color: var(--white);
+      }
+
+      input {
+        display: none;
+
+        &:checked + label {
+          color: var(--white);
+        }
+
+        &:checked ~ .menu-wrapper {
+          display: flex;
+          flex-direction: column;
+          padding: 1.5rem !important;
+          gap: 1rem;
+        }
+      }
+
+      ul.menu-wrapper {
+        display: flex;
+        text-align: start;
+        flex-direction: column;
+        width: 100%;
+        border-bottom: none;
+        background: linear-gradient(
+          2deg,
+          rgba(46, 170, 250, 1) 20%,
+          rgba(31, 47, 152, 1) 100%
+        );
+        border-width: 1px;
+        border-style: solid;
+        border-color: var(--nav-border);
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        z-index: 3;
+        height: max-content;
+        display: none;
+        text-align: left;
+        border-radius: 0px 0px 20px 20px;
+        box-shadow: 0px 3px 5px var(--shadow);
+
+        li {
+          display: block;
+          float: none;
+          width: auto;
+          margin: 0;
+          padding: 1rem;
+
+          a {
+            padding: 20px 30px;
+          }
+
+          &:hover {
+            background: var(--primary);
+            color: var(--orange-nav) !important;
+            cursor: pointer;
+
+            a {
+              background: none;
+              border-bottom: none !important;
+              color: var(--orange-nav);
+            }
+          }
+        }
+      }
+    }
+
+    a.nav_vc.vc-active {
+      font-weight: 600;
+      color: var(--orange-nav) !important;
+      border-bottom: none;
+    }
+  }
+
+  /* Surface Duo */
+  @media screen and (max-width: 569px) {
+    label {
+      translate: -1rem;
+    }
+  }
+
+  /* 14 Pro Max */
+  @media screen and (max-width: 481px) {
+    input {
+      &:checked ~ .menu-wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 0rem !important;
+        gap: 0rem !important;
+      }
+    }
+
+    label {
+      translate: -2rem;
+    }
+
+    ul.menu-wrapper {
+      li {
+        font-size: 1.85rem;
+      }
+    }
+  }
+
+  /* test-tool */
+
+  .testTool-container {
+    padding: 4rem 7rem 0rem;
+
+    .testTool-head {
+      text-align: center;
+    }
+
+    .role-container {
+      display: flex;
+
+      .role-badge {
+        display: flex;
+
+        .role-text {
+          text-align: center;
+          width: max-content;
+        }
+      }
+    }
+  }
+
+  .testToolDownload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 2rem 0rem 0rem;
+
+    .download-box {
+      padding: 2rem 2rem 1.5rem;
+      background: #fff;
+      border-radius: 15px;
+      width: fit-content;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+
+      .download-btn {
+        display: flex;
+        width: auto;
+        gap: 1rem;
+        align-items: center;
+        justify-content: center;
+        background: var(--third);
+        border: 0;
+        border-radius: 15px;
+        padding: 1rem;
+        color: var(--white);
+
+        &:hover {
+          background: var(--primary);
+        }
+      }
+    }
+  }
+
+  .contact {
+    text-align: right;
+    padding: 3rem 0 0;
+  }
+
+  a.test-tool-a {
+    color: var(--primary) !important;
+
+    &:hover {
+      color: var(--secondary) !important;
+    }
+  }
+
+  /* Test-tool Responsive  */
+  @media screen and (max-width: 2560px) {
+    .testTool-container {
+      .invite-section {
+        text-align: center;
+      }
+    }
+
+    .roleBasedManual {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .role-container {
+      justify-content: center;
+      gap: 2rem;
+      padding: 3rem;
+      transform: scale(1.1);
+
+      .role-badge {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+      }
+    }
+
+    .submit-section {
+      text-align: center;
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    .roleBasedManual {
+      flex-direction: column;
+      width: 100%;
+
+      .download-btn {
+        justify-content: space-around !important;
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .role-container {
+      flex-direction: column;
+      padding: 4rem 3rem;
+      transform: scale(0.95);
+
+      .role-badge {
+        flex-direction: row;
+      }
+    }
+
+    .displayCutLine {
+      display: inline;
+    }
+
+    .download-box {
+      .download-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .roleBasedManual {
+        align-items: normal;
+
+        br {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 569px) {
+    .testTool-container {
+      padding: 4rem 3rem 0rem;
+
+      .invite-section {
+        text-align: left;
+      }
+
+      .testToolDownload-container {
+        .download-box {
+          .download-content {
+            .download-btn {
+              flex-direction: column;
+              gap: 0.5rem;
+            }
+          }
+
+          .roleBasedManual {
+            .download-btn {
+              display: flex;
+
+              .iconRole {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+
+      .submit-section {
+        padding: 0rem 1rem 2rem;
+      }
+    }
+
+    .role-container {
+      display: flex;
+      flex-direction: column;
+      transform: scale(1);
+      padding: 1.5rem 0rem;
+
+      .role-badge {
+        flex-direction: column-reverse;
+      }
+    }
+
+    .contact {
+      text-align: left;
+      padding: 3rem 0 0;
+    }
+  }
+
+  @media screen and (max-width: 376px) {
+    .submit-section {
+      padding: 0px 30px 25px;
+    }
+  }
+</style>
+<nav class="vc-navbar" id="menu">
+  <div id="menu-icon" onclick="handleMenuIconClick()">
+    <div class="bar">&nbsp;</div>
+
+    <div class="bar">&nbsp;</div>
+
+    <div class="bar">&nbsp;</div>
+  </div>
+
+  <ul class="menu-wrapper">
+    <li>
+      <a class="nav_vc" href="/Our-Service/DigitalID/index.aspx">หน้าแรก</a>
+    </li>
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Home.aspx"
+        >VC</a
+      >
+    </li>
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Report.aspx"
+        >เอกสารที่เกี่ยวข้อง</a
+      >
+    </li>
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/PilotUseCase.aspx"
+        >กรณีศึกษานำร่อง</a
+      >
+    </li>
+    <li>
+      <a
+        class="nav_vc vc-active"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Conformance-Test-Tool.aspx"
+        >การทดสอบมาตรฐาน</a
+      >
+    </li>
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/VC-team.aspx"
+        >คณะทำงาน</a
+      >
+    </li>
+    <!-- <li><a class="nav_vc" href="/th/Our-Service/VC-and-Digital-Document-Wallet/Timeline.aspx">ปฏิทินโครงการ</a>
+                    </li> -->
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/knowledge.aspx"
+        >แหล่งความรู้เพิ่มเติม</a
+      >
+    </li>
+  </ul>
+</nav>
+&nbsp;
+
+<div class="testTool-container">
+  <div class="testTool-head">
+    <h3>เรียนเชิญเข้าร่วมการทดสอบ Conformance Test Tool</h3>
+  </div>
+
+  <div class="invite-section">
+    ทางเราขอเรียนเชิญหน่วยงานที่สนใจเข้าร่วม <strong>การทดสอบ </strong
+    ><strong>Conformance Test Tool</strong>&nbsp;เพื่อประเมินเกณฑ์มาตรฐานของ
+
+    <div class="role-container">
+      <div class="role-badge">
+        <img
+          src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/เครองมอการทดสอบมาตรฐาน/issuer-(4).png.aspx"
+        />
+        <strong class="role-text">ผู้ออกเอกสาร</strong>
+      </div>
+
+      <div class="role-badge">
+        <img
+          src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/เครองมอการทดสอบมาตรฐาน/holder-(4).png.aspx"
+        />
+        <strong class="role-text">ผู้ถือเอกสาร</strong>
+      </div>
+
+      <div class="role-badge">
+        <img
+          src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/เครองมอการทดสอบมาตรฐาน/verifier-(6).png.aspx"
+        /><strong class="role-text">ผู้ตรวจสอบเอกสาร</strong>
+      </div>
+    </div>
+    อันเป็นส่วนสำคัญในการพัฒนาระบบเอกสารรับรองดิจิทัลให้เป็นไปตามมาตรฐานที่กำหนด
+
+    <div class="testToolDownload-container">
+      <div class="download-box">
+        หากหน่วยงานของท่านสนใจเข้าร่วม กรุณาดาวน์โหลดแบบหนังสือขออนุญาตได้ที่
+        <div class="download-content">
+          <button
+            class="download-btn"
+            onclick="
+              handleDownloadResource(
+                '/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/เครองมอการทดสอบมาตรฐาน/แบบหนงสอขอทดสอบ-conformance-test-tool-v-06.docx.aspx?lang=th-TH',
+              )
+            "
+            type="button"
+          >
+            <svg
+              class="bi bi-file-earmark-arrow-down"
+              fill="currentColor"
+              height="30"
+              viewbox="0 0 16 16"
+              width="30"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"
+              ></path>
+              <path
+                d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"
+              ></path>
+            </svg>
+            แบบหนังสือขออนุญาตทดสอบระบบ conformance&nbsp;test&nbsp;tool
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="testToolDownload-container">
+    <div class="download-box">
+      <span
+        >สามารถดาวน์โหลด<strong>คู่มือการทดสอบตามบทบาท</strong>ที่ต้องการทดสอบได้ที่</span
+      >
+
+      <div class="download-content roleBasedManual">
+        <button
+          class="download-btn"
+          onclick="handleDownloadResource('/')"
+          type="button"
+        >
+          <svg
+            class="bi bi-file-earmark-arrow-down"
+            fill="currentColor"
+            height="30"
+            viewbox="0 0 16 16"
+            width="30"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"
+            ></path>
+            <path
+              d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"
+            ></path>
+          </svg>
+          คู่มือการทดสอบ<br />
+          สำหรับ Issuer &nbsp;
+          <img
+            class="iconRole"
+            src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/เครองมอการทดสอบมาตรฐาน/bank-(1).png.aspx"
+            style="width: 30px !important; height: 30px !important"
+          /></button
+        ><button
+          class="download-btn"
+          onclick="handleDownloadResource('/')"
+          type="button"
+        >
+          <svg
+            class="bi bi-file-earmark-arrow-down"
+            fill="currentColor"
+            height="30"
+            viewbox="0 0 16 16"
+            width="30"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"
+            ></path>
+            <path
+              d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"
+            ></path>
+          </svg>
+          คู่มือการทดสอบ<br />
+          สำหรับ Holder &nbsp;
+          <img
+            class="iconRole"
+            src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/เครองมอการทดสอบมาตรฐาน/wallet-(1).png.aspx"
+            style="width: 30px !important; height: 30px !important"
+          /></button
+        ><button
+          class="download-btn"
+          onclick="handleDownloadResource('/')"
+          type="button"
+        >
+          <svg
+            class="bi bi-file-earmark-arrow-down"
+            fill="currentColor"
+            height="30"
+            viewbox="0 0 16 16"
+            width="30"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"
+            ></path>
+            <path
+              d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"
+            ></path>
+          </svg>
+          คู่มือการทดสอบ<br />
+          สำหรับ Verifier &nbsp;
+          <img
+            class="iconRole"
+            src="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/เครองมอการทดสอบมาตรฐาน/examine-(1).png.aspx"
+            style="width: 30px !important; height: 30px !important"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>&nbsp;</div>
+&nbsp;
+
+<div class="submit-section">
+  และนำส่งหนังสือมาที่สารบรรณอิเล็กทรอนิกส์สพธอ.
+  <a class="test-tool-a" href="mailto:saraban@etda.or.th">saraban@etda.or.th</a
+  ><br />
+  ขอขอบคุณและหวังเป็นอย่างยิ่งว่าจะได้รับความร่วมมือจากท่าน
+</div>
+
+<div>&nbsp;</div>
+<img
+  alt="info_test-(1).jpg"
+  src="/getattachment/Our-Service/Digital-ID/index/VC-and-Digital-Document-Wallet/เครองมอการทดสอบมาตรฐาน/ChatGPT-Image-July-1,-2026-12_04_31.png.aspx?lang=th-TH"
+  style="width: 1920px; height: 1335px"
+/>
+<div class="contact">
+  หากต้องการข้อมูลเพิ่มเติม โปรดติดต่อ ชญากัญจน์ โบรัชตะสุวรรณ์<br />
+  ที่ อีเมล
+  <a class="test-tool-a" href="mailto:doc-wallet@etda.or.th"
+    >doc-wallet@etda.or.th</a
+  >
+  หรือ เบอร์โทรศัพท์ 021231234
+</div>
+
+<div>&nbsp;</div>
+<script type="text/javascript">
+  function updateMenu() {
+    const menu = document.getElementById("menu");
+    const menuIcon = document.getElementById("menu-icon");
+
+    if (document.getElementById("responsive-menu-checkbox").checked) {
+      menu.style.borderBottomRightRadius = "0";
+      menu.style.borderBottomLeftRadius = "0";
+      menuIcon.classList.add("menu-icon-close");
+    } else {
+      menu.style.borderRadius = "10px";
+      menuIcon.classList.remove("menu-icon-close");
+    }
+  }
+
+  function handleMenuIconClick() {
+    const menuCheckbox = document.getElementById("responsive-menu-checkbox");
+
+    if (menuCheckbox.checked) {
+      menuCheckbox.checked = false;
+      menuCheckbox.removeAttribute("checked");
+    } else {
+      menuCheckbox.checked = true;
+      menuCheckbox.setAttribute("checked", "checked");
+    }
+
+    updateMenu();
+  }
+
+  function handleDownloadResource(resourceUrl = null, filename = null) {
+    if (resourceUrl === null) throw Error("Must have resource url!");
+
+    const a = document.createElement("a");
+    a.href = resourceUrl;
+
+    if (filename) a.download = filename;
+
+    a.click();
+    a.remove();
+  }
+</script>
