@@ -148,6 +148,14 @@
     text-underline-offset: 8px;
     text-decoration-thickness: 2px;
   }
+
+  /* เมนูที่ถูกปิดใช้งานชั่วคราว (Disabled) */
+  ul.menu-wrapper li a.disabled {
+    color: #8a8a8a !important;
+    cursor: not-allowed !important;
+    pointer-events: none;
+    opacity: 0.6;
+  }
   /* =========================================
        5. SECTION 1: LAYOUT
        ========================================= */
@@ -435,7 +443,7 @@
   /* --- ส่วนของรูปภาพและ Grid ด้านล่าง (คงไว้เหมือนเดิม) --- */
   .workflow-image {
     width: 100%;
-    max-width: 800px;
+    max-width: 950px !important;
     height: auto;
     display: block;
     margin: 0 auto 20px auto;
@@ -721,32 +729,30 @@
         >สำหรับบุคคลธรรมดา</a
       >
     </li>
-    <!-- 3. สำหรับกลุ่มเปราะบาง -->
+    <!-- 3. สำหรับกลุ่มเปราะบาง (Disabled) -->
     <li>
-      <a
-        class="nav_vc"
-        href="/th/Our-Service/DigitalID/personal/vulnerable.aspx"
+      <a class="nav_vc disabled" href="#" onclick="return false;"
         >สำหรับกลุ่มเปราะบาง</a
       >
     </li>
-    <!-- 4. สำหรับกลุ่มคนต่างด้าว -->
+    <!-- 4. สำหรับกลุ่มคนต่างด้าว (Disabled) -->
     <li>
-      <a class="nav_vc" href="/th/Our-Service/DigitalID/Public/Foreigner.aspx"
+      <a class="nav_vc disabled" href="#" onclick="return false;"
         >สำหรับกลุ่มคนต่างด้าว</a
       >
     </li>
-    <!-- 5. ภัยคุกคาม -->
+    <!-- 5. ภัยคุกคาม 
     <li>
       <a class="nav_vc" href="/th/Our-Service/DigitalID/Public/threats.aspx"
         >ภัยคุกคาม</a
       >
-    </li>
-    <!-- 6. บทความ -->
+    </li> -->
+    <!-- 6. บทความ
     <li>
       <a class="nav_vc" href="/th/Our-Service/DigitalID/Public/articles.aspx"
         >บทความ</a
       >
-    </li>
+    </li>  -->
   </ul>
 </nav>
 <!-- Title -->
@@ -791,7 +797,7 @@
     <img
       alt="ทำไมเราถึงควรใช้ Digital ID"
       class="why-image"
-      src="/getattachment/Our-Service/Digital-ID/index/Digital-ID-ทเกยวของกบบคคลธรรมดา/public/S1Citizen_why1.png.aspx?lang=th-TH"
+      src="/getattachment/Our-Service/Digital-ID/index/Digital-ID-ทเกยวของกบบคคลธรรมดา/public/S1Citizen_why1-Photoroom.png.aspx?lang=th-TH"
     />
   </div>
 </section>
@@ -892,7 +898,7 @@
     <img
       alt="ขั้นตอนที่ 1"
       class="workflow-image"
-      src="/getattachment/Our-Service/Digital-ID/index/Digital-ID-ทเกยวของกบบคคลธรรมดา/public/S1Citizen_proof1.png.aspx?lang=th-TH"
+      src="/getattachment/Our-Service/Digital-ID/index/Digital-ID-ทเกยวของกบบคคลธรรมดา/public/S1Citizen_proof11.PNG.aspx?lang=th-TH"
     />
     <!-- ข้อความอธิบายใต้ขั้นตอนที่ 1 ตาม Mockup 
     <div class="step-labels-grid">
@@ -1180,7 +1186,8 @@
     <div class="report-divider">&nbsp;</div>
     <a
       class="report-icon"
-      href="https://www.etda.or.th/getattachment/ETC/strategy-law-standard/standard/%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%A2%E0%B8%A3%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%AD%E0%B9%80%E0%B8%A5%E0%B8%81%E0%B8%97%E0%B8%A3%E0%B8%AD%E0%B9%89%E0%B8%99%E0%B8%B4%E0%B8%AA-%E0%B9%80%E0%B8%A3%E0%B8%AD%E0%B8%87-%E0%B8%A1%E0%B8%B2%E0%B8%95%E0%B8%A3%E0%B8%90%E0%B8%B2%E0%B8%99%E0%B8%98%E0%B8%A3/ETCAnnounce-_15Sep66_Standard-DID_TS.zip.aspx?lang=th-TH"
+      href="https://www.etda.or.th/getattachment/Regulator/DigitalID/law/ETCAnnounce-_15Sep66_Standard-DID_TS.pdf.aspx?lang=th-TH
+"
       target="_blank"
       ><img
         alt="External link"
