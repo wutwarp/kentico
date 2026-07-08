@@ -1,0 +1,594 @@
+<!-- Technical Report -->
+<style type="text/css">
+  /* SET UP */
+  :root {
+    --primary: #2b4191;
+    --secondary: #1d3359;
+    --white: #f9f8fe;
+    --gray: #727272;
+    --gray-section: #dde1ee;
+    --bg-nav: #f0f4ff;
+    --nav-border: #768bb4;
+    --navItem-hover: #e5ecf9;
+    --shadow: #72727268;
+    --orange-light: #f89906;
+    --orange-bold: #fc7a16;
+    --orange-nav: #ffc365;
+    --black: #1e1e1e;
+    --third: #1ab9cb;
+  }
+
+  ul.collaps-level01 {
+    padding: 0px;
+  }
+
+  /* Nav */
+  nav.vc-navbar {
+    display: flex;
+    justify-content: center;
+    background-color: #0f2849;
+    height: 5rem;
+    padding: 0 20px; /* ปรับให้มี padding ซ้าย-ขวา ป้องกันเนื้อหาชนขอบ */
+    border-radius: 10px;
+    align-items: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2) !important; /* แก้ var(--gray) เป็น rgba เนื่องจากใน :root ไม่มีตัวแปร --gray ครับ */
+    width: 100%;
+    box-sizing: border-box; /* ป้องกันกล่องทะลุขอบจอ */
+  }
+
+  ul.menu-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+  }
+
+  ul.menu-wrapper li {
+    display: flex;
+    align-items: center; /* จัดให้ข้อความและเส้นคั่นอยู่กึ่งกลางแนวตั้งตรงกัน */
+    justify-content: center;
+  }
+
+  /* 1. แก้ไขเส้นคั่น (Separator) ให้วาดด้วย CSS แทนตัวอักษร */
+  ul.menu-wrapper li::after {
+    content: ""; /* ลบตัวอักษร | ออก */
+    display: block;
+    width: 1px; /* ความหนาของเส้น */
+    height: 28px; /* ความสูงของเส้น (ปรับเพิ่ม/ลดได้ เพื่อให้ครอบคลุมสระบน-ล่างพอดี) */
+    background-color: #ffffff;
+    opacity: 0.5;
+    margin: 0 25px; /* ระยะห่างซ้าย-ขวา (Distribute) ให้ดูโปร่งเหมือนใน Figma */
+    transform: translateY(4px);
+  }
+
+  ul.menu-wrapper li:last-child::after {
+    display: none; /* ซ่อนเส้นคั่นของเมนูตัวสุดท้าย */
+  }
+
+  /* 2. แก้ไขตัวอักษรให้อยู่กึ่งกลาง */
+  ul.menu-wrapper li a {
+    font-size: 24px;
+    color: #ffffff;
+    text-decoration: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    line-height: 1; /* บังคับระยะบรรทัดให้พอดีกับตัวอักษร ช่วยแก้ปัญหาฟอนต์ลอย */
+    padding-top: 15px; /* ดันลงมานิดหน่อยเพื่อชดเชย Baseline ของฟอนต์ DB Heavent */
+    transition: 0.3s ease;
+  }
+
+  /* เมื่อเป็นหน้าที่กำลังเลือก (Active) */
+  ul.menu-wrapper li a.vc-active {
+    color: #3bb2bd !important;
+    font-weight: bold;
+    text-decoration: none !important;
+  }
+
+  /* เมื่อเอาเมาส์ชี้ (Hover) */
+  ul.menu-wrapper li a:hover {
+    color: #3bb2bd !important;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    text-decoration-thickness: 2px;
+  }
+
+  /* Responsive */
+  @media screen and (max-width: 2560px) {
+    label {
+      display: none;
+    }
+
+    ul.menu-wrapper {
+      display: flex;
+      align-self: start;
+      font-size: 24px;
+    }
+
+    a.nav_vc.vc-active {
+      font-weight: 600;
+      color: var(--orange-nav) !important;
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    #menu-icon {
+      color: var(--white);
+      cursor: pointer;
+      display: block !important;
+      user-select: none;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .vc-active {
+      border-bottom: none !important;
+    }
+
+    nav.vc-navbar {
+      justify-content: end;
+      position: relative;
+
+      .menu-name {
+        display: flex;
+        color: var(--white);
+      }
+
+      input {
+        display: none;
+
+        &:checked + label {
+          color: var(--white);
+        }
+
+        &:checked ~ .menu-wrapper {
+          display: flex;
+          flex-direction: column;
+          padding: 1.5rem !important;
+          gap: 1rem;
+        }
+      }
+
+      ul.menu-wrapper {
+        display: flex;
+        text-align: start;
+        flex-direction: column;
+        width: 100%;
+        border-bottom: none;
+        background: linear-gradient(
+          2deg,
+          rgba(46, 170, 250, 1) 20%,
+          rgba(31, 47, 152, 1) 100%
+        );
+        border-width: 1px;
+        border-style: solid;
+        border-color: var(--nav-border);
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        z-index: 3;
+        height: max-content;
+        display: none;
+        text-align: left;
+        border-radius: 0px 0px 20px 20px;
+        box-shadow: 0px 3px 5px var(--shadow);
+
+        li {
+          display: block;
+          float: none;
+          width: auto;
+          margin: 0;
+          padding: 1rem;
+
+          a {
+            padding: 20px 30px;
+          }
+
+          &:hover {
+            background: var(--primary);
+            color: var(--orange-nav) !important;
+            cursor: pointer;
+
+            a {
+              background: none;
+              border-bottom: none !important;
+              color: var(--orange-nav);
+            }
+          }
+        }
+      }
+    }
+
+    a.nav_vc.vc-active {
+      font-weight: 600;
+      color: var(--orange-nav) !important;
+      border-bottom: none;
+    }
+  }
+
+  /* Surface Duo */
+  @media screen and (max-width: 569px) {
+    label {
+      translate: -1rem;
+    }
+  }
+
+  /* 14 Pro Max */
+  @media screen and (max-width: 481px) {
+    input {
+      &:checked ~ .menu-wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 0rem !important;
+        gap: 0rem !important;
+      }
+    }
+
+    label {
+      translate: -2rem;
+    }
+
+    ul.menu-wrapper {
+      li {
+        font-size: 1.85rem;
+      }
+    }
+  }
+
+  .panel-title a {
+    font-size: 32px !important;
+  }
+
+  a.collapsed:hover {
+    color: var(--primary) !important;
+  }
+
+  .content-collapse .panel-heading h4 a:hover {
+    color: var(--white) !important;
+  }
+
+  .control-page2f,
+  .content-insite2f {
+    padding-bottom: 0px;
+  }
+
+  .ico-pdf {
+    position: absolute;
+    top: 1.3rem;
+    right: 0;
+    width: 157px;
+    text-align: center;
+  }
+
+  .ico-pdf a::after {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background-color: #666666;
+    top: -0px;
+    left: 0;
+  }
+
+  /* Responsive */
+
+  @media screen and (max-width: 2560px) {
+    .miniPhone-view {
+      display: none !important;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .ico-pdf {
+      width: 100px;
+      top: 15px;
+    }
+  }
+
+  @media screen and (max-width: 569px) {
+    .content-collapse ul.collaps-level01 > li > .box-list-collapse {
+      padding: 29px 30px 29px 20px;
+      background-position: left 30px center;
+    }
+
+    .ico-pdf a::after {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 1px;
+      background-color: #666666;
+      top: 0px;
+      left: -15px;
+    }
+
+    .ico-pdf {
+      right: 12px;
+    }
+  }
+
+  @media screen and (max-width: 481px) {
+    .miniPhone-view {
+      display: inline !important;
+
+      .ico-pdf a::after {
+        content: "";
+        position: absolute;
+        height: 60%;
+        width: 1px;
+        background-color: #666666;
+        top: 5px;
+        left: -15px;
+      }
+
+      .ico-pdf {
+        top: 3rem;
+        right: 12px;
+      }
+    }
+
+    .desktopAndPhone-view {
+      display: none !important;
+    }
+  }
+</style>
+<nav class="vc-navbar" id="menu">
+  <div id="menu-icon" onclick="handleMenuIconClick()">
+    <div class="bar">&nbsp;</div>
+
+    <div class="bar">&nbsp;</div>
+
+    <div class="bar">&nbsp;</div>
+  </div>
+
+  <ul class="menu-wrapper">
+    <li>
+      <a class="nav_vc" href="/Our-Service/DigitalID/index.aspx">หน้าแรก</a>
+    </li>
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Home.aspx"
+        >VC</a
+      >
+    </li>
+    <li>
+      <a
+        class="nav_vc vc-active"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Report.aspx"
+        >เอกสารที่เกี่ยวข้อง</a
+      >
+    </li>
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/PilotUseCase.aspx"
+        >กรณีศึกษานำร่อง</a
+      >
+    </li>
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/Conformance-Test-Tool.aspx"
+        >การทดสอบมาตรฐาน</a
+      >
+    </li>
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/VC-team.aspx"
+        >คณะทำงาน</a
+      >
+    </li>
+    <!-- <li><a class="nav_vc" href="/th/Our-Service/VC-and-Digital-Document-Wallet/Timeline.aspx">ปฏิทินโครงการ</a>
+                    </li> -->
+    <li>
+      <a
+        class="nav_vc"
+        href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/knowledge.aspx"
+        >แหล่งความรู้เพิ่มเติม</a
+      >
+    </li>
+  </ul>
+</nav>
+&nbsp;
+
+<div class="control-page2f">
+  <div class="content-tablelist2f">
+    <div class="table-responsive">
+      <table
+        border="1"
+        cellpadding="1"
+        cellspacing="1"
+        class="table"
+        style="width: 500px"
+      >
+        <thead>
+          <tr>
+            <th width="25%">ชื่อเอกสาร</th>
+            <th width="40%">วัตถุประสงค์</th>
+            <th width="15%">ดาวน์โหลด</th>
+          </tr>
+        </thead>
+        <tbody style="text-align: left">
+          <!-- Row 1 -->
+          <tr>
+            <td style="vertical-align: top; width: 25%">
+              <h5>
+                รายงานทางเทคนิค เรื่อง
+                กรอบการสร้างความน่าเชื่อถือของเอกสารรับรองและเอกสารสำแดง
+              </h5>
+              (Trust Model Framework for Verifiable Credential and Verifiable
+              Presentation)
+
+              <p>เผยแพร่เมื่อ : ธ.ค. 2568</p>
+            </td>
+            <td style="vertical-align: top; width: 40%">
+              เพื่อให้การประยุกต์ใช้เอกสารรับรองและเอกสารสำแดงมีความมั่นคงปลอดภัย
+              มีการกำกับดูแลที่ชัดเจน และสามารถนำไปประยุกต์ใช้งานได้ในบริบทสากล
+              ซึ่งประกอบด้วยข้อกำหนดด้านเทคนิค ธรรมาภิบาล กระบวนการรับรอง
+              และการตรวจสอบความน่าเชื่อถือของผู้เกี่ยวข้อง อันได้แก่
+              ผู้ออกเอกสารรับรอง (issuer) ผู้ถือเอกสารรับรอง (holder)
+              ผู้ตรวจสอบเอกสารสำแดง (verifier) ระบบทะเบียนเอกสารรับรอง
+              (verifiable data registry: VDR)
+              และหน่วยงานผู้มีอำนาจในการควบคุมดูแลบริการเกี่ยวกับระบบเอกสารรับรองดิจิทัล
+              (VC Governance Authority หรือ VCGA)
+            </td>
+            <td class="t-center2f" style="vertical-align: top; width: 15%">
+              <a
+                href="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Technique-Report/รายงานทางเทคนค-VCGF-VCGF-v1-3.pdf.aspx?lang=th-TH"
+                target="_blank"
+                ><img src="/App_Themes/ETDA/images/icon-pdf.svg"
+              /></a>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top; width: 25%">
+              <h5>
+                รายงานทางเทคนิค เรื่อง
+                กรอบแนวทางการทำงานร่วมกันของเอกสารรับรองดิจิทัลสำหรับประเทศไทย
+              </h5>
+              (Thai VC Architecture and Reference Framework)
+
+              <p>เผยแพร่เมื่อ : ม.ค. 2568</p>
+            </td>
+            <td style="vertical-align: top; width: 40%">
+              เป็นแนวทางอ้างอิงการให้ระบบการใช้งานเอกสารรับรองดิจิทัล
+              เอกสารสำแดงดิจิทัลและกระเป๋าเอกสารดิจิทัลในประเทศไทยสามารถทำงานร่วมกันได้
+              และช่วยลดความซับซ้อนของการพัฒนาเชิงเทคนิคที่อาจมีความแตกต่างกัน
+            </td>
+            <td class="t-center2f" style="vertical-align: top; width: 15%">
+              <a
+                href="/getattachment/Our-Service/Digital-Trusted-services-Infrastructure/VC-and-Digital-Document-Wallet/Technique-Report/รายงานทางเทคนค-Thai-VC-ARF-v1-1-(2).pdf.aspx?lang=th-TH"
+                target="_blank"
+                ><img src="/App_Themes/ETDA/images/icon-pdf.svg"
+              /></a>
+            </td>
+          </tr>
+          <!-- Row 2 -->
+          <tr>
+            <td style="vertical-align: top; width: 25%">
+              <h5>
+                รายงานทางเทคนิค เรื่อง
+                กรอบการทำงานร่วมกันของกระเป๋าดิจิทัลสำหรับเอกสารรับรอง&nbsp;
+              </h5>
+              (Interoperable Framework of Digital Wallets for Verifiable
+              Credentials)
+
+              <p>เผยแพร่เมื่อ : 3&nbsp;เม.ย. 2566</p>
+            </td>
+            <td style="vertical-align: top; width: 40%">
+              อธิบายหลักการทำงาน วงจรชีวิต องค์ประกอบ
+              และข้อแนะนำของกระเป๋าดิจิทัล และเอกสารรับรอง (Verifiable
+              Credential: VC) ที่จัดเก็บในกระเป๋าดิจิทัล
+              เพื่อให้ผู้ให้บริการกระเป๋าดิจิทัล (Digital Wallet Provider)
+              และผู้พัฒนาที่เกี่ยวข้องมีแนวทางในการให้บริการที่มีความมั่นคงปลอดภัย
+              คุ้มครองข้อมูล ส่วนบุคคล และสามารถทำงานร่วมกันได้
+              <p><u>ข้อมูลที่เกี่ยวข้อง</u></p>
+
+              <ul>
+                <li>
+                  <p>
+                    <a
+                      href="https://www.etda.or.th/getattachment/Our-Service/Standard/txt-Recommendation/Information/%E0%B8%94%E0%B8%B2%E0%B8%A7%E0%B8%99%E0%B9%82%E0%B8%AB%E0%B8%A5%E0%B8%94%E0%B8%A1%E0%B8%B2%E0%B8%95%E0%B8%A3%E0%B8%90%E0%B8%B2%E0%B8%99/ETDA-Recommendation/White-Paper/Technical-Report/20230426DigitalWallet-presentaion-public.pdf.aspx?lang=th-TH"
+                      target="_blank"
+                      ><u>เอกสารนำเสนอ</u></a
+                    >
+                  </p>
+                </li>
+              </ul>
+            </td>
+            <td class="t-center2f" style="vertical-align: top; width: 15%">
+              <a
+                href="https://www.etda.or.th/th/Our-Service/Standard/White-Paper.aspx"
+                target="_blank"
+                ><img src="/App_Themes/ETDA/images/icon-pdf.svg"
+              /></a>
+            </td>
+          </tr>
+          <!-- Row 3 -->
+          <tr>
+            <td style="vertical-align: top; width: 25%">
+              <h5>
+                ขมธอ. 24-2563<br />
+                โครงสร้างข้อมูลของเอกสารรับรองและเอกสารสำแดง
+              </h5>
+              (Data Structure of Verifiable Credentials and Presentations)
+
+              <p>ประกาศเมื่อ : 30 ก.ย. 2563</p>
+            </td>
+            <td style="vertical-align: top; width: 40%">
+              กำหนดโครงสร้างข้อมูลสำหรับเอกสารรับรอง (Verifiable Credential: VC)
+              และเอกสารสำแดง (Verifiable Presentation: VP)&nbsp;
+              รวมถึงอธิบายความเชื่อมโยงในการใช้งาน VC และ VP
+              ระหว่างเอนทิตีที่เกี่ยวข้อง&nbsp;
+              <p><u>ข้อมูลที่เกี่ยวข้อง</u></p>
+
+              <ul>
+                <li>
+                  <p>
+                    <u
+                      ><a
+                        href="https://www.etda.or.th/getattachment/Our-Service/Standard/ETDA-Recommendation/Information/%E0%B8%94%E0%B8%B2%E0%B8%A7%E0%B8%99%E0%B9%82%E0%B8%AB%E0%B8%A5%E0%B8%94%E0%B8%A1%E0%B8%B2%E0%B8%95%E0%B8%A3%E0%B8%90%E0%B8%B2%E0%B8%99/ETDA-Recommendation-(1)/%E0%B9%81%E0%B8%AA%E0%B8%94%E0%B8%87%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B8%97%E0%B8%87%E0%B8%AB%E0%B8%A1%E0%B8%94/%E0%B8%82%E0%B8%A1%E0%B8%98%E0%B8%AD-24-2563/20200914-DataStructure-VC-VP_V08-1.pdf.aspx?lang=th-TH"
+                        target="_blank"
+                        >เอกสารนำเสนอ</a
+                      ></u
+                    >
+                  </p>
+                </li>
+              </ul>
+            </td>
+            <td class="t-center2f" style="vertical-align: top; width: 15%">
+              <a
+                href="https://www.etda.or.th/getattachment/bafad651-864a-4f01-86ab-a2f39239d400/%E0%B8%82%E0%B8%A1%E0%B8%98%E0%B8%AD-24-2563.aspx"
+                target="_blank"
+                ><img
+                  src="https://www.etda.or.th/App_Themes/ETDA/images/icon-pdf.svg"
+              /></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script type="text/javascript">
+    // $(document).ready(
+    //     $('.collapse').collapse({
+    //         toggle: true
+    //     })
+    // )
+
+    function updateMenu() {
+      const menu = document.getElementById("menu");
+      const menuIcon = document.getElementById("menu-icon");
+
+      if (document.getElementById("responsive-menu-checkbox").checked) {
+        menu.style.borderBottomRightRadius = "0";
+        menu.style.borderBottomLeftRadius = "0";
+        menuIcon.classList.add("menu-icon-close");
+      } else {
+        menu.style.borderRadius = "10px";
+        menuIcon.classList.remove("menu-icon-close");
+      }
+    }
+
+    function handleMenuIconClick() {
+      const menuCheckbox = document.getElementById("responsive-menu-checkbox");
+
+      if (menuCheckbox.checked) {
+        menuCheckbox.checked = false;
+        menuCheckbox.removeAttribute("checked");
+      } else {
+        menuCheckbox.checked = true;
+        menuCheckbox.setAttribute("checked", "checked");
+      }
+
+      updateMenu();
+    }
+  </script>
+</div>
