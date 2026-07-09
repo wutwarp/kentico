@@ -27,6 +27,11 @@
     box-sizing: border-box;
   }
 
+  html {
+    /* scroll-behavior: smooth; ถูกถอดออก เพราะควบคุมความเร็วไม่ได้
+       ใช้ JS smoothScrollTo() แทน เพื่อปรับความเร็ว/easing เอง */
+  }
+
   body {
     font-family: "dbheavent_cond", sans-serif;
     background: var(--white);
@@ -37,6 +42,77 @@
   .page-inner {
     max-width: 1280px;
     margin: 0 auto;
+  }
+
+  /* Nav ใหม่ */
+  nav.main-navbar {
+    display: flex;
+    justify-content: center;
+    background-color: #0f2849;
+    height: 5rem;
+    padding: 0 20px;
+    border-radius: 10px;
+    align-items: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2) !important;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 60px;
+  }
+
+  ul.main-menu-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+  }
+
+  ul.main-menu-wrapper li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  ul.main-menu-wrapper li::after {
+    content: "";
+    display: block;
+    width: 1px;
+    height: 28px;
+    background-color: #ffffff;
+    opacity: 0.5;
+    margin: 0 25px;
+    transform: translateY(4px);
+  }
+
+  ul.main-menu-wrapper li:last-child::after {
+    display: none;
+  }
+
+  ul.main-menu-wrapper li a {
+    font-size: 24px;
+    color: #ffffff;
+    text-decoration: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    padding-top: 15px;
+    transition: 0.3s ease;
+  }
+
+  ul.main-menu-wrapper li a.main-active {
+    color: #3bb2bd !important;
+    font-weight: bold;
+    text-decoration: none !important;
+  }
+
+  ul.main-menu-wrapper li a:hover {
+    color: #3bb2bd !important;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    text-decoration-thickness: 2px;
   }
 
   /* ============================
@@ -71,6 +147,10 @@
     font-size: 35px;
     color: #1d3359;
     line-height: 1.4;
+    text-align: justify;
+    text-justify: inter-word;
+    word-break: normal;
+    overflow-wrap: break-word;
   }
 
   .intro-image {
@@ -159,11 +239,11 @@
   }
 
   .stats-box {
-    padding: 28px 32px;
-    min-height: 209px;
+    position: relative;
+    padding: 18px 32px 50px;
+    min-height: 250px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
   }
 
   .stats-title {
@@ -172,7 +252,17 @@
     color: var(--black);
     margin-bottom: 20px;
     line-height: 1;
-    width: 100%;
+  }
+
+  .stats-update {
+    position: absolute;
+    right: 32px;
+    bottom: 16px;
+    font-size: 18px;
+    color: white;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.2px;
   }
 
   .stats-grid {
@@ -395,6 +485,7 @@
 
   .card-group {
     margin-bottom: 36px;
+    scroll-margin-top: 24px;
   }
 
   .card-group-title {
@@ -515,6 +606,7 @@
        ============================ */
   .resources-section {
     margin-top: 12px;
+    scroll-margin-top: 24px;
   }
 
   .resources-section-title {
@@ -650,6 +742,15 @@
     .stat-item .stat-number {
       font-size: 45px;
     }
+
+    nav.main-navbar {
+      overflow-x: auto;
+      justify-content: flex-start;
+    }
+    ul.main-menu-wrapper {
+      justify-content: flex-start;
+      width: max-content;
+    }
   }
 </style>
 <script type="text/javascript">
@@ -754,11 +855,96 @@
     }
   }
 
+  /* ============================
+       CUSTOM SMOOTH SCROLL (ช้าลง + easing)
+       ปรับความเร็วได้ที่ตัวแปร duration (ms) ด้านล่าง
+       ============================ */
+  function smoothScrollTo(targetY, duration = 1000) {
+    const startY = window.scrollY;
+    const diff = targetY - startY;
+    let startTime = null;
+
+    function easeInOutQuad(t) {
+      return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    }
+
+    function step(currentTime) {
+      if (startTime === null) startTime = currentTime;
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      window.scrollTo(0, startY + diff * easeInOutQuad(progress));
+      if (elapsed < duration) {
+        requestAnimationFrame(step);
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  /* ============================
+       เผื่อพื้นที่เลื่อนไม่พอ (สำหรับ anchor ที่อยู่ใกล้ท้ายหน้า
+       เช่น #card-knowledge) โดยเสริม spacer ชั่วคราวท้ายหน้า
+       เท่าที่ขาด เพื่อให้เลื่อนขึ้นไปชนบนได้เหมือน anchor อื่นๆ
+       ============================ */
+  function ensureScrollSpace(targetY) {
+    const maxScroll =
+      document.documentElement.scrollHeight - window.innerHeight;
+    let spacer = document.getElementById("scroll-spacer");
+
+    if (targetY > maxScroll) {
+      const deficit = targetY - maxScroll;
+      if (!spacer) {
+        spacer = document.createElement("div");
+        spacer.id = "scroll-spacer";
+        spacer.setAttribute("aria-hidden", "true");
+        document.body.appendChild(spacer);
+      }
+      spacer.style.height = `${deficit}px`;
+    } else if (spacer) {
+      spacer.style.height = "0px";
+    }
+  }
+
+  function initNavbarScroll() {
+    document
+      .querySelectorAll('.main-menu-wrapper a[href^="#"]')
+      .forEach((link) => {
+        link.addEventListener("click", function (e) {
+          const targetId = this.getAttribute("href");
+          const targetEl = document.querySelector(targetId);
+          if (!targetEl) return;
+
+          e.preventDefault();
+
+          const marginTop =
+            parseInt(getComputedStyle(targetEl).scrollMarginTop) || 0;
+          const targetY =
+            targetEl.getBoundingClientRect().top + window.scrollY - marginTop;
+
+          ensureScrollSpace(targetY);
+          smoothScrollTo(targetY, 1000);
+        });
+      });
+  }
+
   window.addEventListener("DOMContentLoaded", renderTimeline);
   window.addEventListener("resize", calculateLineHeight);
+  window.addEventListener("DOMContentLoaded", initNavbarScroll);
 </script>
 <!-- PAGE CONTENT -->
 <main class="page-wrapper">
+  <!-- navbar ใหม่ สำหรับเลื่อนไปยังหมวดต่างๆ ในหน้านี้ -->
+  <div class="page-inner" style="padding-top: 15px">
+    <nav class="main-navbar" id="main-menu">
+      <ul class="main-menu-wrapper">
+        <li><a href="#section-personal">บุคคลธรรมดา</a></li>
+        <li><a href="#section-corporate">นิติบุคคล</a></li>
+        <li><a href="#section-vcwallet">VC &amp; Digital Wallet</a></li>
+        <li><a href="#card-knowledge">แหล่งข้อมูลเพิ่มเติม</a></li>
+      </ul>
+    </nav>
+  </div>
+
   <div class="intro-bg">
     <div class="page-inner">
       <!-- INTRO SECTION -->
@@ -768,15 +954,17 @@
             โครงสร้างพื้นฐาน<br />
             <span class="highlight">Digital ID</span> ของประเทศไทย
           </h2>
+
           <p>
-            โครงการส่งเสริมดิจิทัลไอดี คือ
-            การสร้างระบบพิสูจน์และยืนยันตัวตนทางดิจิทัลที่ "สะดวก ปลอดภัย
-            ไร้รอยต่อ ครอบคลุมทุกภาคส่วน" เพื่อให้ประชาชนและภาคธุรกิจ
-            สามารถเข้าถึงบริการดิจิทัลได้อย่างมั่นใจ ปลอดภัย และ
-            ทั่วถึงพร้อมทั้งสนับสนุนการ
-            บูรณาการข้อมูลและธรรมาภิบาลในระบบดิจิทัลของประเทศ
+            โครงการส่งเสริมดิจิทัลไอดี คือ การสร้างระบบพิสูจน์และยืนยัน<br />
+            ตัวตนทางดิจิทัลที่ &quot;สะดวก ปลอดภัย ไร้รอยต่อครอบคลุม<br />
+            ทุกภาคส่วน&quot; เพื่อให้ประชาชนและภาคธุรกิจสามารถเข้าถึง<br />
+            บริการดิจิทัลได้อย่างมั่นใจ ปลอดภัย และทั่วถึงพร้อมทั้ง<br />
+            สนับสนุนการบูรณาการข้อมูลและธรรมาภิบาล<br />
+            ในระบบดิจิทัลของประเทศ
           </p>
         </div>
+
         <div class="intro-image">
           <img
             alt="บัตร Digital ID"
@@ -784,8 +972,8 @@
           />
         </div>
       </section>
-
       <!-- FRAMEWORK + STATS -->
+
       <section class="bottom-section">
         <div class="framework-box">
           <div class="framework-image">
@@ -794,11 +982,17 @@
               src="/getattachment/Our-Service/Digital-ID/index/Group-62588.png.aspx?lang=th-TH"
             />
           </div>
+
           <div class="framework-content">
-            <h3>Digital ID<br />Framework</h3>
+            <h3>
+              Digital ID<br />
+              Framework
+            </h3>
+
             <p>
-              กรอบการขับเคลื่อนการให้บริการ<br />พิสูจน์และยืนยันตัวตนทางดิจิทัล<br />ประเทศไทยระยะที่
-              2 (พ.ศ. 2568–2570)
+              กรอบการขับเคลื่อนการให้บริการ<br />
+              พิสูจน์และยืนยันตัวตนทางดิจิทัล<br />
+              ประเทศไทยระยะที่ 2 (พ.ศ. 2568&ndash;2570)
             </p>
             <button
               class="download-btn"
@@ -815,27 +1009,42 @@
         </div>
 
         <div class="stats-box">
-          <h3 style="color: #000000">สถิติจำนวนการใช้งาน Digital ID</h3>
+          <h3 class="stats-title" style="color: #000">
+            สถิติจำนวนการใช้งาน Digital ID
+          </h3>
+
           <div class="stats-grid">
             <div class="stat-item">
               <div class="stat-number">162.63</div>
+
               <div class="stat-label">ล้านบัญชี</div>
+
               <div class="stat-desc">
-                จำนวนบัญชีผู้ใช้งาน<br />ของ Digital ID
+                จำนวนบัญชีผู้ใช้งาน<br />
+                ของ Digital ID
               </div>
             </div>
+
             <div class="stat-item">
               <div class="stat-number">1,797</div>
+
               <div class="stat-label">บริการ</div>
+
               <div class="stat-desc">
-                ที่รัฐเชื่อมต่อกับ<br />Digital ID แล้ว
+                ที่รัฐเชื่อมต่อกับ<br />
+                Digital ID แล้ว
               </div>
             </div>
+
             <div class="stat-item">
               <div class="stat-number">28</div>
+
               <div class="stat-label">ใบอนุญาต</div>
+
               <div class="stat-desc">
-                ผู้ให้บริการพิสูจน์<br />และยืนยันตัวตน
+                ผู้ให้บริการพิสูจน์<br />
+                และยืนยันตัวตน
+                <div class="stats-update">ข้อมูล ณ เม.ย. 69</div>
               </div>
             </div>
           </div>
@@ -849,10 +1058,12 @@
     <section class="timeline-section">
       <div class="timeline-header">
         <h2>ความคืบหน้าของโครงการ</h2>
+
         <p>
           ติดตามพัฒนาการและเป้าหมายของ Digital ID ตั้งแต่เริ่มต้นจนถึงปัจจุบัน
         </p>
       </div>
+
       <div class="timeline-wrapper" id="dynamic-timeline">
         <!-- JS จะถูกแทรกข้อมูลตรงนี้ -->
       </div>
@@ -865,14 +1076,15 @@
       <section class="content-section">
         <div class="content-main-header">
           <h2>เนื้อหาสำคัญของโครงการ <span>Digital ID</span></h2>
+
           <p>
-            แบ่งตามกลุ่มผู้ใช้งานและประเภทของบริการ —
+            แบ่งตามกลุ่มผู้ใช้งานและประเภทของบริการ &mdash;
             คลิกเพื่อดูรายละเอียดในแต่ละหมวด
           </p>
         </div>
-
         <!-- กลุ่ม 1: บุคคลธรรมดา -->
-        <div class="card-group">
+
+        <div class="card-group" id="section-personal">
           <div class="card-group-title">Digital ID ที่เกี่ยวกับบุคคลธรรมดา</div>
 
           <div class="card-grid card-grid-5">
@@ -889,9 +1101,13 @@
                   src="/getattachment/Our-Service/Digital-ID/index/Group-62510.png.aspx?lang=th-TH"
                 />
               </div>
+
               <div class="card-title">สำหรับบุคคลธรรมดา</div>
+
               <div class="card-desc">บริการยืนยันตัวตน สำหรับประชาชนทั่วไป</div>
-              <a class="card-link" href="/Our-Service/DigitalID/personal/public.aspx"
+              <a
+                class="card-link"
+                href="/Our-Service/DigitalID/personal/public.aspx"
                 >ดูเพิ่มเติม &rarr;</a
               >
             </div>
@@ -988,7 +1204,9 @@
             -->
           </div>
         </div>
+        <!-- anchor สำหรับ "นิติบุคคล" รอไว้ก่อน — ส่วนกลุ่ม 2 ด้านล่างยังถูกซ่อนอยู่ (comment out) เมื่อเปิดกลับมาแสดงจริง ลิงก์เมนูนี้จะเลื่อนมาที่นี่ได้ทันที -->
 
+        <div id="section-corporate" style="scroll-margin-top: 24px">&nbsp;</div>
         <!-- กลุ่ม 2: นิติบุคคล
         <div class="card-group">
           <div class="card-group-title">
@@ -1085,10 +1303,9 @@
             </div>
           </div>
         </div>
-        -->
+        --><!-- กลุ่ม 3: VC and Digital Document Wallet -->
 
-        <!-- กลุ่ม 3: VC and Digital Document Wallet -->
-        <div class="card-group">
+        <div class="card-group" id="section-vcwallet">
           <div class="card-group-title">VC and Digital Document Wallet</div>
 
           <div class="card-grid card-grid-3">
@@ -1105,7 +1322,9 @@
                   src="/getattachment/Our-Service/Digital-ID/index/Group-62519.png.aspx?lang=th-TH"
                 />
               </div>
+
               <div class="card-title">VC and Digital Document Wallet</div>
+
               <div class="card-desc">ระบบเก็บเอกสารดิจิทัล</div>
               <a
                 class="card-link"
@@ -1127,7 +1346,9 @@
                   src="/getattachment/Our-Service/Digital-ID/index/Group-62520.png.aspx?lang=th-TH"
                 />
               </div>
+
               <div class="card-title">เอกสารที่เกี่ยวข้อง</div>
+
               <div class="card-desc">มาตรฐานและข้อกำหนด</div>
               <a
                 class="card-link"
@@ -1149,7 +1370,9 @@
                   src="/getattachment/Our-Service/Digital-ID/index/Group-62521.png.aspx?lang=th-TH"
                 />
               </div>
+
               <div class="card-title">กรณีศึกษานำร่อง</div>
+
               <div class="card-desc">ตัวอย่างการใช้งานจริง</div>
               <a
                 class="card-link"
@@ -1171,7 +1394,9 @@
                   src="/getattachment/Our-Service/Digital-ID/index/Group-62522.png.aspx?lang=th-TH"
                 />
               </div>
+
               <div class="card-title">คณะทำงาน</div>
+
               <div class="card-desc">โครงสร้างทีมที่ขับเคลื่อนโครงการ</div>
               <a
                 class="card-link"
@@ -1180,7 +1405,11 @@
               >
             </div>
 
-            <div class="card">
+            <div
+              class="card"
+              id="card-knowledge"
+              style="scroll-margin-top: 24px"
+            >
               <div class="card-icon">
                 <img
                   alt="แหล่งความรู้เพิ่มเติม"
@@ -1193,7 +1422,9 @@
                   src="/getattachment/Our-Service/Digital-ID/index/Group-62523.png.aspx?lang=th-TH"
                 />
               </div>
+
               <div class="card-title">แหล่งความรู้เพิ่มเติม</div>
+
               <div class="card-desc">เอกสารประกอบและสื่อการเรียนรู้</div>
               <a
                 class="card-link"
@@ -1201,8 +1432,7 @@
                 >ดูเพิ่มเติม &rarr;</a
               >
             </div>
-
-           <!--<div class="card">
+            <!--<div class="card">
               <div class="card-icon">
                 <img
                   alt="เครื่องมือการทดสอบมาตรฐาน"
@@ -1221,11 +1451,9 @@
                 >ดูเพิ่มเติม &rarr;</a
               >
             </div> 
-          </div> --> 
-        </div>
-
-        <!-- แหล่งข้อมูลเพิ่มเติม -->
-          <!-- <div class="resources-section">
+          </div> -->
+          </div>
+          <!-- แหล่งข้อมูลเพิ่มเติม --><!-- <div class="resources-section">
           <div class="resources-section-title">แหล่งข้อมูลเพิ่มเติม</div>
 
           <div class="resources-grid">
@@ -1246,9 +1474,7 @@
                   >ดูเพิ่มเติม &rarr;</a
                 >
               </div>
-            </div> -->
-
-            <!-- <div class="resource-card">
+            </div> --><!-- <div class="resource-card">
               <div class="resource-icon-box">
                 <img
                   alt="สถิติจำนวนการใช้งาน"
@@ -1265,9 +1491,12 @@
                 >
               </div>
             </div> -->
-          </div>
         </div>
       </section>
     </div>
+
+    <section>&nbsp;</section>
   </div>
+
+  <div>&nbsp;</div>
 </main>
