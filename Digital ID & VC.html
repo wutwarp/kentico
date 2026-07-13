@@ -1,7 +1,4 @@
 <style type="text/css">
-  /* ============================
-       DESIGN TOKENS
-       ============================ */
   :root {
     --teal: #3bb2bd;
     --teal-dark: #2a9eaa;
@@ -18,9 +15,6 @@
     --radius-lg: 16px;
   }
 
-  /* ============================
-       BASE
-       ============================ */
   * {
     margin: 0;
     padding: 0;
@@ -28,8 +22,6 @@
   }
 
   html {
-    /* scroll-behavior: smooth; ถูกถอดออก เพราะควบคุมความเร็วไม่ได้
-       ใช้ JS smoothScrollTo() แทน เพื่อปรับความเร็ว/easing เอง */
   }
 
   body {
@@ -44,7 +36,6 @@
     margin: 0 auto;
   }
 
-  /* Nav ใหม่ */
   nav.main-navbar {
     display: flex;
     justify-content: center;
@@ -115,9 +106,6 @@
     text-decoration-thickness: 2px;
   }
 
-  /* ============================
-       INTRO
-       ============================ */
   .intro-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -165,9 +153,6 @@
     filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.1));
   }
 
-  /* ============================
-       FRAMEWORK + STATS
-       ============================ */
   .bottom-section {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
@@ -301,9 +286,6 @@
     line-height: 1.1;
   }
 
-  /* ============================
-       INTRO BG LAYER
-       ============================ */
   .intro-bg {
     background: #f9f8fe;
     width: 100%;
@@ -313,9 +295,6 @@
     padding-bottom: 40px;
   }
 
-  /* ============================
-       TIMELINE
-       ============================ */
   .timeline-header {
     text-align: center;
     margin-bottom: 48px;
@@ -455,9 +434,6 @@
     font-weight: 400;
   }
 
-  /* ============================
-       CONTENT CARDS
-       ============================ */
   .content-section {
     margin: 64px 0 0;
   }
@@ -574,9 +550,6 @@
     margin-top: auto;
   }
 
-  /* ============================
-       HOVER EFFECTS FOR CARD
-       ============================ */
   .card:hover {
     border-color: var(--teal);
   }
@@ -601,9 +574,6 @@
     display: block;
   }
 
-  /* ============================
-       RESOURCES
-       ============================ */
   .resources-section {
     margin-top: 12px;
     scroll-margin-top: 24px;
@@ -682,9 +652,6 @@
     background: var(--light-teal);
   }
 
-  /* ============================
-       RESPONSIVE
-       ============================ */
   @media (max-width: 700px) {
     .card {
       width: calc(50% - 6px);
@@ -752,6 +719,36 @@
       width: max-content;
     }
   }
+
+  /* ปุ่มดูความคืบหน้าทั้งหมดของโครงการ*/
+  .timeline-show-all-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+  }
+
+  .timeline-show-all-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 32px;
+    border-radius: 24px;
+    border: 1.5px solid var(--teal);
+    background: var(--light-teal);
+    color: var(--teal) !important;
+    font-size: 24px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .timeline-show-all-btn:hover {
+    background: var(--teal);
+    color: var(--white) !important;
+  }
 </style>
 <script type="text/javascript">
   const timelineData = [
@@ -818,14 +815,45 @@
       desc: "แลกเปลี่ยนวิสัยทัศน์ระดับโลก ดัน Digital ID 2.0 <br>สู่โครงสร้างพื้นฐานดิจิทัลที่ยั่งยืน",
       link: "https://www.etda.or.th/th/pr-news/DigitalID/Digital-ID-Trust-Infrastructure.aspx",
     },
+    {
+      no: 10,
+      date: "25 มิ.ย. 2569",
+      title: "Digital Trust Thailand 2026",
+      desc: "แลกเปลี่ยนวิสัยทัศน์ระดับโลก ดัน Digital ID 2.0 <br>สู่โครงสร้างพื้นฐานดิจิทัลที่ยั่งยืน",
+      link: "https://www.etda.or.th/th/pr-news/DigitalID/Digital-ID-Trust-Infrastructure.aspx",
+    },
+    {
+      no: 11,
+      date: "26 มิ.ย. 2569",
+      title: "Digital Trust Thailand 2026",
+      desc: "แลกเปลี่ยนวิสัยทัศน์ระดับโลก ดัน Digital ID 2.0 <br>สู่โครงสร้างพื้นฐานดิจิทัลที่ยั่งยืน",
+      link: "https://www.etda.or.th/th/pr-news/DigitalID/Digital-ID-Trust-Infrastructure.aspx",
+    },
+    {
+      no: 12,
+      date: "30 มิ.ย. 2569",
+      title: "Digital Trust Thailand 2026",
+      desc: "แลกเปลี่ยนวิสัยทัศน์ระดับโลก ดัน Digital ID 2.0 <br>สู่โครงสร้างพื้นฐานดิจิทัลที่ยั่งยืน",
+      link: "https://www.etda.or.th/th/pr-news/DigitalID/Digital-ID-Trust-Infrastructure.aspx",
+    },
+    {
+      no: 13,
+      date: "1 ก.ค. 2569",
+      title: "Digital Trust Thailand 2026",
+      desc: "แลกเปลี่ยนวิสัยทัศน์ระดับโลก ดัน Digital ID 2.0 <br>สู่โครงสร้างพื้นฐานดิจิทัลที่ยั่งยืน",
+      link: "https://www.etda.or.th/th/pr-news/DigitalID/Digital-ID-Trust-Infrastructure.aspx",
+    },
   ];
+
+  let showAllTimeline = false;
 
   function renderTimeline() {
     const wrapper = document.getElementById("dynamic-timeline");
-    const sortedData = timelineData.sort((a, b) => b.no - a.no).slice(0, 10);
+    const sortedData = timelineData.sort((a, b) => b.no - a.no);
+    const dataToShow = showAllTimeline ? sortedData : sortedData.slice(0, 10);
 
     let html = "";
-    sortedData.forEach((item, index) => {
+    dataToShow.forEach((item, index) => {
       const alignmentClass = index % 2 === 0 ? "right" : "";
 
       html += `
@@ -842,6 +870,33 @@
 
     wrapper.innerHTML = html;
     calculateLineHeight();
+    updateTimelineButtonVisibility(sortedData.length);
+  }
+
+  function updateTimelineButtonVisibility(totalCount) {
+    const btnWrapper = document.getElementById("timeline-show-all-wrapper");
+    const btn = document.getElementById("timeline-show-all-btn");
+    if (!btnWrapper || !btn) return;
+
+    // ถ้าข้อมูลทั้งหมดมีไม่เกิน 10 รายการ (แสดงครบอยู่แล้ว) ไม่จำเป็นต้องมีปุ่มเลย
+    if (totalCount <= 10) {
+      btnWrapper.style.display = "none";
+      return;
+    }
+
+    btnWrapper.style.display = "flex";
+    btn.textContent = showAllTimeline
+      ? "ย่อกลับ"
+      : "ดูความคืบหน้าทั้งหมดของโครงการ";
+  }
+
+  function initTimelineShowAllButton() {
+    const btn = document.getElementById("timeline-show-all-btn");
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+      showAllTimeline = !showAllTimeline;
+      renderTimeline();
+    });
   }
 
   function calculateLineHeight() {
@@ -855,10 +910,6 @@
     }
   }
 
-  /* ============================
-       CUSTOM SMOOTH SCROLL (ช้าลง + easing)
-       ปรับความเร็วได้ที่ตัวแปร duration (ms) ด้านล่าง
-       ============================ */
   function smoothScrollTo(targetY, duration = 1000) {
     const startY = window.scrollY;
     const diff = targetY - startY;
@@ -881,11 +932,6 @@
     requestAnimationFrame(step);
   }
 
-  /* ============================
-       เผื่อพื้นที่เลื่อนไม่พอ (สำหรับ anchor ที่อยู่ใกล้ท้ายหน้า
-       เช่น #card-knowledge) โดยเสริม spacer ชั่วคราวท้ายหน้า
-       เท่าที่ขาด เพื่อให้เลื่อนขึ้นไปชนบนได้เหมือน anchor อื่นๆ
-       ============================ */
   function ensureScrollSpace(targetY) {
     const maxScroll =
       document.documentElement.scrollHeight - window.innerHeight;
@@ -928,6 +974,7 @@
   }
 
   window.addEventListener("DOMContentLoaded", renderTimeline);
+  window.addEventListener("DOMContentLoaded", initTimelineShowAllButton);
   window.addEventListener("resize", calculateLineHeight);
   window.addEventListener("DOMContentLoaded", initNavbarScroll);
 </script>
@@ -1066,6 +1113,16 @@
 
       <div class="timeline-wrapper" id="dynamic-timeline">
         <!-- JS จะถูกแทรกข้อมูลตรงนี้ -->
+      </div>
+
+      <div class="timeline-show-all-wrapper" id="timeline-show-all-wrapper">
+        <button
+          type="button"
+          class="timeline-show-all-btn"
+          id="timeline-show-all-btn"
+        >
+          ดูความคืบหน้าทั้งหมดของโครงการ
+        </button>
       </div>
     </section>
   </div>
