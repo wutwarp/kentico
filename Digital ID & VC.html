@@ -93,6 +93,15 @@
     transition: 0.3s ease;
   }
 
+  ul.main-menu-wrapper li span.main-disabled {
+    font-size: 24px;
+    color: #8a8a8a !important;
+    cursor: not-allowed !important;
+    pointer-events: none;
+    opacity: 0.6;
+    padding-top: 15px;
+  }
+
   ul.main-menu-wrapper li a.main-active {
     color: #3bb2bd !important;
     font-weight: bold;
@@ -982,9 +991,15 @@
     <nav class="main-navbar" id="main-menu">
       <ul class="main-menu-wrapper">
         <li><a href="#section-personal">บุคคลธรรมดา</a></li>
-        <li><a href="#section-corporate">นิติบุคคล</a></li>
         <li><a href="#section-vcwallet">VC &amp; Digital Wallet</a></li>
-        <li><a href="#card-knowledge">แหล่งข้อมูลเพิ่มเติม</a></li>
+        <li>
+          <span class="main-disabled" aria-disabled="true">นิติบุคคล</span>
+        </li>
+        <li>
+          <span class="main-disabled" aria-disabled="true"
+            >แหล่งข้อมูลเพิ่มเติม</span
+          >
+        </li>
       </ul>
     </nav>
   </div>
