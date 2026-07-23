@@ -259,6 +259,13 @@
     letter-spacing: 0.2px;
   }
 
+  .stats-update .star-mark {
+    color: #000;
+    font-weight: 700;
+    font-size: 40px;
+    vertical-align: middle;
+  }
+
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -988,20 +995,14 @@
 <main class="page-wrapper">
   <!-- navbar ใหม่ สำหรับเลื่อนไปยังหมวดต่างๆ ในหน้านี้ -->
   <div class="page-inner" style="padding-top: 15px">
-    <nav class="main-navbar" id="main-menu">
-      <ul class="main-menu-wrapper">
-        <li><a href="#section-personal">บุคคลธรรมดา</a></li>
-        <li><a href="#section-vcwallet">VC &amp; Digital Wallet</a></li>
-        <li>
-          <span class="main-disabled" aria-disabled="true">นิติบุคคล</span>
-        </li>
-        <li>
-          <span class="main-disabled" aria-disabled="true"
-            >แหล่งข้อมูลเพิ่มเติม</span
-          >
-        </li>
-      </ul>
-    </nav>
+    <!-- <nav class="main-navbar" id="main-menu">
+<ul class="main-menu-wrapper">
+	<li><a href="#section-personal">บุคคลธรรมดา</a></li>
+	<li><a href="#section-vcwallet">VC &amp; Digital Wallet</a></li>
+	<li><span aria-disabled="true" class="main-disabled">นิติบุคคล</span></li>
+	<li><span aria-disabled="true" class="main-disabled">แหล่งข้อมูลเพิ่มเติม</span></li>
+</ul>
+</nav> -->
   </div>
 
   <div class="intro-bg">
@@ -1069,7 +1070,7 @@
 
         <div class="stats-box">
           <h3 class="stats-title" style="color: #000">
-            สถิติจำนวนการใช้งาน Digital ID
+            สถิติจำนวนการใช้งาน Digital ID*
           </h3>
 
           <div class="stats-grid">
@@ -1103,40 +1104,15 @@
               <div class="stat-desc">
                 ผู้ให้บริการพิสูจน์<br />
                 และยืนยันตัวตน
-                <div class="stats-update">ข้อมูล ณ เม.ย. 69</div>
+                <div class="stats-update">
+                  <span class="star-mark">*</span> ข้อมูล ณ เม.ย. 69
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
     </div>
-  </div>
-
-  <div class="page-inner">
-    <!-- TIMELINE SECTION -->
-    <section class="timeline-section">
-      <div class="timeline-header">
-        <h2>ความคืบหน้าของโครงการ</h2>
-
-        <p>
-          ติดตามพัฒนาการและเป้าหมายของ Digital ID ตั้งแต่เริ่มต้นจนถึงปัจจุบัน
-        </p>
-      </div>
-
-      <div class="timeline-wrapper" id="dynamic-timeline">
-        <!-- JS จะถูกแทรกข้อมูลตรงนี้ -->
-      </div>
-
-      <div class="timeline-show-all-wrapper" id="timeline-show-all-wrapper">
-        <button
-          type="button"
-          class="timeline-show-all-btn"
-          id="timeline-show-all-btn"
-        >
-          ดูความคืบหน้าทั้งหมดของโครงการ
-        </button>
-      </div>
-    </section>
   </div>
 
   <div class="intro-bg">
@@ -1425,30 +1401,13 @@
                 >ดูเพิ่มเติม &rarr;</a
               >
             </div>
+            <!-- <div class="card">
+<div class="card-icon"><img alt="กรณีศึกษานำร่อง" class="img-default" src="/getattachment/Our-Service/Digital-ID/index/กรณศกษานำรอง.png.aspx?lang=th-TH" /> <img alt="กรณีศึกษานำร่อง" class="img-hover" src="/getattachment/Our-Service/Digital-ID/index/Group-62521.png.aspx?lang=th-TH" /></div>
 
-            <div class="card">
-              <div class="card-icon">
-                <img
-                  alt="กรณีศึกษานำร่อง"
-                  class="img-default"
-                  src="/getattachment/Our-Service/Digital-ID/index/กรณศกษานำรอง.png.aspx?lang=th-TH"
-                />
-                <img
-                  alt="กรณีศึกษานำร่อง"
-                  class="img-hover"
-                  src="/getattachment/Our-Service/Digital-ID/index/Group-62521.png.aspx?lang=th-TH"
-                />
-              </div>
+<div class="card-title">กรณีศึกษานำร่อง</div>
 
-              <div class="card-title">กรณีศึกษานำร่อง</div>
-
-              <div class="card-desc">ตัวอย่างการใช้งานจริง</div>
-              <a
-                class="card-link"
-                href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/PilotUseCase.aspx"
-                >ดูเพิ่มเติม &rarr;</a
-              >
-            </div>
+<div class="card-desc">ตัวอย่างการใช้งานจริง</div>
+<a class="card-link" href="/Our-Service/DigitalID/VC-and-Digital-Document-Wallet/PilotUseCase.aspx">ดูเพิ่มเติม &rarr;</a></div> -->
 
             <div class="card">
               <div class="card-icon">
@@ -1562,6 +1521,34 @@
             </div> -->
         </div>
       </section>
+
+      <div class="page-inner">
+        <!-- TIMELINE SECTION -->
+        <section class="timeline-section">
+          <div class="timeline-header">
+            <h2>ความคืบหน้าของโครงการ</h2>
+
+            <p>
+              ติดตามพัฒนาการและเป้าหมายของ Digital ID
+              ตั้งแต่เริ่มต้นจนถึงปัจจุบัน
+            </p>
+          </div>
+
+          <div class="timeline-wrapper" id="dynamic-timeline">
+            <!-- JS จะถูกแทรกข้อมูลตรงนี้ -->
+          </div>
+
+          <div class="timeline-show-all-wrapper" id="timeline-show-all-wrapper">
+            <button
+              class="timeline-show-all-btn"
+              id="timeline-show-all-btn"
+              type="button"
+            >
+              ดูความคืบหน้าทั้งหมดของโครงการ
+            </button>
+          </div>
+        </section>
+      </div>
     </div>
 
     <section>&nbsp;</section>
